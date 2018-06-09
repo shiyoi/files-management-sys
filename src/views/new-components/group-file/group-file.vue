@@ -47,8 +47,14 @@
             </div>
         </div>
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
-            <contract-file-list v-if="which === 'contractFileList'"></contract-file-list>
-            <div v-if="which === 'contractFileNew'">新建档案</div>
+            <!-- 档案列表组件 -->
+            <keep-alive>
+                <contract-file-list v-if="which === 'contractFileList'"></contract-file-list>
+            </keep-alive>
+            <!-- 新建档案组件 -->
+            <keep-alive>
+                <new-file v-if="which === 'contractFileNew'"></new-file>
+            </keep-alive>
         </div>
     </div>
 </template>
@@ -66,10 +72,13 @@
     import scrollBar from '@/views/my-components/scroll-bar/vue-scroller-bars';
 
 
-// my components
+    // my components
     import userImage from '../../new-components/user-image/user-image.vue';
     import topNav from '../../new-components/top-nav/top-nav.vue';
+    //引入档案列表组件
     import contractFileList from '../../new-components/contract-file-list/contract-file-list.vue';
+    //引入新建档案组件
+    import newFile from '../../new-components/new-file/new-file.vue';
 
 
 export default {
@@ -85,7 +94,8 @@ export default {
     scrollBar,
     userImage,
     topNav,
-    contractFileList 
+    contractFileList,
+    newFile 
   },
   data () {
             return {

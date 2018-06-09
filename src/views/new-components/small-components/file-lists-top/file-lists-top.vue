@@ -4,13 +4,13 @@
 <template>
   <div class="list-top">
     <ul>
-      <li>搜索</li>
-      <li>新建</li>
-      <li>批量导入</li>
-      <li>导出</li>
-      <li>刷新</li>
-      <li>打印</li>
-      <li>迁移</li>
+      <li><Icon size="14" type="search"></Icon><span>搜索</span></li>
+      <li><Icon size="14" type="plus"></Icon><span>新建</span></li>
+      <li style="width:90px;"><Icon size="14" type="reply-all"></Icon><span>批量导入</span></li>
+      <li><Icon size="14" type="share"></Icon><span>导出</span></li>
+      <li><Icon size="14" type="android-sync"></Icon><span>刷新</span></li>
+      <li><Icon size="14" type="android-print"></Icon><span>打印</span></li>
+      <li><Icon size="14" type="social-dropbox"></Icon><span>迁移</span></li>
     </ul>
   </div>
 </template>
