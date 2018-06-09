@@ -17,7 +17,9 @@
       <Row :gutter="32">
               <Col span="24" class="demo-tabs-style1">
                   <Tabs type="line" size="small">
-                      <TabPane label="简要信息">标签一的内容</TabPane>
+                      <TabPane label="简要信息">
+                          <brief-information></brief-information>
+                      </TabPane>
                       <TabPane label="操作日志">
                           <div class="tab-info-con">
                             <Table height="200" border :columns="columns2" :data="data2"></Table>
@@ -37,6 +39,7 @@
 </template>
 <script>
 import fileListsTop from '../small-components/file-lists-top/file-lists-top.vue';
+import briefInformation from './brief-information/brief-information.vue';
 export default {
   name: 'contract-file',
   data: function () {
@@ -175,7 +178,7 @@ export default {
             operating_people: '张三',
             type: '修改',
             time: '2018-05-06',
-            operating: `<span style="color:#029ddb;">查看操作日志</span>`
+            operating: ''
         },
         {
             operating_frequency: '5',
@@ -279,7 +282,8 @@ export default {
     };
   },
   components: {
-    fileListsTop
+    fileListsTop,
+    briefInformation
   },
   methods: {
     handleSelectAll (status) {
