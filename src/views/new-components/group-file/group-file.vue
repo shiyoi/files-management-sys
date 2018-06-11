@@ -103,6 +103,24 @@ export default {
                 userName: '',
                 isFullScreen: false,
                 openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
+                //档案  的 档案类型(一  二  三级导航的数据定义)
+                file_type: {
+                  "group_file_type": {
+                    name: "集团档案",
+                    childs: [
+                      {name: "合同档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                      {name: "文书档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                      {name: "实物档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                      {name: "资料档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                      {name: "会计档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                      {name: "声像档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                      {name: "设备档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                      {name: "基建档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                    ]
+                  }
+                },
+
+                
                 top_nav_active: '1',//标识一级导航  '0'  '1'  '2'  '3'  '4'
                 which: 'contractFileList'
             };
@@ -135,7 +153,8 @@ export default {
       parentDataToUserImage () {
           return {
               shrink : this.shrink,
-              top_nav_active : this.top_nav_active
+              top_nav_active : this.top_nav_active,
+              file_type: this.file_type
             }
       }
   },

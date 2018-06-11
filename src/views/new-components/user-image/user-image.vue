@@ -20,74 +20,74 @@
                     <Submenu name="1" v-show="!dataToUserImage.shrink">
                         <template slot="title">
                             <Icon type="ios-paper"></Icon>
-                            合同档案
+                            {{ dataToUserImage.file_type.group_file_type.childs[0].name }}
                         </template>
-                        <MenuItem name="1-1" @click.native="changeWhich('contractFileList')">档案列表</MenuItem>
-                        <MenuItem name="1-2" @click.native="changeWhich('contractFileNew')">新建档案</MenuItem>
-                        <MenuItem name="1-3">批量操作</MenuItem>
+                        <MenuItem name="1-1" @click.native="changeWhich('contractFileList')">{{ dataToUserImage.file_type.group_file_type.childs[0].childs[0].name }}</MenuItem>
+                        <MenuItem name="1-2" @click.native="changeWhich('contractFileNew')">{{ dataToUserImage.file_type.group_file_type.childs[0].childs[1].name }}</MenuItem>
+                        <MenuItem name="1-3">{{ dataToUserImage.file_type.group_file_type.childs[0].childs[2].name }}</MenuItem>
                     </Submenu>
                     <Submenu name="2" v-show="!dataToUserImage.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            文书档案
+                            {{ dataToUserImage.file_type.group_file_type.childs[1].name }}
                         </template>
-                        <MenuItem name="2-1">档案列表</MenuItem>
-                        <MenuItem name="2-2">新建档案</MenuItem>
-                        <MenuItem name="2-3">批量操作</MenuItem>
+                        <MenuItem name="2-1">{{ dataToUserImage.file_type.group_file_type.childs[1].childs[0].name }}</MenuItem>
+                        <MenuItem name="2-2">{{ dataToUserImage.file_type.group_file_type.childs[1].childs[1].name }}</MenuItem>
+                        <MenuItem name="2-3">{{ dataToUserImage.file_type.group_file_type.childs[1].childs[2].name }}</MenuItem>
                     </Submenu>
                     <Submenu name="3" v-show="!dataToUserImage.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            实物档案
+                            {{ dataToUserImage.file_type.group_file_type.childs[2].name }}
                         </template>
-                        <MenuItem name="3-1">档案列表</MenuItem>
-                        <MenuItem name="3-2">新建档案</MenuItem>
-                        <MenuItem name="3-3">批量操作</MenuItem>
+                        <MenuItem name="3-1">{{ dataToUserImage.file_type.group_file_type.childs[2].childs[0].name }}</MenuItem>
+                        <MenuItem name="3-2">{{ dataToUserImage.file_type.group_file_type.childs[2].childs[1].name }}</MenuItem>
+                        <MenuItem name="3-3">{{ dataToUserImage.file_type.group_file_type.childs[2].childs[2].name }}</MenuItem>
                     </Submenu>
                     <Submenu name="4" v-show="!dataToUserImage.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            资料档案
+                            {{ dataToUserImage.file_type.group_file_type.childs[3].name }}
                         </template>
-                        <MenuItem name="4-1">档案列表</MenuItem>
-                        <MenuItem name="4-2">新建档案</MenuItem>
-                        <MenuItem name="4-3">批量操作</MenuItem>
+                        <MenuItem name="4-1">{{ dataToUserImage.file_type.group_file_type.childs[3].childs[0].name }}</MenuItem>
+                        <MenuItem name="4-2">{{ dataToUserImage.file_type.group_file_type.childs[3].childs[1].name }}</MenuItem>
+                        <MenuItem name="4-3">{{ dataToUserImage.file_type.group_file_type.childs[3].childs[2].name }}</MenuItem>
                     </Submenu>
                     <Submenu name="5" v-show="!dataToUserImage.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            会计档案
+                            {{ dataToUserImage.file_type.group_file_type.childs[4].name }}
                         </template>
-                        <MenuItem name="5-1">档案列表</MenuItem>
-                        <MenuItem name="5-2">新建档案</MenuItem>
-                        <MenuItem name="5-3">批量操作</MenuItem>
+                        <MenuItem name="5-1">{{ dataToUserImage.file_type.group_file_type.childs[4].childs[0].name }}</MenuItem>
+                        <MenuItem name="5-2">{{ dataToUserImage.file_type.group_file_type.childs[4].childs[1].name }}</MenuItem>
+                        <MenuItem name="5-3">{{ dataToUserImage.file_type.group_file_type.childs[4].childs[2].name }}</MenuItem>
                     </Submenu> 
                     <Submenu name="6" v-show="!dataToUserImage.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            声像档案
+                            {{ dataToUserImage.file_type.group_file_type.childs[5].name }}
                         </template>
-                        <MenuItem name="6-1">档案列表</MenuItem>
-                        <MenuItem name="6-2">新建档案</MenuItem>
-                        <MenuItem name="6-3">批量操作</MenuItem>
+                        <MenuItem name="6-1">{{ dataToUserImage.file_type.group_file_type.childs[5].childs[0].name }}</MenuItem>
+                        <MenuItem name="6-2">{{ dataToUserImage.file_type.group_file_type.childs[5].childs[1].name }}</MenuItem>
+                        <MenuItem name="6-3">{{ dataToUserImage.file_type.group_file_type.childs[5].childs[2].name }}</MenuItem>
                     </Submenu> 
                     <Submenu name="7" v-show="!dataToUserImage.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            设备档案
+                            {{ dataToUserImage.file_type.group_file_type.childs[6].name }}
                         </template>
-                        <MenuItem name="7-1">档案列表</MenuItem>
-                        <MenuItem name="7-2">新建档案</MenuItem>
-                        <MenuItem name="7-3">批量操作</MenuItem>
+                        <MenuItem name="7-1">{{ dataToUserImage.file_type.group_file_type.childs[6].childs[0].name }}</MenuItem>
+                        <MenuItem name="7-2">{{ dataToUserImage.file_type.group_file_type.childs[6].childs[1].name }}</MenuItem>
+                        <MenuItem name="7-3">{{ dataToUserImage.file_type.group_file_type.childs[6].childs[2].name }}</MenuItem>
                     </Submenu>  
                     <Submenu name="8" v-show="!dataToUserImage.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            基建档案
+                            {{ dataToUserImage.file_type.group_file_type.childs[7].name }}
                         </template>
-                        <MenuItem name="8-1">档案列表</MenuItem>
-                        <MenuItem name="8-2">新建档案</MenuItem>
-                        <MenuItem name="8-3">批量操作</MenuItem>
+                        <MenuItem name="8-1">{{ dataToUserImage.file_type.group_file_type.childs[7].childs[0].name }}</MenuItem>
+                        <MenuItem name="8-2">{{ dataToUserImage.file_type.group_file_type.childs[7].childs[1].name }}</MenuItem>
+                        <MenuItem name="8-3">{{ dataToUserImage.file_type.group_file_type.childs[7].childs[2].name }}</MenuItem>
                     </Submenu> 
                   </template>
                   <template v-show="dataToUserImage.shrink">
@@ -156,6 +156,7 @@ export default {
       group_files: [
           {secondNav: 'contractFile'}
       ],
+      
       whichclick: ''
 
     };
