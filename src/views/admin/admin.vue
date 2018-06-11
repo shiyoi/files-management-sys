@@ -5,7 +5,7 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-           <user-image  :dataToUserImage="parentDataToUserImage"></user-image> 
+           <user-image  :dataNav="parentDataToUserImage"></user-image> 
         </div>
         <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
             <div class="main-header">

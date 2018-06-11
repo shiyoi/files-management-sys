@@ -5,7 +5,7 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-           <user-image  :dataToUserImage="parentDataToUserImage" @whichClick="handleClick"></user-image> 
+           <user-image  :dataNav="parentDataToUserImage" @whichClick="handleClick"></user-image> 
         </div>
         <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
             <div class="main-header">
@@ -49,7 +49,7 @@
         <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
             <!-- 档案列表组件 -->
             <keep-alive>
-                <contract-file-list v-if="which === 'contractFileList'"></contract-file-list>
+                <contract-file-list v-if="which === '集团档案/合同档案/档案列表'"></contract-file-list>
             </keep-alive>
             <!-- 新建档案组件 -->
             <keep-alive>
@@ -79,6 +79,7 @@
     import contractFileList from '../../new-components/contract-file-list/contract-file-list.vue';
     //引入新建档案组件
     import newFile from '../../new-components/new-file/new-file.vue';
+    import top_nav from '@/libs/config.js';
 
 
 export default {
@@ -104,25 +105,52 @@ export default {
                 isFullScreen: false,
                 openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
                 //档案  的 档案类型(一  二  三级导航的数据定义)
-                file_type: {
-                  "group_file_type": {
-                    name: "集团档案",
-                    childs: [
-                      {name: "合同档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
-                      {name: "文书档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
-                      {name: "实物档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
-                      {name: "资料档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
-                      {name: "会计档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
-                      {name: "声像档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
-                      {name: "设备档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
-                      {name: "基建档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
-                    ]
-                  }
-                },
+                // top_nav: [
+                //   {
+                //     name: "首页"
+                //   },
+                //   {
+                //     name: "集团档案",
+                //     childs: [
+                //       {name: "合同档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                //       {name: "文书档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                //       {name: "实物档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                //       {name: "资料档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                //       {name: "会计档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                //       {name: "声像档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                //       {name: "设备档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                //       {name: "基建档案", "childs": [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]},
+                //     ]
+                //   },
+                //   {
+                //     name: "人事档案",
+                //     childs: [
+                //       {name: "人事档案",childs: [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]}
+                //     ]
+                //   },
+                //   {
+                //     name: "档案管理",
+                //     childs: [
+                //       {name: "集团档案管理"},
+                //       {name: "人事档案管理"},
+                //       {name: "借阅管理"},
+                //       {name: "档案储存管理"},
+                //     ]
+                //   },
+                //   {
+                //     name: "系统设置",
+                //     childs: [
+                //       {name: "系统设置",childs: [{name: "菜单管理"},{name: "角色管理"},{name: "用户角色配置"}]},
+                //       {name: "水印"},
+                //       {name: "条形码",childs: [{name: "打印任务"}]},
+                //       {name: "公司信息维护",childs: [{name: "公司列表"},{name: "新增公司"}]}
+                //     ]
+                //   }
+                // ],
 
                 
-                top_nav_active: '1',//标识一级导航  '0'  '1'  '2'  '3'  '4'
-                which: 'contractFileList'
+                top_nav_active: 1,//标识一级导航  0  1  2  3  4  分别表示  首页  集团档案  人事档案  档案管理  系统设置
+                which: '集团档案/合同档案/档案列表'  //最低级导航的  path
             };
   },
   computed: {
@@ -154,7 +182,7 @@ export default {
           return {
               shrink : this.shrink,
               top_nav_active : this.top_nav_active,
-              file_type: this.file_type
+              top_nav: top_nav
             }
       }
   },
