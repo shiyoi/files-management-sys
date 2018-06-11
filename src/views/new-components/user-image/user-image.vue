@@ -29,65 +29,65 @@
                     <Submenu name="2" v-show="!dataNav.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            
+                            {{ dataNav.top_nav[dataNav.top_nav_active].childs[1].name }}
                         </template>
-                        <MenuItem name="2-1"></MenuItem>
-                        <MenuItem name="2-2"></MenuItem>
-                        <MenuItem name="2-3"></MenuItem>
+                        <MenuItem name="2-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[0].name }}</MenuItem>
+                        <MenuItem name="2-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[1].name }}</MenuItem>
+                        <MenuItem name="2-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[2].name }}</MenuItem>
                     </Submenu>
                     <Submenu name="3" v-show="!dataNav.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            
+                            {{ dataNav.top_nav[dataNav.top_nav_active].childs[2].name }}
                         </template>
-                        <MenuItem name="3-1"></MenuItem>
-                        <MenuItem name="3-2"></MenuItem>
-                        <MenuItem name="3-3"></MenuItem>
+                        <MenuItem name="3-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[0].name }}</MenuItem>
+                        <MenuItem name="3-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[1].name }}</MenuItem>
+                        <MenuItem name="3-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[2].name }}</MenuItem>
                     </Submenu>
                     <Submenu name="4" v-show="!dataNav.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            
+                            {{ dataNav.top_nav[dataNav.top_nav_active].childs[3].name }}
                         </template>
-                        <MenuItem name="4-1"></MenuItem>
-                        <MenuItem name="4-2"></MenuItem>
-                        <MenuItem name="4-3"></MenuItem>
+                        <MenuItem name="4-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[0].name }}</MenuItem>
+                        <MenuItem name="4-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[1].name }}</MenuItem>
+                        <MenuItem name="4-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[2].name }}</MenuItem>
                     </Submenu>
                     <Submenu name="5" v-show="!dataNav.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                           
+                            {{ dataNav.top_nav[dataNav.top_nav_active].childs[4].name }}
                         </template>
-                        <MenuItem name="5-1"></MenuItem>
-                        <MenuItem name="5-2"></MenuItem>
-                        <MenuItem name="5-3"></MenuItem>
+                        <MenuItem name="5-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[0].name }}</MenuItem>
+                        <MenuItem name="5-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[1].name }}</MenuItem>
+                        <MenuItem name="5-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[2].name }}</MenuItem>
                     </Submenu> 
                     <Submenu name="6" v-show="!dataNav.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                           
+                            {{ dataNav.top_nav[dataNav.top_nav_active].childs[5].name }}
                         </template>
-                        <MenuItem name="6-1"></MenuItem>
-                        <MenuItem name="6-2"></MenuItem>
-                        <MenuItem name="6-3"></MenuItem>
+                        <MenuItem name="6-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[0].name }}</MenuItem>
+                        <MenuItem name="6-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[1].name }}</MenuItem>
+                        <MenuItem name="6-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[2].name }}</MenuItem>
                     </Submenu> 
                     <Submenu name="7" v-show="!dataNav.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            
+                            {{ dataNav.top_nav[dataNav.top_nav_active].childs[6].name }}
                         </template>
-                        <MenuItem name="7-1"></MenuItem>
-                        <MenuItem name="7-2"></MenuItem>
-                        <MenuItem name="7-3"></MenuItem>
+                        <MenuItem name="7-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[0].name }}</MenuItem>
+                        <MenuItem name="7-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[1].name }}</MenuItem>
+                        <MenuItem name="7-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[2].name }}</MenuItem>
                     </Submenu>  
                     <Submenu name="8" v-show="!dataNav.shrink">
                         <template slot="title">
                             <Icon type="ios-people"></Icon>
-                            
+                            {{ dataNav.top_nav[dataNav.top_nav_active].childs[7].name }}
                         </template>
-                        <MenuItem name="8-1"></MenuItem>
-                        <MenuItem name="8-2"></MenuItem>
-                        <MenuItem name="8-3"></MenuItem>
+                        <MenuItem name="8-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[0].name }}</MenuItem>
+                        <MenuItem name="8-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[1].name }}</MenuItem>
+                        <MenuItem name="8-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[2].name }}</MenuItem>
                     </Submenu> 
                   </template>
                   <template v-show="dataNav.shrink">
