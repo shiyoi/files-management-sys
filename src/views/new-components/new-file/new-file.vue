@@ -1,6 +1,8 @@
 <style scoped lang="less">
 @import './new-file.less';
 </style>
+
+
 <template>
 <!-- 新建档案组件 -->
   <div class="new-file-con">
