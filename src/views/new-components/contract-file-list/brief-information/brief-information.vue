@@ -17,7 +17,7 @@
     </div>
     <div>
       <div>路径：</div>
-      <div>集团档案/合同档案</div>      
+      <div>{{ path }}</div>      
     </div>
     <div>
       <div>创建时间：</div>
@@ -28,7 +28,7 @@
 <script>
 export default {
   name: 'brief-informateion',
-  props: ['info'],
+  props: ['info','path'],
   data: function () {
     return {};
   },
@@ -44,10 +44,10 @@ export default {
     }
   },
   created: function () {
-    console.log('-------------------------------------------');
+    
   },
   actived: function () {
-    console.log('+++++++++++++++++++++++++++++++++++++++++++++');
+    
   }
 }
 </script>

@@ -18,7 +18,7 @@
               <Col span="24" class="demo-tabs-style1">
                   <Tabs type="line" size="small">
                       <TabPane label="简要信息">
-                          <brief-information :info="toBriefInfo"></brief-information>
+                          <brief-information :path="path" :info="toBriefInfo"></brief-information>
                       </TabPane>
                       <TabPane label="操作日志">
                           <div class="tab-info-con">
@@ -43,6 +43,7 @@ import briefInformation from './brief-information/brief-information.vue';
 import axios from 'axios';
 export default {
   name: 'contract-file',
+  props: ['path'],
   data: function () {
     return {
         columns4: [
@@ -265,10 +266,7 @@ export default {
                 rowNo: '',
                 piece: '',
             }
-
-
-        }
-
+        },
     };
   },
   components: {
@@ -308,7 +306,20 @@ export default {
         // console.log(response.data.data);
         // console.log(that.data1);
         that.data1 = response.data.data;
-        //console.log('从服务器接收的数据：',that.data1);
+        console.log('从服务器接收的数据：',that.data1);
+
+
+        //赋值第一条数据为初始值
+        that.toBriefInfo.contractName = that.data1[0].contractName;//档案名称
+        that.toBriefInfo.creatorId = that.data1[0].creatorId;//创建者
+        that.toBriefInfo.createTm = that.data1[0].createTm;//创建时间
+        that.toBriefInfo.archiveMaterialStock = that.data1[0].archiveMaterialStock;//创建时间
+
+
+        console.log(this.toBriefInfo);
+
+
+
     })
     .catch(function (error) {
         console.log(error);

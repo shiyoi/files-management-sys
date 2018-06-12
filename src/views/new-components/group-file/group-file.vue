@@ -47,9 +47,9 @@
             </div>
         </div>
     <keep-alive>
-        <div v-if="top_nav_active == 1" class="single-page-con" :style="{left: shrink?'60px':'200px'}">
+        <div v-if="top_nav_active == 1" class="single-page-con" :style="{left: shrink?'60px':'200px',width: shrink ? 'calc(100% - 60px)' : 'calc(100% - 200px)'}">
             <!-- 档案列表组件 -->
-            <keep-alive><contract-file-list v-if="which === config[1].childs[0].childs[0].path"></contract-file-list></keep-alive>
+            <keep-alive><contract-file-list :path="which" v-if="which === config[1].childs[0].childs[0].path"></contract-file-list></keep-alive>
             <!-- 新建档案组件 -->
             <keep-alive><new-file v-if="which === config[1].childs[0].childs[1].path"></new-file></keep-alive>
         </div>
