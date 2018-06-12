@@ -9,7 +9,7 @@
       <fileListsTop></fileListsTop>
       <Table highlight-row @on-current-change="handleRowChange" border ref="selection" :columns="columns4" :data="data1"></Table>
       <div class="page-container-div">
-        <Page :total="40" size="small" show-elevator show-sizer></Page>
+        <Page :total="100" size="small" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
       </div>
     </div>
     <!-- 下面tab部门 -->
@@ -284,6 +284,12 @@ export default {
         this.toBriefInfo = currentRow;
         console.log('当前选中行的数据：',this.toBriefInfo);
         // console.log(oldCurrentRow);
+    },
+    handlePage (a) {
+        console.log(a);
+    },
+    handlePageSize (a) {
+        console.log(a);
     }
   },
 
