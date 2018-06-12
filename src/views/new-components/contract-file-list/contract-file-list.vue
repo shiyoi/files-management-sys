@@ -308,7 +308,7 @@ export default {
         // console.log(response.data.data);
         // console.log(that.data1);
         that.data1 = response.data.data;
-        console.log('从服务器接收的数据：',that.data1);
+        //console.log('从服务器接收的数据：',that.data1);
     })
     .catch(function (error) {
         console.log(error);

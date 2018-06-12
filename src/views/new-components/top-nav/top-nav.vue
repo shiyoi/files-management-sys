@@ -36,8 +36,10 @@ export default {
   methods : {
     switchingStatus (item) {
       this.top_nav_active = item.status;
+      console.log(typeof this.top_nav_active);
       this.$emit('switch',this.top_nav_active);//向父级组件传递状态
-      this.$router.push(item.to);//跳转路由
+      
+      // this.$router.push(item.to);//跳转路由
     }
   }
 };
