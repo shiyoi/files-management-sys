@@ -16,7 +16,11 @@
     <div class="new-file-con">
       <!-- 入库情况组件 -->
       <storage-situation></storage-situation>
-    </div>    
+    </div>  
+    <div class="new-file-con">
+      <!-- 附件长传组件 -->
+      <annex-upload></annex-upload>
+    </div>       
   </div>
 </template>
 <script>
@@ -24,8 +28,10 @@
 import fileBasicInfo from './file-basic-info/file-basic-info.vue';
 // 引入移交信息组件
 import transferInfo from './transfer-info/transfer-info.vue';
-// 引入入库情况
+// 引入入库情况组件
 import storageSituation from './storage-situation/storage-situation.vue';
+// 附件长传组件
+import annexUpload from './annex-upload/annex-upload.vue';
 export default {
   data: function () {
     return {
@@ -35,7 +41,8 @@ export default {
   components: {
     fileBasicInfo,
     transferInfo,
-    storageSituation
+    storageSituation,
+    annexUpload
 
   }
 
