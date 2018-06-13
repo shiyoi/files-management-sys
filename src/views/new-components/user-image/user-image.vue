@@ -27,7 +27,7 @@
                                 </template>
                                 <MenuItem name="1-1" @click.native="changeWhich(top_nav[dataNav.top_nav_active].childs[0].childs[0].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].name }}</MenuItem>
                                 <MenuItem name="1-2" @click.native="changeWhich(top_nav[dataNav.top_nav_active].childs[0].childs[1].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].name }}</MenuItem>
-                                <MenuItem name="1-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].name }}</MenuItem>
+                                <MenuItem name="1-3" @click.native="changeWhich(top_nav[dataNav.top_nav_active].childs[0].childs[2].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].name }}</MenuItem>
                             </Submenu>
                             <!-- 文书档案 -->
                             <Submenu name="2" v-show="!dataNav.shrink">

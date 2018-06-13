@@ -52,6 +52,8 @@
             <keep-alive><contract-file-list :path="which" v-if="which === config[1].childs[0].childs[0].path"></contract-file-list></keep-alive>
             <!-- 新建档案组件 -->
             <keep-alive><new-file v-if="which === config[1].childs[0].childs[1].path"></new-file></keep-alive>
+            <!-- 批量操作组件 -->
+            <keep-alive><batch-operating v-if="which === config[1].childs[0].childs[2].path"></batch-operating></keep-alive>
         </div>
     </keep-alive>
     </div>
@@ -76,6 +78,9 @@
     import contractFileList from '../../new-components/contract-file-list/contract-file-list.vue';
     //引入新建档案组件
     import newFile from '../../new-components/new-file/new-file.vue';
+    //引入批量操作
+    import batchOperating from '../../new-components/batch-operating/batch-operating.vue';    
+    //引入配置文件
     import config from '@/libs/config.js';
 
 export default {
@@ -92,7 +97,8 @@ export default {
     userImage,
     topNav,
     contractFileList,
-    newFile 
+    newFile,
+    batchOperating 
   },
   data () {
     return {
