@@ -1,5 +1,5 @@
 <style scoped lang="less">
-@import './file-basic-info-header.less';
+@import './file-header.less';
 </style>
 <template>
   <div class="basic-info-header">{{text}}</div>

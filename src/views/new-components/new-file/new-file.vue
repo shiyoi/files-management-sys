@@ -4,15 +4,23 @@
 
 
 <template>
-<!-- 新建档案组件 -->
+<div>
   <div class="new-file-con">
     <!-- 档案基本信息组件 -->
     <file-basic-info></file-basic-info>
   </div>
+  <div class="new-file-con">
+    <!-- 移交信息组件 -->
+    <transfer-info></transfer-info>
+  </div>
+</div>
+
 </template>
 <script>
 // 引入档案基本信息组件
 import fileBasicInfo from './file-basic-info/file-basic-info.vue';
+// 引入移交信息组件
+import transferInfo from './transfer-info/transfer-info.vue';
 export default {
   data: function () {
     return {
@@ -20,7 +28,8 @@ export default {
     };
   },
   components: {
-    fileBasicInfo
+    fileBasicInfo,
+    transferInfo
   }
 
 }
