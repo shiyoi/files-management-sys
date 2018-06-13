@@ -91,10 +91,10 @@
           </div>                        
       </div>
 
-        <div slot="footer">
-            <Button type="primary">查询</Button>
-            <Button @click="search = false">重置</Button>
-        </div>
+      <div slot="footer">
+        <Button type="primary">查询</Button>
+        <Button @click="search = false">重置</Button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -143,7 +143,7 @@ export default {
 
   methods: {
     ok: function () {
-
+      
     },
     cancel: function () {
 

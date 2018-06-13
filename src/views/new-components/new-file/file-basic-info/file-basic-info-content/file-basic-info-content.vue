@@ -1,14 +1,47 @@
-<style lang="less">
-
-  @import '../../../../../styles/new-common.less';
-  @import './file-basic-info-content.less';
+<style scoped lang="less">
+@import './file-basic-info-content.less';
 </style>
 
 <template>
   <div class="basic-info-con">
-    <div class="basic-rows">fdsfd</div>
-
-
+    <div class="basics-rows">
+      <div class="basics-rows-l">
+        <div><span class="color-red">* </span>合同名称</div>
+        <div><Input placeholder="" style="width:100%;"></Input></div>
+      </div>
+      <div class="basics-rows-r">
+        <div><span class="color-red">* </span>腾邦签署主体</div>
+        <div><Input placeholder="" style="width:100%;"></Input></div>        
+      </div>
+    </div>
+    <div class="basics-rows">
+        <div style="width:11%;float:left;"><span class="color-red">* </span>业务内容摘要</div>
+        <div style="width:78%;float:left;background:#f84;"><Input placeholder="" style="width: 100%;"></Input></div>  
+    </div>
+    <div class="basics-rows">
+      <div class="basics-rows-l">left</div>
+      <div class="basics-rows-r">right</div>
+    </div>
+    <div class="basics-rows">
+      <div class="basics-rows-l">left</div>
+      <div class="basics-rows-r">right</div>
+    </div>
+    <div class="basics-rows">
+      <div class="basics-rows-l">left</div>
+      <div class="basics-rows-r">right</div>
+    </div>
+    <div class="basics-rows">
+      <div class="basics-rows-l">left</div>
+      <div class="basics-rows-r">right</div>
+    </div>
+    <div class="basics-rows">
+      <div class="basics-rows-l">left</div>
+      <div class="basics-rows-r">right</div>
+    </div>
+    <div class="basics-rows">
+      <div class="basics-rows-l">left</div>
+      <div class="basics-rows-r">right</div>
+    </div>                            
   </div>
 </template>
 <script>
