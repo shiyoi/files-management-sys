@@ -4,23 +4,28 @@
 
 
 <template>
-<div>
-  <div class="new-file-con">
-    <!-- 档案基本信息组件 -->
-    <file-basic-info></file-basic-info>
+  <div>
+    <div class="new-file-con">
+      <!-- 档案基本信息组件 -->
+      <file-basic-info></file-basic-info>
+    </div>
+    <div class="new-file-con">
+      <!-- 移交信息组件 -->
+      <transfer-info></transfer-info>
+    </div>
+    <div class="new-file-con">
+      <!-- 入库情况组件 -->
+      <storage-situation></storage-situation>
+    </div>    
   </div>
-  <div class="new-file-con">
-    <!-- 移交信息组件 -->
-    <transfer-info></transfer-info>
-  </div>
-</div>
-
 </template>
 <script>
 // 引入档案基本信息组件
 import fileBasicInfo from './file-basic-info/file-basic-info.vue';
 // 引入移交信息组件
 import transferInfo from './transfer-info/transfer-info.vue';
+// 引入入库情况
+import storageSituation from './storage-situation/storage-situation.vue';
 export default {
   data: function () {
     return {
@@ -29,7 +34,9 @@ export default {
   },
   components: {
     fileBasicInfo,
-    transferInfo
+    transferInfo,
+    storageSituation
+
   }
 
 }
