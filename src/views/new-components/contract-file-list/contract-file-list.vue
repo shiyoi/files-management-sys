@@ -40,7 +40,7 @@
 <script>
 import fileListsTop from '../small-components/file-lists-top/file-lists-top.vue';
 import briefInformation from './brief-information/brief-information.vue';
-import axios from 'axios';
+// import axios from 'axios';
 export default {
   name: 'contract-file',
   props: ['path'],
@@ -303,7 +303,9 @@ export default {
   },
   activated: function () {
     let that =this;
-    axios.post('http://10.2.104.201:8989/company/contract/find', {})
+    // axios.post('http://10.2.104.201:8989/company/contract/find', {})
+    // this.$axios.post('http://127.0.0.1:8989/company/contract/find', {})
+    this.$axios.post('company/contract/find', {})
     .then(function (response) {
         // console.log(response);
         response.data.data.forEach((item,index,arr)=>{
