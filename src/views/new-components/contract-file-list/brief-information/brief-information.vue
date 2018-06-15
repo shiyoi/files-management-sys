@@ -35,12 +35,17 @@ export default {
   computed: {
     //储存
     savePosition: function () {
-      return `${this.info.archiveMaterialStock.archiveRoom} /
-              ${this.info.archiveMaterialStock.cabinet} /
-              ${this.info.archiveMaterialStock.columnNo} /
-              ${this.info.archiveMaterialStock.rowNo} /
-              ${this.info.archiveMaterialStock.piece}
-      `;
+      if (this.info.archiveMaterialStock.archiveRoom === '' || this.info.archiveMaterialStock.cabinet === '' || this.info.archiveMaterialStock.columnNo === '' || this.info.archiveMaterialStock.rowNo === '' || this.info.archiveMaterialStock.piece === '') {
+        return '暂无数据';
+      } else {
+        return `${this.info.archiveMaterialStock.archiveRoom} /
+                ${this.info.archiveMaterialStock.cabinet} /
+                ${this.info.archiveMaterialStock.columnNo} /
+                ${this.info.archiveMaterialStock.rowNo} /
+                ${this.info.archiveMaterialStock.piece}
+        `;
+      }
+
     }
   },
   created: function () {

@@ -7,7 +7,7 @@
     <!-- 头部操作和表格部分 -->
     <div class="right-main-page">
       <fileListsTop></fileListsTop>
-      <Table highlight-row @on-current-change="handleRowChange" border ref="selection" :columns="columns4" :data="data1"></Table>
+      <Table highlight-row @on-current-change="handleRowChange" border ref="selection" :columns="columns4" :data="fileListData"></Table>
       <div class="page-container-div">
         <Page :total="100" size="small" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
       </div>
@@ -97,7 +97,7 @@ export default {
                 key: 'borrowingSituation'
             }              
         ],
-        data1: [
+        fileListData: [
             {
                 contractNo: 'AHU889001231',
                 contractName: 'xxxxx公司xxxx业务合同',
@@ -302,38 +302,29 @@ export default {
       //alert('beforeCreate');
   },
   activated: function () {
-    let that =this;
-    // axios.post('http://10.2.104.201:8989/company/contract/find', {})
-    // this.$axios.post('http://127.0.0.1:8989/company/contract/find', {})
+    // 异步请求  合同档案-档案列表接口
     this.$axios.post('company/contract/find', {})
-    .then(function (response) {
-        // console.log(response);
-        response.data.data.forEach((item,index,arr)=>{
-            item.validityPeriod = `${item.effectiveEndDate}-${item.effectiveStartDate}`;
-        });
-        // console.log(response.data.data);
-        // console.log(that.data1);
-        that.data1 = response.data.data;
-        console.log('从服务器接收的数据：',that.data1);
+    .then( res => {
+        if(0 != res.data.data.length) {
+            //显示前，处理数据（有效期时间的拼接）
+            res.data.data.forEach((item,index,arr)=>{
+                item.validityPeriod = `${item.effectiveStartDate}-${item.effectiveEndDate}`;
+            });
+        }
+        this.fileListData = res.data.data;
+        console.log('从服务器接收的数据：',this.fileListData);
 
-
-        //赋值第一条数据为初始值
-        that.toBriefInfo.contractName = that.data1[0].contractName;//档案名称
-        that.toBriefInfo.creatorId = that.data1[0].creatorId;//创建者
-        that.toBriefInfo.createTm = that.data1[0].createTm;//创建时间
-        that.toBriefInfo.archiveMaterialStock = that.data1[0].archiveMaterialStock;//创建时间
-
-
-        console.log(this.toBriefInfo);
-
-
-
+        //赋初始值   (考虑到后台不一定可靠，拿不到数据时 this.fileListData 为空数组时------显示暂无数据)
+        this.toBriefInfo.contractName = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].contractName;//档案名称
+        this.toBriefInfo.creatorId = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].creatorId;//创建者
+        this.toBriefInfo.createTm = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].createTm;//创建时间
+        if (this.fileListData[0] != undefined) {
+            this.toBriefInfo.archiveMaterialStock = this.fileListData[0].archiveMaterialStock;//储存位置
+        }
     })
-    .catch(function (error) {
-        console.log(error);
+    .catch(err => {
+        console.log('异步请求合同档案/档案列表失败',err);
     });
-
-
   },
   deactivated: function () {
       //alert('停用');

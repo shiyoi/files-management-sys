@@ -236,10 +236,10 @@ export default {
   mounted () {
       //this.init();
       //window.addEventListener('resize', this.scrollBarResize);
-      let _this = this;
-      common.bus.$on('on-NewFiles',function (msg) {
-          _this.which = msg;
-      });
+    //   let _this = this;
+    //   common.bus.$on('on-NewFiles',function (msg) {
+    //       _this.which = msg;
+    //   });
   },
   created () {
       // 显示打开的页面的列表

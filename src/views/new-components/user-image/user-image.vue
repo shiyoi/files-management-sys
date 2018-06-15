@@ -13,91 +13,91 @@
         </div>
 
         <!-- 集团档案 -->
-        <div v-else-if="dataNav.top_nav_active == '1'" :class="dataNav.shrink ? 'small' : 'long'">
+        <div v-else-if="dataNav.top_nav_active === 1" :class="dataNav.shrink ? 'small' : 'long'">
             <div class="sidebar-menu-con" :style="{width: dataNav.shrink?'60px':'200px', overflow: dataNav.shrink ? 'visible' : 'auto'}">
                 <Row>
                 <Col span="24">
-                    <Menu :theme="theme2" :open-names="['1']" active-name="1-1" accordion>
+                    <Menu :theme="theme2" :open-names="[dataNav.top_nav[dataNav.top_nav_active].childs[0].path]" :active-name="whichclick" accordion>
                         <template v-show="!dataNav.shrink">
                             <!-- 合同档案 -->
-                            <Submenu name="1" v-show="!dataNav.shrink">
+                            <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].path" v-show="!dataNav.shrink">
                                 <template slot="title">
                                     <Icon type="ios-paper"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[0].name }}
                                 </template>
-                                <MenuItem name="1-1" @click.native="changeWhich(top_nav[dataNav.top_nav_active].childs[0].childs[0].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].name }}</MenuItem>
-                                <MenuItem name="1-2" @click.native="changeWhich(top_nav[dataNav.top_nav_active].childs[0].childs[1].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].name }}</MenuItem>
-                                <MenuItem name="1-3" @click.native="changeWhich(top_nav[dataNav.top_nav_active].childs[0].childs[2].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].name }}</MenuItem>
                             </Submenu>
                             <!-- 文书档案 -->
-                            <Submenu name="2" v-show="!dataNav.shrink">
+                            <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[1].path" v-show="!dataNav.shrink">
                                 <template slot="title">
                                     <Icon type="ios-people"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[1].name }}
                                 </template>
-                                <MenuItem name="2-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[0].name }}</MenuItem>
-                                <MenuItem name="2-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[1].name }}</MenuItem>
-                                <MenuItem name="2-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[0].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[1].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[2].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[1].childs[2].name }}</MenuItem>
                             </Submenu>
                             <!-- 实物档案 -->
-                            <Submenu name="3" v-show="!dataNav.shrink">
+                            <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[2].path" v-show="!dataNav.shrink">
                                 <template slot="title">
                                     <Icon type="ios-people"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[2].name }}
                                 </template>
-                                <MenuItem name="3-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[0].name }}</MenuItem>
-                                <MenuItem name="3-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[1].name }}</MenuItem>
-                                <MenuItem name="3-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[0].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[1].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[2].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[2].childs[2].name }}</MenuItem>
                             </Submenu>
                             <!-- 资料档案 -->
-                            <Submenu name="4" v-show="!dataNav.shrink">
+                            <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[3].path" v-show="!dataNav.shrink">
                                 <template slot="title">
                                     <Icon type="ios-people"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[3].name }}
                                 </template>
-                                <MenuItem name="4-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[0].name }}</MenuItem>
-                                <MenuItem name="4-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[1].name }}</MenuItem>
-                                <MenuItem name="4-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[0].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[1].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[2].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[3].childs[2].name }}</MenuItem>
                             </Submenu>
                             <!-- 会计档案 -->
-                            <Submenu name="5" v-show="!dataNav.shrink">
+                            <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[4].path" v-show="!dataNav.shrink">
                                 <template slot="title">
                                     <Icon type="ios-people"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[4].name }}
                                 </template>
-                                <MenuItem name="5-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[0].name }}</MenuItem>
-                                <MenuItem name="5-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[1].name }}</MenuItem>
-                                <MenuItem name="5-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[0].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[1].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[2].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[4].childs[2].name }}</MenuItem>
                             </Submenu> 
                             <!-- 声像档案 -->
-                            <Submenu name="6" v-show="!dataNav.shrink">
+                            <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[5].path" v-show="!dataNav.shrink">
                                 <template slot="title">
                                     <Icon type="ios-people"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[5].name }}
                                 </template>
-                                <MenuItem name="6-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[0].name }}</MenuItem>
-                                <MenuItem name="6-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[1].name }}</MenuItem>
-                                <MenuItem name="6-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[0].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[1].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[2].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[5].childs[2].name }}</MenuItem>
                             </Submenu> 
                             <!-- 设备档案 -->
-                            <Submenu name="7" v-show="!dataNav.shrink">
+                            <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[6].path" v-show="!dataNav.shrink">
                                 <template slot="title">
                                     <Icon type="ios-people"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[6].name }}
                                 </template>
-                                <MenuItem name="7-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[0].name }}</MenuItem>
-                                <MenuItem name="7-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[1].name }}</MenuItem>
-                                <MenuItem name="7-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[0].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[1].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[2].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[6].childs[2].name }}</MenuItem>
                             </Submenu>  
                             <!-- 基建档案 -->
-                            <Submenu name="8" v-show="!dataNav.shrink">
+                            <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[7].path" v-show="!dataNav.shrink">
                                 <template slot="title">
                                     <Icon type="ios-people"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[7].name }}
                                 </template>
-                                <MenuItem name="8-1">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[0].name }}</MenuItem>
-                                <MenuItem name="8-2">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[1].name }}</MenuItem>
-                                <MenuItem name="8-3">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[0].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[1].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[2].path">{{ dataNav.top_nav[dataNav.top_nav_active].childs[7].childs[2].name }}</MenuItem>
                             </Submenu> 
                         </template>
                         <template v-show="dataNav.shrink">
@@ -153,6 +153,7 @@ import avatar from '@/images/1528115142.jpg';
 import shrinkableMenu from '../../main-components/shrinkable-menu/shrinkable-menu.vue';
 import leftSmallIcon from '../left-small-icon/left-small-icon.vue';
 import topNav from '@/libs/config.js';
+import common from '@/libs/common.js';
 
 export default {
   name : "user-image",
@@ -167,8 +168,8 @@ export default {
       username : "某某某",
       department: "腾邦国际-IT-资源共享",
       theme2: 'dark',
-      whichclick: '',
-      top_nav: topNav
+      whichclick: '集团档案/合同档案/批量操作',
+      config: topNav
 
     };
   },
@@ -180,8 +181,11 @@ export default {
           this.$emit('whichClick',this.whichclick);
       }
   },
-  computed: {
-
+  mounted() {
+      common.bus.$on('on-NewFiles', msg => {
+        this.whichclick = msg;
+        this.$emit('whichClick',this.whichclick);
+      });
   }
 };
 </script>
