@@ -69,6 +69,7 @@
     import themeSwitch from '../../main-components/theme-switch/theme-switch.vue';
     import Cookies from 'js-cookie';
     import util from '@/libs/util.js';
+    import common from '@/libs/common.js';
     import scrollBar from '@/views/my-components/scroll-bar/vue-scroller-bars';
 
     // my components
@@ -140,7 +141,8 @@ export default {
           return {
               shrink : this.shrink,
               top_nav_active : this.top_nav_active,
-              top_nav: config
+              top_nav: config,
+              sub_nav: this.which
             }
       }
   },
@@ -234,6 +236,10 @@ export default {
   mounted () {
       //this.init();
       //window.addEventListener('resize', this.scrollBarResize);
+      let _this = this;
+      common.bus.$on('on-NewFiles',function (msg) {
+          _this.which = msg;
+      });
   },
   created () {
       // 显示打开的页面的列表

@@ -17,7 +17,7 @@
             <div class="sidebar-menu-con" :style="{width: dataNav.shrink?'60px':'200px', overflow: dataNav.shrink ? 'visible' : 'auto'}">
                 <Row>
                 <Col span="24">
-                    <Menu :theme="theme2" :open-names="['1']" accordion>
+                    <Menu :theme="theme2" :open-names="['1']" active-name="1-1" accordion>
                         <template v-show="!dataNav.shrink">
                             <!-- 合同档案 -->
                             <Submenu name="1" v-show="!dataNav.shrink">

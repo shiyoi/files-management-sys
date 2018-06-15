@@ -16,6 +16,9 @@ Vue.prototype.$axios = axios;
 Vue.prototype.$axios.defaults.baseURL = "http://10.2.104.201:8989/";
 // Vue.prototype.$axios.defaults.baseURL = "http://127.0.0.1:8989/";
 
+
+
+
 new Vue({
     el: '#app',
     router: router,

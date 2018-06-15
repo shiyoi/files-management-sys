@@ -7,7 +7,8 @@ export const loginRouter = {
     meta: {
         title: 'Login - 登录'
     },
-    component: () => import('@/views/login.vue')
+    // component: () => import('@/views/login.vue')
+    component: () => import('@/views/new-components/group-file/group-file.vue')
 };
 
 export const page404 = {

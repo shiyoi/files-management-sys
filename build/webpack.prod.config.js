@@ -19,8 +19,12 @@ fs.open('./build/env.js', 'w', function(err, fd) {
 module.exports = merge(webpackBaseConfig, {
     output: {
         //publicPath: 'https://iview.github.io/iview-admin/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名 
-        publicPath: 'http://localhost:3000/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名 
-        // publicPath: 'http://127.0.0.1:8989/dist/',  // 修改 https://iv...admin 这部分为你的服务器域名 
+        // publicPath: 'http://172.16.7.109:3000/dist/',  // 我的本地  ip
+        // publicPath: 'http://172.16.7.125:8989/dist/',  // 开哥本地 ip
+
+
+        // publicPath: 'http://10.2.104.201:8989/dist/',  // 测试环境 ip
+        publicPath: 'http://127.0.0.1:8989/dist/',  //  本地 127.0.0.1
         filename: '[name].[hash].js',
         chunkFilename: '[name].[hash].chunk.js'
     },

@@ -5,7 +5,7 @@
   <div class="list-top">
     <ul>
       <li @click="search = !search;"><Icon size="14" type="search"></Icon><span>搜索</span></li>
-      <li><Icon size="14" type="plus"></Icon><span>新建</span></li>
+      <li @click="openNewFiles"><Icon size="14" type="plus"></Icon><span>新建</span></li>
       <li style="width:90px;"><Icon size="14" type="reply-all"></Icon><span>批量导入</span></li>
       <li><Icon size="14" type="share"></Icon><span>导出</span></li>
       <li><Icon size="14" type="android-sync"></Icon><span>刷新</span></li>
@@ -99,6 +99,9 @@
   </div>
 </template>
 <script>
+import common from '@/libs/common.js';
+//引入配置文件
+import config from '@/libs/config.js';
 export default {
   name: 'file-lists-top',
   data: function () {
@@ -147,6 +150,9 @@ export default {
     },
     cancel: function () {
 
+    },
+    openNewFiles : function () {
+      common.bus.$emit('on-NewFiles',config[1].childs[0].childs[1].path);
     }
   }
 }
