@@ -168,7 +168,7 @@ export default {
       username : "某某某",
       department: "腾邦国际-IT-资源共享",
       theme2: 'dark',
-      whichclick: '集团档案/合同档案/批量操作',
+      whichclick: '集团档案/合同档案/档案列表',
       config: topNav
 
     };
