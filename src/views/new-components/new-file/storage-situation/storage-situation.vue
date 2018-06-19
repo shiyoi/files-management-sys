@@ -4,7 +4,7 @@
 <template>
     <div class="basicInfo">
       <file-header text="入库情况"></file-header>
-      <storage-situation-content></storage-situation-content>
+      <storage-situation-content ref="child_ssc"></storage-situation-content>
     </div>        
 
 

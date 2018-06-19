@@ -4,7 +4,7 @@
 <template>
     <div class="basicInfo">
       <file-header text="合同档案基本信息"></file-header>
-      <file-basic-info-content></file-basic-info-content>
+      <file-basic-info-content ref="child_fbic"></file-basic-info-content>
     </div>        
 </template>
 <script>

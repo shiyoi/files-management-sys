@@ -4,7 +4,7 @@
 <template>
     <div class="basicInfo">
       <file-header text="备注"></file-header>
-      <remark-content></remark-content>
+      <remark-content ref="child_rc"></remark-content>
     </div>        
 
 
@@ -14,7 +14,8 @@ import fileHeader from '../file-basic-info/file-header/file-header.vue';
 import remarkContent from './remark-content/remark-content.vue';
 export default {
   data: function () {
-    return {};
+    return {
+    };
   },
   components: {
     fileHeader,

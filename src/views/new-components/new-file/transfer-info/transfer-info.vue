@@ -4,7 +4,7 @@
 <template>
     <div class="basicInfo">
       <file-header text="移交信息"></file-header>
-      <transfer-info-content></transfer-info-content>
+      <transfer-info-content ref="child_tic"></transfer-info-content>
     </div>        
 
 
@@ -14,7 +14,9 @@ import fileHeader from '../file-basic-info/file-header/file-header.vue';
 import transferInfoContent from './transfer-info-content/transfer-info-content.vue';
 export default {
   data: function () {
-    return {};
+    return {
+
+    };
   },
   components: {
     fileHeader,

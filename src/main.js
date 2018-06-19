@@ -11,9 +11,11 @@ import util from './libs/util';
 import axios from 'axios';//fengchehche
 import VeeValidate from 'vee-validate';//fengchehche
 
+
 Vue.use(VueI18n);
 Vue.use(iView);
 Vue.use(VeeValidate);
+
 Vue.prototype.$axios = axios;
 Vue.prototype.$axios.defaults.baseURL = "http://10.2.104.201:8989/";
 // Vue.prototype.$axios.defaults.baseURL = "http://127.0.0.1:8989/";
