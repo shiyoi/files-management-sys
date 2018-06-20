@@ -2,12 +2,10 @@
 @import './transfer-info.less';
 </style>
 <template>
-    <div class="basicInfo">
-      <file-header text="移交信息"></file-header>
-      <transfer-info-content ref="child_tic"></transfer-info-content>
-    </div>        
-
-
+  <div class="basicInfo">
+    <file-header text="移交信息"></file-header>
+    <transfer-info-content ref="child_tic"></transfer-info-content>
+  </div>        
 </template>
 <script>
 import fileHeader from '../file-basic-info/file-header/file-header.vue';

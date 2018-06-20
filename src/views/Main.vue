@@ -4,7 +4,7 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
         <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-            <scroll-bar ref="scrollBar">
+            <!-- <scroll-bar ref="scrollBar">
                 <shrinkable-menu 
                     :shrink="shrink"
                     @on-change="handleSubmenuChange"
@@ -17,7 +17,9 @@
                         <img v-show="shrink" src="../images/logo-min.jpg" key="min-logo" />
                     </div>
                 </shrinkable-menu>
-            </scroll-bar>
+            </scroll-bar> -->
+           <router-view></router-view> 
+
         </div>
         <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
             <div class="main-header">

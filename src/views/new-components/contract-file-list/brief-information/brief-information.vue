@@ -26,33 +26,33 @@
   </div>
 </template>
 <script>
-export default {
-  name: 'brief-informateion',
-  props: ['info','path'],
-  data: function () {
-    return {};
-  },
-  computed: {
-    //储存
-    savePosition: function () {
-      if (this.info.archiveMaterialStock.archiveRoom === '' || this.info.archiveMaterialStock.cabinet === '' || this.info.archiveMaterialStock.columnNo === '' || this.info.archiveMaterialStock.rowNo === '' || this.info.archiveMaterialStock.piece === '') {
-        return '暂无数据';
-      } else {
-        return `${this.info.archiveMaterialStock.archiveRoom} /
-                ${this.info.archiveMaterialStock.cabinet} /
-                ${this.info.archiveMaterialStock.columnNo} /
-                ${this.info.archiveMaterialStock.rowNo} /
-                ${this.info.archiveMaterialStock.piece}
-        `;
-      }
+  export default {
+    name: 'brief-informateion',
+    props: ['info','path'],
+    data: function () {
+      return {};
+    },
+    computed: {
+      //储存
+      savePosition: function () {
+        if (this.info.archiveMaterialStock.archiveRoom === '' || this.info.archiveMaterialStock.cabinet === '' || this.info.archiveMaterialStock.columnNo === '' || this.info.archiveMaterialStock.rowNo === '' || this.info.archiveMaterialStock.piece === '') {
+          return '暂无数据';
+        } else {
+          return `${this.info.archiveMaterialStock.archiveRoom} /
+                  ${this.info.archiveMaterialStock.cabinet} /
+                  ${this.info.archiveMaterialStock.columnNo} /
+                  ${this.info.archiveMaterialStock.rowNo} /
+                  ${this.info.archiveMaterialStock.piece}
+          `;
+        }
 
+      }
+    },
+    created: function () {
+      
+    },
+    actived: function () {
+      
     }
-  },
-  created: function () {
-    
-  },
-  actived: function () {
-    
-  }
-}
+  };
 </script>

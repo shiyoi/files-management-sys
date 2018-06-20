@@ -25,9 +25,9 @@
                                     <Icon type="ios-paper"></Icon>
                                     {{ dataNav.top_nav[dataNav.top_nav_active].childs[0].name }}
                                 </template>
-                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].name }}</MenuItem>
-                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].name }}</MenuItem>
-                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].path)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].to)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[0].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].to)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[1].name }}</MenuItem>
+                                <MenuItem :name="dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].path" @click.native="changeWhich(dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].to)">{{ dataNav.top_nav[dataNav.top_nav_active].childs[0].childs[2].name }}</MenuItem>
                             </Submenu>
                             <!-- 文书档案 -->
                             <Submenu :name="dataNav.top_nav[dataNav.top_nav_active].childs[1].path" v-show="!dataNav.shrink">
@@ -175,10 +175,11 @@ export default {
   },
   methods : {
       //判断点击的是哪一个  三级列表，相应的改变属性whichclick，并传值给父组件
-      changeWhich: function (path) {
-          console.log(path);
-          this.whichclick = path;
-          this.$emit('whichClick',this.whichclick);
+      changeWhich: function (...to) {
+          console.log(...to);
+          this.$router.push(...to);//跳转路由
+        //   this.whichclick = path;
+        //   this.$emit('whichClick',this.whichclick);
       }
   },
   mounted() {

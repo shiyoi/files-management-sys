@@ -13,7 +13,9 @@ const package = require('../package.json');
 
 fs.open('./build/env.js', 'w', function(err, fd) {
     const buf = 'export default "production";';
-    fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
+    // fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
+    fs.write(fd, buf, function(err, written, buffer) {});//node -v > 10.1.0
+
 });
 
 module.exports = merge(webpackBaseConfig, {
@@ -23,8 +25,8 @@ module.exports = merge(webpackBaseConfig, {
         // publicPath: 'http://172.16.7.125:8989/dist/',  // 开哥本地 ip
 
 
-        // publicPath: 'http://10.2.104.201:8989/dist/',  // 测试环境 ip
-        publicPath: 'http://127.0.0.1:8989/dist/',  //  本地 127.0.0.1
+        publicPath: 'http://10.2.104.201:8989/dist/',  // 测试环境 ip
+        // publicPath: 'http://127.0.0.1:8989/dist/',  //  本地 127.0.0.1
         filename: '[name].[hash].js',
         chunkFilename: '[name].[hash].chunk.js'
     },

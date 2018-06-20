@@ -7,8 +7,8 @@ export const loginRouter = {
     meta: {
         title: 'Login - 登录'
     },
-    // component: () => import('@/views/login.vue')
-    component: () => import('@/views/new-components/group-file/group-file.vue')
+    component: () => import('@/views/login.vue')
+    // component: () => import('@/views/new-components/group-file/group-file.vue')
 };
 
 export const page404 = {
@@ -50,46 +50,60 @@ export const locking = {
     component: () => import('@/views/main-components/lockscreen/components/locking-page.vue')
 };
 // fengcheche 基于已有路由 加的路由 2018.6.4  不作为Main组件的子页面
-// 后台首页
-export const admin = {
-    path: '/admin',
-    name: 'admin',
+
+// export const otherRouter = {
+//     path: '/',
+//     redirect: '/home'
+// };
+//首页路由
+export const home = {
+    path: '/home',
+    name: 'home',
     component: () => import('@/views/admin/admin.vue')
 };
-
+//集团档案路由
 export const groupFile = {
-    path: '/',
+    path: '/groupFile',
     name: 'groupFile',
-    component: () => import('@/views/new-components/group-file/group-file.vue')
-};
-export const otherRouter = {
-    path: '/qq',
-    name: 'otherRouter',
-    redirect: '/groupFile',
-    // component: Main,
+    redirect: '/groupFile/contractFile/fileList',
+    component: () => import('@/views/new-components/group-file/group-file.vue'),
     children: [
-        { path: 'groupFile', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/new-components/group-file/group-file.vue') }
+        {path: '/groupFile/contractFile/fileList', name: 'contractFileList', component: () => import('@/views/new-components/contract-file-list/contract-file-list.vue')}, 
+        {path: '/groupFile/contractFile/newFile', name: 'contractFileNew', component: () => import('@/views/new-components/new-file/new-file.vue')}, 
+        {path: '/groupFile/contractFile/batchOperation', name: 'contractFileNew', component: () => import('@/views/new-components/batch-operating/batch-operating.vue')} 
     ]
 };
+//人事档案路由
+// export const personnelFile = {
+//     path: '/personnelFile',
+//     name: 'personnelFile',
+//     redirect: '/personnelFile/fileList',
+//     component: () => import(),
+//     children: [
+//         {path: '/personnelFile/fileList', name: 'personnelFileList', component: () => import()},
+//         {path: '/personnelFile/newFile', name: 'personnelFileList', component: () => import()},
+//         {path: '/personnelFile/batchOperation', name: 'personnelFileList', component: () => import()}
+//     ]
+// }
 //fengcheche 基于已有路由 加的路由 2018.6.4
 
 
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
-// export const otherRouter = {
-//     path: '/',
-//     name: 'otherRouter',
-//     redirect: '/home',
-//     component: Main,
-//     children: [
-//         { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue') },
-//         //{ path: 'admin', title: {i18n: 'home'}, name: 'admin', component: () => import('@/views/home/home.vue') },
-//         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/own-space.vue') },
-//         { path: 'order/:order_id', title: '订单详情', name: 'order-info', component: () => import('@/views/advanced-router/component/order-info.vue') }, // 用于展示动态路由
-//         { path: 'shopping', title: '购物详情', name: 'shopping', component: () => import('@/views/advanced-router/component/shopping-info.vue') }, // 用于展示带参路由
-//         { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') }
-//     ]
-// };
+export const otherRouter = {
+    path: '/',
+    name: 'otherRouter',
+    redirect: '/home',
+    component: Main,
+    children: [
+        // { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue') },
+        //{ path: 'admin', title: {i18n: 'home'}, name: 'admin', component: () => import('@/views/home/home.vue') },
+        { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/own-space.vue') },
+        { path: 'order/:order_id', title: '订单详情', name: 'order-info', component: () => import('@/views/advanced-router/component/order-info.vue') }, // 用于展示动态路由
+        { path: 'shopping', title: '购物详情', name: 'shopping', component: () => import('@/views/advanced-router/component/shopping-info.vue') }, // 用于展示带参路由
+        { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/message.vue') }
+    ]
+};
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
@@ -262,9 +276,9 @@ export const appRouter = [
 export const routers = [
     loginRouter,
     otherRouter,
+    home,
     preview,
     locking,
-    admin,
     groupFile,
     // groupFile1,
     ...appRouter,

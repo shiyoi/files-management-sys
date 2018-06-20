@@ -162,6 +162,22 @@ export default {
   },
   methods: {
 
+  },
+  created () {
+    //请求表单下拉框的  配置信息
+    // this.$axios.post('/init-base-data', {})
+    // .then((res)=>{
+    //   console.log(res);
+    //   //遍历合同类型对象
+    //   for (let name in res.data.contractType) {
+    //     basicInfo.fileTypeShow.push({"value": name,"label": res.data.contractType[name]});
+    //   }
+    //   console.log(basicInfo.fileTypeShow);
+      
+    //   }
+
+    // )
+    // .catch();
   }
 }
 </script>

@@ -1,7 +1,7 @@
 const nav = [
   {
     name: "首页",
-    to: "/admin",
+    to: "/home",
     status: 0,
     path: "首页"
   },
@@ -11,7 +11,7 @@ const nav = [
     status: 1,
     path: "集团档案",
     childs: [
-      {name: "合同档案", path: "集团档案/合同档案", "childs": [{"name": "档案列表", path: "集团档案/合同档案/档案列表"},{"name": "新建档案", path: "集团档案/合同档案/新建档案"},{"name": "批量操作", path: "集团档案/合同档案/批量操作"}]},
+      {name: "合同档案", path: "集团档案/合同档案", "childs": [{"name": "档案列表", to: "/groupFile/contractFile/fileList", path: "集团档案/合同档案/档案列表"},{"name": "新建档案", to: "/groupFile/contractFile/newFile", path: "集团档案/合同档案/新建档案"},{"name": "批量操作", to: "/groupFile/contractFile/batchOperation", path: "集团档案/合同档案/批量操作"}]},
       {name: "文书档案", path: "集团档案/文书档案", "childs": [{"name": "档案列表", path: "集团档案/文书档案/档案列表"},{"name": "新建档案", path: "集团档案/文书档案/新建档案"},{"name": "批量操作", path: "集团档案/文书档案/批量操作"}]},
       {name: "实物档案", path: "集团档案/实物档案", "childs": [{"name": "档案列表", path: "集团档案/实物档案/档案列表"},{"name": "新建档案", path: "集团档案/实物档案/新建档案"},{"name": "批量操作", path: "集团档案/实物档案/批量操作"}]},
       {name: "资料档案", path: "集团档案/资料档案", "childs": [{"name": "档案列表", path: "集团档案/资料档案/档案列表"},{"name": "新建档案", path: "集团档案/资料档案/新建档案"},{"name": "批量操作", path: "集团档案/资料档案/批量操作"}]},
@@ -23,10 +23,11 @@ const nav = [
   },
   {
     name: "人事档案",
-    to : '/personnelFiles',
+    to : '/personnelFile',
     status: 2,
-    childs: [
-      {name: "人事档案",childs: [{"name": "档案列表"},{"name": "新建档案"},{"name": "批量操作"}]}
+    childs: [{
+      name: "人事档案",
+      childs: [{"name": "档案列表", to: "/personnelFile/fileList"},{"name": "新建档案", to: "/personnelFile/newFile"},{"name": "批量操作", to: "/personnelFile/batchOperation"}]}
     ]
   },
   {
