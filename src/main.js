@@ -18,7 +18,11 @@ Vue.use(VeeValidate);
 
 Vue.prototype.$axios = axios;
 // Vue.prototype.$axios.defaults.baseURL = "http://10.2.104.201:8989/";
-Vue.prototype.$axios.defaults.baseURL = "http://127.0.0.1:8989/";
+Vue.prototype.$axios.defaults.baseURL = "http://10.200.66.113:8989/";
+// Vue.prototype.$axios.defaults.baseURL = "http://localhost:3000/";
+// Vue.prototype.$axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded";
+// Vue.prototype.$axios.defaults.headers.post['Content-Type'] = "application/json";
+// Vue.prototype.$axios.defaults.headers.get['Content-Type'] = "application/x-www-form-urlencoded";
 
 
 

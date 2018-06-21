@@ -266,6 +266,7 @@
                         piece: '',
                     }
                 },
+                shrink: false
             };
         },
         components: {
@@ -324,6 +325,6 @@
         },
         deactivated: function () {
             //alert('停用');
-        }
+        }       
     }
 </script>

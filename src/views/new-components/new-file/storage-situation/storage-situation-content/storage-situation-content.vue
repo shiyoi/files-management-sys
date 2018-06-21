@@ -64,18 +64,18 @@ export default {
   data: function () {
     return {
       storageInfo: {
-        stockStatus: "0",//入库状态
+        stockStatus: "10",//入库状态
         //入库状态 数据
         storageStatusShow: [
-          {value: "0",label: "已入库"},
-          {value: "1",label: "未入库"}
+          {value: "20",label: "已入库"},
+          {value: "10",label: "未入库"}
         ],
-        stockType: "0",//入库类型
+        stockType: "30",//入库类型
         //入库类型 数据
         storageTypeShow: [
-          {value: "0",label: "实物库"},
-          {value: "1",label: "电子库"},
-          {value: "2",label: "实物库+电子库"}
+          {value: "10",label: "实物库"},
+          {value: "20",label: "电子库"},
+          {value: "30",label: "实物库+电子库"}
         ],
         archiveRoom: "0",//档案位置
         //档案位置 数据
@@ -95,8 +95,24 @@ export default {
 
   },
   methods: {
-
-  }
+   //初始化 表单的  select 控件，参数1：arg[0]表示从后台获取的对象，参数2：arg[1]表示VUE data里面对应的变量
+    initOptions (obj,arr) {
+      if (Object.keys(obj).length > 0) {
+        arr.length = 0;
+        for (let key in obj) {
+          arr.push({value: key,label: obj[key]});
+        }
+      }    
+    }
+  },
+  created () {
+    //请求表单下拉框的  配置信息
+    this.$axios.post('/common/init-stock-statu').then( res => {
+        this.initOptions(res.data.data.stockStatus,this.storageInfo.storageStatusShow);//入库状态
+        this.initOptions(res.data.data.stockType,this.storageInfo.storageTypeShow);//入库类型
+      }
+    ).catch( err => {"init-stock-statu接口调用失败" + console.log(err)});
+  }    
 }
 </script>
 

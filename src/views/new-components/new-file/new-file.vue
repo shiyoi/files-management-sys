@@ -3,7 +3,7 @@
 </style>
 
 <template>
-  <div>
+  <div>  
     <div class="new-file-con"><file-basic-info ref="child_fbi"></file-basic-info></div><!-- 档案基本信息组件 -->
     <div class="new-file-con"><transfer-info ref="child_ti"></transfer-info></div><!-- 移交信息组件 -->
     <div class="new-file-con"><storage-situation ref="child_ss"></storage-situation></div><!-- 入库情况组件 -->
@@ -95,7 +95,7 @@
         //   enteringUser: "",//收文人
         // }; 
       }
-    }
+    }   
 
   }
 </script>

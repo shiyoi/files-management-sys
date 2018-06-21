@@ -47,12 +47,12 @@ export default {
   data: function () {
     return {
       transferInfo: {
-        resource: "0",//数据来源
+        resource: "20",//数据来源
         //数据来源 的选项数据
         dataSourceShow: [
-          {value: "0",label: "OA系统"},
-          {value: "1",label: "手动录入"},
-          {value: "2",label: "其他"}
+          {value: "10",label: "OA系统"},
+          {value: "20",label: "手动录入"},
+          {value: "30",label: "其他"}
         ],
         processNo: "",//流程单号
         transferNo: "",//移交人
@@ -65,8 +65,23 @@ export default {
 
   },
   methods: {
-
-  }
+   //初始化 表单的  select 控件，参数1：arg[0]表示从后台获取的对象，参数2：arg[1]表示VUE data里面对应的变量
+    initOptions (obj,arr) {
+      if (Object.keys(obj).length > 0) {
+        arr.length = 0;
+        for (let key in obj) {
+          arr.push({value: key,label: obj[key]});
+        }
+      }    
+    }
+  },
+  created () {
+    //请求表单下拉框的  配置信息
+    this.$axios.post('/common/init-transfer-data').then( res => {
+        this.initOptions(res.data.data.resource,this.transferInfo.dataSourceShow);
+      }
+    ).catch( err => {"init-transfer-data接口调用失败" + console.log(err)});
+  }    
 }
 </script>
 

@@ -4,10 +4,10 @@
 
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
-        <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-           <user-image  :dataNav="parentDataToUserImage" @whichClick="handleClick"></user-image>
-
-        </div>
+        <!-- <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}"> -->
+           <!-- <user-image  :dataNav="parentDataToUserImage" @whichClick="handleClick"></user-image> -->
+            <group-file-menu :dataNav="parentDataToUserImage" @whichClick="handleClick"></group-file-menu>
+        <!-- </div> -->
         <!-- <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
             <div class="main-header">
                 <div class="navicon-con">
@@ -58,15 +58,14 @@
             <!-- <keep-alive><batch-operating v-if="which === config[1].childs[0].childs[2].path"></batch-operating></keep-alive> -->
         <!-- </div> -->
     <!-- </keep-alive> -->
-        <div class="single-page-con" :style="{left: shrink?'60px':'200px',width: shrink ? 'calc(100% - 60px)' : 'calc(100% - 200px)'}">
+        <div class="single-page-con" :style="{left: shrink ? '60px':'200px',width: shrink ? 'calc(100% - 60px)' : 'calc(100% - 200px)'}">
            <router-view></router-view> 
         </div>
     </div>
 </template>
 
 <script>
-    // import common from '@/libs/common.js';
-
+    import common from '@/libs/common.js';
     // my components
     import userImage from '../../new-components/user-image/user-image.vue';
     import topNav from '../../new-components/top-nav/top-nav.vue';
@@ -79,7 +78,9 @@
     //引入配置文件
     import config from '@/libs/config.js';
     //头
-    import topHeader from '@/views/new-components/topHeader/topHeader.vue'
+    import topHeader from '@/views/new-components/topHeader/topHeader.vue';
+    //menu
+    import groupFileMenu from '@/views/new-components/left-menu/groupFile-menu/groupFile-menu.vue';
 
 
 export default {
@@ -90,7 +91,8 @@ export default {
     contractFileList,
     newFile,
     batchOperating,
-    topHeader
+    topHeader,
+    groupFileMenu
 
   },
   data () {
@@ -201,14 +203,12 @@ export default {
           }, 300);
       }
   },
-  mounted () {
-      //this.init();
-      //window.addEventListener('resize', this.scrollBarResize);
-    //   let _this = this;
-    //   common.bus.$on('on-NewFiles',function (msg) {
-    //       _this.which = msg;
-    //   });
-  },
+mounted () {
+    common.bus.$on('toggleMenu', shrink => {
+        this.shrink = shrink;
+        // console.log(this.shrink);
+    });
+},
   created () {
       // 显示打开的页面的列表
       this.$store.commit('setOpenedList');

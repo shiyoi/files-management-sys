@@ -69,14 +69,8 @@
       <div class="basics-rows-r">
         <div class="r-f">
           <CheckboxGroup v-model="basicInfo.enteringType">
-            <Checkbox label="original">
-                <span>原件</span>
-            </Checkbox>
-            <Checkbox label="copy">
-                <span>复印件</span>
-            </Checkbox>
-            <Checkbox label="electronicDocument">
-                <span>电子档</span>
+            <Checkbox v-for="item in basicInfo.enteringTypeShow" :label="item.value">
+                <span>{{ item.label }}</span>
             </Checkbox>
           </CheckboxGroup>        
         </div>        
@@ -118,39 +112,43 @@ export default {
         contractName: "",//合同名称
         signedSubject: "",//腾邦签署主体
         businessBrief: "",//业务内容摘要
-        groupCompany: "0",//档案归属
+        groupCompany: "TT",//档案归属
           //档案归属数据
           fileAttribution: [
-            {value: "0",label: "全部"},
-            {value: "1",label: "腾邦集团"},
-            {value: "2",label: "商业集团"},
-            {value: "3",label: "物流集团"},
-            {value: "4",label: "差旅集团"},
-            {value: "5",label: "资产集团"},
-            {value: "6",label: "投资集团"},
-            {value: "7",label: "旅游集团"},
-            {value: "8",label: "金控集团"}
+            {value: "TG",label: "腾邦集团"},
+            {value: "TT",label: "商业集团"},
+            {value: "TL",label: "物流集团"},
+            {value: "TBCL",label: "差旅集团"},
+            {value: "TZ",label: "资产集团"},
+            {value: "TBTZ",label: "投资集团"},
+            {value: "TBLY",label: "旅游集团"},
+            {value: "TBJK",label: "金控集团5"}
           ],        
         oppositeCompany: "",//对方公司名称
         effectiveDate: "",//有效期时间
         effectiveStartDate: "",//有效期开始时间
         effectiveEndDate: "",//有效期结束时间
-        contractType: "0",//合同类型
+        contractType: "20",//合同类型
           //合同类型数据
           fileTypeShow: [
-            {value: "0",label: "销售合同"},
-            {value: "1",label: "采购合同"},
-            {value: "2",label: "服务合同"}
+            {value: "10",label: "销售合同"},
+            {value: "20",label: "采购合同"},
+            {value: "30",label: "服务合同"}
           ],        
         contractNo: "",//合同编号
         signedUser: "",//签署人
-        enteringType: ['original'],//收文类别
-        status: "0",//状态
+        enteringType: ["10"],//收文类别
+        enteringTypeShow: [
+            {value: "10",label: "原件"},
+            {value: "20",label: "复印件"},
+            {value: "30",label: "电子档"}          
+        ],
+        status: "10",//状态
           //状态数据
           statusShow: [
-            {value: "0",label: "未收文"},
-            {value: "1",label: "已收文"},
-            {value: "2",label: "已注销"}
+            {value: "10",label: "未收文"},
+            {value: "20",label: "已收文"},
+            {value: "30",label: "已注销"}
           ],        
         enteringDate: "",//收文时间
         enteringUser: "某某某",//收文人
@@ -161,23 +159,25 @@ export default {
 
   },
   methods: {
-
+    //初始化 表单的  select 控件，参数1：arg[0]表示从后台获取的对象，参数2：arg[1]表示VUE data里面对应的变量
+    initOptions (obj,arr) {
+      if (Object.keys(obj).length > 0) {
+        arr.length = 0;
+        for (let key in obj) {
+          arr.push({value: key,label: obj[key]});
+        }
+      }    
+    }
   },
   created () {
     //请求表单下拉框的  配置信息
-    // this.$axios.post('/init-base-data', {})
-    // .then((res)=>{
-    //   console.log(res);
-    //   //遍历合同类型对象
-    //   for (let name in res.data.contractType) {
-    //     basicInfo.fileTypeShow.push({"value": name,"label": res.data.contractType[name]});
-    //   }
-    //   console.log(basicInfo.fileTypeShow);
-      
-    //   }
-
-    // )
-    // .catch();
+    this.$axios.post('/common/init-base-data').then( res => {
+        this.initOptions(res.data.data.contractType,this.basicInfo.fileTypeShow);//初始化  合同类型 options
+        this.initOptions(res.data.data.status,this.basicInfo.statusShow);//初始化  状态 options
+        this.initOptions(res.data.data.groupCompany,this.basicInfo.fileAttribution);//初始化  档案归属 options
+        this.initOptions(res.data.data.enteringType,this.basicInfo.enteringTypeShow);//初始化  档案类别 复选框
+      }
+    ).catch( err => {"合同类型接口调用失败" + console.log(err)});
   }
 }
 </script>
