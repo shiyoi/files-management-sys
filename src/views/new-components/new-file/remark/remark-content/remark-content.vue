@@ -5,7 +5,7 @@
 <template>
 <!-- 备注的body 组件 -->
   <div class="basic-info-con">
-    <Input v-model="remarkInfo.remark" type="textarea" :rows="4" autosize="remarkInfo.obj" placeholder="Enter something..."></Input>                      
+    <Input v-model="remarkInfo.remark" type="textarea" :rows="4" autosize="remarkInfo.obj" :maxlength="400" placeholder="Enter something..."></Input>                      
   </div>
 </template>
 <script>

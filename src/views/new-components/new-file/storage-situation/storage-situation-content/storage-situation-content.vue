@@ -43,16 +43,16 @@
       <div class="basics-rows-l">
         <div class="text">柜号</div>
         <div>
-          <div style="width:40%;float:left;"><Input v-model="storageInfo.cabinet" placeholder="" style="width:100%;"></Input></div>
+          <div style="width:40%;float:left;"><Input v-model="storageInfo.cabinet" placeholder="" style="width:100%;" :maxlength="10"></Input></div>
           <div style="width:20%;float:left;text-align:right;padding-right:8px;">列号</div>
-          <div style="width:40%;float:left;"><Input v-model="storageInfo.columnNo" placeholder="" style="width:100%;"></Input></div>
+          <div style="width:40%;float:left;"><Input v-model="storageInfo.columnNo" placeholder="" style="width:100%;" :maxlength="10"></Input></div>
         </div>
       </div>
       <div class="basics-rows-r">
         <div class="r-f">
-          <div style="width:40%;float:left;"><Input v-model="storageInfo.rowNo" placeholder="" style="width:100%;"></Input></div>
+          <div style="width:40%;float:left;"><Input v-model="storageInfo.rowNo" placeholder="" style="width:100%;" :maxlength="10"></Input></div>
           <div style="width:20%;float:left;text-align:right;padding-right:8px;">件号</div>
-          <div style="width:40%;float:left;"><Input v-model="storageInfo.piece" placeholder="" style="width:100%;"></Input></div>      
+          <div style="width:40%;float:left;"><Input v-model="storageInfo.piece" placeholder="" style="width:100%;" :maxlength="10"></Input></div>      
         </div>        
         <div class="text">行号</div>
       </div>

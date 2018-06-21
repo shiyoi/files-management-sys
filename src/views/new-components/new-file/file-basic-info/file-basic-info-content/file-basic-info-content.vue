@@ -7,17 +7,19 @@
     <div class="basics-rows">
       <div class="basics-rows-l">
         <div class="text"><span class="color-red">* </span>合同名称</div>
-        <div><Input v-model="basicInfo.contractName" placeholder="" name="email" style="width:100%;"></Input></div>
+        <div><Input v-model="basicInfo.contractName" placeholder="" name="email" style="width:100%;" :maxlength="30"></Input></div>
         <span>{{ errors.first('email') }}</span>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><Input v-model="basicInfo.signedSubject" placeholder="" style="width:100%;"></Input></div>        
+        <div class="r-f"><Input v-model="basicInfo.signedSubject" placeholder="" style="width:100%;" :maxlength="30"></Input></div>        
         <div class="text"><span class="color-red">* </span>腾邦签署主体</div>
       </div>
     </div>
-    <div class="basics-rows">
+    <div class="basics-rows" style="height:90px;">
         <div style="width:11%;float:left;text-align:right;padding-right:8px;"><span class="color-red">* </span>业务内容摘要</div>
-        <div style="width:89%;float:left;"><Input v-model="basicInfo.businessBrief" placeholder="请输入业务类型，限制200字符" style="width: 100%;"></Input></div>  
+        <div style="width:89%;float:left;">
+          <Input v-model="basicInfo.businessBrief" type="textarea" :rows="4" placeholder="请输入业务内容摘要，限制200字符" :maxlength="200"></Input>                      
+        </div>  
     </div>
     <div class="basics-rows">
       <div class="basics-rows-l">
@@ -35,7 +37,7 @@
     <div class="basics-rows">
       <div class="basics-rows-l">
         <div class="text"><span class="color-red">* </span>对方公司名称</div>
-        <div><Input v-model="basicInfo.oppositeCompany" placeholder="" style="width:100%;"></Input></div>
+        <div><Input v-model="basicInfo.oppositeCompany" placeholder="" style="width:100%;" :maxlength="30"></Input></div>
       </div>
       <div class="basics-rows-r">
         <div class="r-f"><DatePicker v-model="basicInfo.effectiveDate" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
@@ -52,7 +54,7 @@
         </div>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><Input v-model="basicInfo.contractNo" placeholder="请输入合同编号" style="width:100%;"></Input></div>        
+        <div class="r-f"><Input v-model="basicInfo.contractNo" placeholder="请输入合同编号" style="width:100%;" :maxlength="30"></Input></div>        
         <div class="text">合同编号</div>
       </div>
     </div>
@@ -60,7 +62,7 @@
       <div class="basics-rows-l">
         <div class="text">签署人</div>
         <div>
-          <Input v-model="basicInfo.signedUser" placeholder="请输入签署人" style="width:100%;"></Input>
+          <Input v-model="basicInfo.signedUser" placeholder="请输入签署人" style="width:100%;" :maxlength="30"></Input>
           <!-- <Select v-model="basicInfo.signedUser" style="width:100%">
             <Option v-for="item in fileTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>            -->

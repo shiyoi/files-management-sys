@@ -15,14 +15,14 @@
         </div>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><Input v-model="transferInfo.processNo" placeholder="请输入OA单号后，系统自动关联" style="width:100%;"></Input></div>        
+        <div class="r-f"><Input v-model="transferInfo.processNo" placeholder="请输入OA单号后，系统自动关联" style="width:100%;" :maxlength="30"></Input></div>        
         <div class="text">OA单号</div>
       </div>
     </div>
     <div class="basics-rows">
       <div class="basics-rows-l">
         <div class="text">移交人</div>
-        <div><Input v-model="transferInfo.transferNo" placeholder="请输入工号，系统自动关联人员信息" style="width:100%;"></Input></div>
+        <div><Input v-model="transferInfo.transferNo" placeholder="请输入工号，系统自动关联人员信息" style="width:100%;" :maxlength="30"></Input></div>
       </div>
       <div class="basics-rows-r">
         <div class="r-f" style="text-indent:8px;">{{ transferInfo.department }}</div>        
