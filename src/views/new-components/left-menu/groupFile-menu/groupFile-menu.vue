@@ -1,4 +1,4 @@
-<style>
+<style lang="less">
    @import './groupFile-menu.less';
 </style>
 
