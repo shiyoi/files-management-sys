@@ -9,6 +9,7 @@
       <li style="width:90px;"><Icon size="14" type="reply-all"></Icon><span>批量导入</span></li>
       <li @click="exportExcel = !exportExcel;"><Icon size="14" type="share"></Icon><span>导出</span></li>
       <li><Icon size="14" type="android-sync"></Icon><span>刷新</span></li>
+      <li style="width:110px;"><Icon size="14" type="forward"></Icon><span>移入批量操作</span></li>
       <li><Icon size="14" type="android-print"></Icon><span>打印</span></li>
       <li><Icon size="14" type="social-dropbox"></Icon><span>迁移</span></li>
     </ul>
@@ -176,7 +177,9 @@ export default {
 
     },
     openNewFiles : function () {
-      common.bus.$emit('on-NewFiles',config[1].childs[0].childs[1].path);
+      console.log(config[1].childs[0].childs[1].to);
+      // common.bus.$emit('on-NewFiles',config[1].childs[0].childs[1].to);
+      this.$router.push(config[1].childs[0].childs[1].to);
     }
   }
 }

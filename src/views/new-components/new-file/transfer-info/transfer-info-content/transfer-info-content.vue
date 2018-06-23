@@ -10,7 +10,7 @@
         <div class="text">数据来源</div>
         <div>
           <Select v-model="transferInfo.resource" style="width:100%">
-            <Option v-for="item in transferInfo.dataSourceShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in dataSourceShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>           
         </div>
       </div>
@@ -46,14 +46,14 @@
 export default {
   data: function () {
     return {
+      //数据来源 的选项数据
+      dataSourceShow: [
+        {value: "10",label: "OA系统"},
+        {value: "20",label: "手动录入"},
+        {value: "30",label: "其他"}
+      ],      
       transferInfo: {
         resource: "20",//数据来源
-        //数据来源 的选项数据
-        dataSourceShow: [
-          {value: "10",label: "OA系统"},
-          {value: "20",label: "手动录入"},
-          {value: "30",label: "其他"}
-        ],
         processNo: "",//流程单号
         transferNo: "",//移交人
         department: "xxxx/xx/xxxx/xxxxxxxx",//所属部门
@@ -78,7 +78,7 @@ export default {
   created () {
     //请求表单下拉框的  配置信息
     this.$axios.post('/common/init-transfer-data').then( res => {
-        this.initOptions(res.data.data.resource,this.transferInfo.dataSourceShow);
+        this.initOptions(res.data.data.resource,this.dataSourceShow);
       }
     ).catch( err => {"init-transfer-data接口调用失败" + console.log(err)});
   }    

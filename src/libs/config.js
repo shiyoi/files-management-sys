@@ -13,12 +13,12 @@ const nav = [
     childs: [
       {name: "合同档案", path: "集团档案/合同档案", "childs": [{"name": "档案列表", to: "/groupFile/contractFile/fileList", path: "集团档案/合同档案/档案列表"},{"name": "新建档案", to: "/groupFile/contractFile/newFile", path: "集团档案/合同档案/新建档案"},{"name": "批量操作", to: "/groupFile/contractFile/batchOperation", path: "集团档案/合同档案/批量操作"}]},
       {name: "文书档案", path: "集团档案/文书档案", "childs": [{"name": "档案列表", to: "/groupFile/documentsFile/fileList", path: "集团档案/文书档案/档案列表"},{"name": "新建档案", to: "/groupFile/documentsFile/newFile", path: "集团档案/文书档案/新建档案"},{"name": "批量操作", to: "/groupFile/documentsFile/batchOperation", path: "集团档案/文书档案/批量操作"}]},
-      {name: "实物档案", path: "集团档案/实物档案", "childs": [{"name": "档案列表", path: "集团档案/实物档案/档案列表"},{"name": "新建档案", path: "集团档案/实物档案/新建档案"},{"name": "批量操作", path: "集团档案/实物档案/批量操作"}]},
-      {name: "资料档案", path: "集团档案/资料档案", "childs": [{"name": "档案列表", path: "集团档案/资料档案/档案列表"},{"name": "新建档案", path: "集团档案/资料档案/新建档案"},{"name": "批量操作", path: "集团档案/资料档案/批量操作"}]},
-      {name: "会计档案", path: "集团档案/会计档案", "childs": [{"name": "档案列表", path: "集团档案/会计档案/档案列表"},{"name": "新建档案", path: "集团档案/会计档案/新建档案"},{"name": "批量操作", path: "集团档案/会计档案/批量操作"}]},
-      {name: "声像档案", path: "集团档案/声像档案", "childs": [{"name": "档案列表", path: "集团档案/声像档案/档案列表"},{"name": "新建档案", path: "集团档案/声像档案/新建档案"},{"name": "批量操作", path: "集团档案/声像档案/批量操作"}]},
-      {name: "设备档案", path: "集团档案/设备档案", "childs": [{"name": "档案列表", path: "集团档案/设备档案/档案列表"},{"name": "新建档案", path: "集团档案/设备档案/新建档案"},{"name": "批量操作", path: "集团档案/设备档案/批量操作"}]},
-      {name: "基建档案", path: "集团档案/基建档案", "childs": [{"name": "档案列表", path: "集团档案/基建档案/档案列表"},{"name": "新建档案", path: "集团档案/基建档案/新建档案"},{"name": "批量操作", path: "集团档案/基建档案/批量操作"}]},
+      {name: "实物档案", path: "集团档案/实物档案", "childs": [{"name": "档案列表", to: "/groupFile/physicalsFile/fileList", path: "集团档案/实物档案/档案列表"},{"name": "新建档案", to: "/groupFile/physicalsFile/newFile", path: "集团档案/实物档案/新建档案"},{"name": "批量操作", to: "/groupFile/physicalsFile/batchOperation", path: "集团档案/实物档案/批量操作"}]},
+      {name: "资料档案", path: "集团档案/资料档案", "childs": [{"name": "档案列表", to: "/groupFile/dataFile/fileList", path: "集团档案/资料档案/档案列表"},{"name": "新建档案", to: "/groupFile/dataFile/newFile", path: "集团档案/资料档案/新建档案"},{"name": "批量操作", to: "/groupFile/dataFile/batchOperation", path: "集团档案/资料档案/批量操作"}]},
+      {name: "会计档案", path: "集团档案/会计档案", "childs": [{"name": "档案列表", to: "/groupFile/accountingFile/fileList", path: "集团档案/会计档案/档案列表"},{"name": "新建档案", to: "/groupFile/accountingFile/newFile", path: "集团档案/会计档案/新建档案"},{"name": "批量操作", to: "/groupFile/accountingFile/batchOperation", path: "集团档案/会计档案/批量操作"}]},
+      {name: "声像档案", path: "集团档案/声像档案", "childs": [{"name": "档案列表", to: "/groupFile/soundimageFile/fileList", path: "集团档案/声像档案/档案列表"},{"name": "新建档案", to: "/groupFile/soundimageFile/newFile", path: "集团档案/声像档案/新建档案"},{"name": "批量操作", to: "/groupFile/soundimageFile/batchOperation", path: "集团档案/声像档案/批量操作"}]},
+      {name: "设备档案", path: "集团档案/设备档案", "childs": [{"name": "档案列表", to: "/groupFile/equipmentFile/fileList", path: "集团档案/设备档案/档案列表"},{"name": "新建档案", to: "/groupFile/equipmentFile/newFile", path: "集团档案/设备档案/新建档案"},{"name": "批量操作", to: "/groupFile/equipmentFile/batchOperation", path: "集团档案/设备档案/批量操作"}]},
+      {name: "基建档案", path: "集团档案/基建档案", "childs": [{"name": "档案列表", to: "/groupFile/infrastructureFile/fileList", path: "集团档案/基建档案/档案列表"},{"name": "新建档案", to: "/groupFile/infrastructureFile/newFile", path: "集团档案/基建档案/新建档案"},{"name": "批量操作", to: "/groupFile/infrastructureFile/batchOperation", path: "集团档案/基建档案/批量操作"}]},
     ]
   },
   {

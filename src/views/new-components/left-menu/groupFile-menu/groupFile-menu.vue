@@ -9,26 +9,16 @@
         <Col span="24">
             <Menu :theme="theme2" accordion >
                 <div v-show="!shrink">
-                    <!-- 合同档案 -->
-                    <Submenu name="合同档案">
+                    <!-- 循环生成集团档案的   left_menu -->
+                    <Submenu v-for="(v,i) in configNav[1].childs" :key="i" :name="v.name">
                         <template slot="title">
                             <Icon type="ios-paper"></Icon>
-                            合同档案
+                            {{ v.name }}
                         </template>
-                        <MenuItem name="档案列表" @click.native="changeWhich(dataNav.top_nav[1].childs[0].childs[0].to)">档案列表</MenuItem>
-                        <MenuItem name="新建档案" @click.native="changeWhich(dataNav.top_nav[1].childs[0].childs[1].to)">新建档案</MenuItem>
-                        <MenuItem name="批量操作" @click.native="changeWhich(dataNav.top_nav[1].childs[0].childs[2].to)">批量操作</MenuItem>
-                    </Submenu>
-                    <!-- 合同档案 -->
-                    <Submenu name="文书档案">
-                        <template slot="title">
-                            <Icon type="ios-paper"></Icon>
-                            文书档案
-                        </template>
-                        <MenuItem name="档案列表" @click.native="changeWhich(dataNav.top_nav[1].childs[1].childs[0].to)">档案列表</MenuItem>
-                        <MenuItem name="新建档案" @click.native="changeWhich(dataNav.top_nav[1].childs[1].childs[1].to)">新建档案</MenuItem>
-                        <MenuItem name="批量操作" @click.native="changeWhich(dataNav.top_nav[1].childs[1].childs[2].to)">批量操作</MenuItem>
-                    </Submenu>                    
+                        <MenuItem :name="v.childs[0].name" @click.native="changeWhich(v.childs[0].to)">{{ v.childs[0].name }}</MenuItem>
+                        <MenuItem :name="v.childs[1].name" @click.native="changeWhich(v.childs[1].to)">{{ v.childs[1].name }}</MenuItem>
+                        <MenuItem :name="v.childs[2].name" @click.native="changeWhich(v.childs[2].to)">{{ v.childs[2].name }}</MenuItem>
+                    </Submenu> 
                 </div>
                 <div v-show="shrink">
                     <div>
@@ -55,7 +45,7 @@
                     <div>
                         <left-small-icon type="ios-paper" title="基建档案"></left-small-icon>
                     </div> 
-                </div>                                                                     -->
+                </div>
             </Menu>
         </Col>
         </Row>
@@ -64,7 +54,8 @@
 </template>
 <script>
   import common from '@/libs/common.js';//bus 总线
-  import leftSmallIcon from '@/views/new-components/left-small-icon/left-small-icon.vue';
+  import leftSmallIcon from '@/views/new-components/left-small-icon/left-small-icon';
+  import config from '@/libs/config.js';
   export default {
     name: "groupFileMenu",
     props: ['dataNav'],
@@ -74,8 +65,12 @@
     data () {
         return {
             shrink: false,
-            theme2: 'dark'
+            theme2: 'dark',
+            config: null
         };
+    },
+    created () {
+        this.configNav = config;
     },
     methods: {
         changeWhich: function (...to) {
@@ -84,9 +79,9 @@
       }
     },
     mounted () {
+      //监控 header 发来的   shrink（true表示 左边应该收缩，false表示左边menu应该展开）
       common.bus.$on('toggleMenu', shrink => {
           this.shrink = shrink;
-          //console.log(this.shrink);
       });
     }
   }

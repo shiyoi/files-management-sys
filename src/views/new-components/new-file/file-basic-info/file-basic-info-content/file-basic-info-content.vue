@@ -26,7 +26,7 @@
         <div class="text"><span class="color-red">* </span>档案归属</div>
         <div>
           <Select v-model="basicInfo.groupCompany" style="width:100%">
-            <Option v-for="item in basicInfo.fileAttribution" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in fileAttribution" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>          
         </div>
       </div>
@@ -40,7 +40,7 @@
         <div><Input v-model="basicInfo.oppositeCompany" placeholder="" style="width:100%;" :maxlength="30"></Input></div>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><DatePicker v-model="basicInfo.effectiveDate" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
+        <div class="r-f"><DatePicker v-model="effectiveDate" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
         <div class="text"><span class="color-red">* </span>有效期</div>
       </div>
     </div>
@@ -49,7 +49,7 @@
         <div class="text">合同类型</div>
         <div>
           <Select v-model="basicInfo.contractType" style="width:100%">
-            <Option v-for="item in basicInfo.fileTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in fileTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>           
         </div>
       </div>
@@ -71,7 +71,7 @@
       <div class="basics-rows-r">
         <div class="r-f">
           <CheckboxGroup v-model="basicInfo.enteringType">
-            <Checkbox v-for="item in basicInfo.enteringTypeShow" :label="item.value">
+            <Checkbox v-for="item in enteringTypeShow" :label="item.value">
                 <span>{{ item.label }}</span>
             </Checkbox>
           </CheckboxGroup>        
@@ -84,12 +84,12 @@
         <div class="text">状态</div>
         <div>
           <Select v-model="basicInfo.status" style="width:100%">
-            <Option v-for="item in basicInfo.statusShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in statusShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>           
         </div>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><DatePicker v-model="basicInfo.enteringDate" type="date" placeholder="Select date" style="width: 100%"></DatePicker></div>        
+        <div class="r-f"><DatePicker v-model="enteringDate" type="date" placeholder="Select date" style="width: 100%"></DatePicker></div>        
         <div class="text">收文时间</div>
       </div>
     </div>
@@ -110,52 +110,86 @@
 export default {
   data: function () {
     return {
+      //档案归属数据
+      fileAttribution: [
+        {value: "TG",label: "腾邦集团"},
+        {value: "TT",label: "商业集团"},
+        {value: "TL",label: "物流集团"},
+        {value: "TBCL",label: "差旅集团"},
+        {value: "TZ",label: "资产集团"},
+        {value: "TBTZ",label: "投资集团"},
+        {value: "TBLY",label: "旅游集团"},
+        {value: "TBJK",label: "金控集团5"}
+      ],   
+      //合同类型数据
+      fileTypeShow: [
+        {value: "10",label: "销售合同"},
+        {value: "20",label: "采购合同"},
+        {value: "30",label: "服务合同"}
+      ],    
+      enteringTypeShow: [
+          {value: "10",label: "原件"},
+          {value: "20",label: "复印件"},
+          {value: "30",label: "电子档"}          
+      ],  
+      //状态数据
+      statusShow: [
+        {value: "10",label: "未收文"},
+        {value: "20",label: "已收文"},
+        {value: "30",label: "已注销"}
+      ],   
+      effectiveDate: "",//有效期时间   
+      enteringDate: "", //收文时间            
       basicInfo: {
         contractName: "",//合同名称
         signedSubject: "",//腾邦签署主体
         businessBrief: "",//业务内容摘要
-        groupCompany: "TT",//档案归属
-          //档案归属数据
-          fileAttribution: [
-            {value: "TG",label: "腾邦集团"},
-            {value: "TT",label: "商业集团"},
-            {value: "TL",label: "物流集团"},
-            {value: "TBCL",label: "差旅集团"},
-            {value: "TZ",label: "资产集团"},
-            {value: "TBTZ",label: "投资集团"},
-            {value: "TBLY",label: "旅游集团"},
-            {value: "TBJK",label: "金控集团5"}
-          ],        
+        groupCompany: "TT",//档案归属      
         oppositeCompany: "",//对方公司名称
-        effectiveDate: "",//有效期时间
         effectiveStartDate: "",//有效期开始时间
         effectiveEndDate: "",//有效期结束时间
         contractType: "20",//合同类型
-          //合同类型数据
-          fileTypeShow: [
-            {value: "10",label: "销售合同"},
-            {value: "20",label: "采购合同"},
-            {value: "30",label: "服务合同"}
-          ],        
         contractNo: "",//合同编号
         signedUser: "",//签署人
         enteringType: ["10"],//收文类别
-        enteringTypeShow: [
-            {value: "10",label: "原件"},
-            {value: "20",label: "复印件"},
-            {value: "30",label: "电子档"}          
-        ],
         status: "10",//状态
-          //状态数据
-          statusShow: [
-            {value: "10",label: "未收文"},
-            {value: "20",label: "已收文"},
-            {value: "30",label: "已注销"}
-          ],        
         enteringDate: "",//收文时间
         enteringUser: "某某某",//收文人
       }
     };
+  },
+  computed: {
+    //有效时间
+    effective: {
+      get () {
+        return this.effectiveDate;
+      },
+      set (newValue) {
+
+      }
+      
+    },
+    //收文时间
+    entering: {
+      get () {
+        return this.enteringDate;
+      },
+      set (newValue) {
+
+      }      
+    }
+  },
+  watch: {
+    effective (newVal,oldVal) {
+      if (Object.keys(newVal).length === 2) {
+        //有效期时间分开为开始  和  结束时间 并格式化为  2018-06-02 格式
+        this.basicInfo.effectiveStartDate = newVal[0].Format("yyyy-MM-dd");
+        this.basicInfo.effectiveEndDate = newVal[1].Format("yyyy-MM-dd");
+      }
+    },
+    entering (newVal,oldVal) {
+      this.basicInfo.enteringDate = newVal.Format("yyyy-MM-dd");
+    }
   },
   components: {
 
@@ -174,10 +208,10 @@ export default {
   created () {
     //请求表单下拉框的  配置信息
     this.$axios.post('/common/init-base-data').then( res => {
-        this.initOptions(res.data.data.contractType,this.basicInfo.fileTypeShow);//初始化  合同类型 options
-        this.initOptions(res.data.data.status,this.basicInfo.statusShow);//初始化  状态 options
-        this.initOptions(res.data.data.groupCompany,this.basicInfo.fileAttribution);//初始化  档案归属 options
-        this.initOptions(res.data.data.enteringType,this.basicInfo.enteringTypeShow);//初始化  档案类别 复选框
+        this.initOptions(res.data.data.contractType,this.fileTypeShow);//初始化  合同类型 options
+        this.initOptions(res.data.data.status,this.statusShow);//初始化  状态 options
+        this.initOptions(res.data.data.groupCompany,this.fileAttribution);//初始化  档案归属 options
+        this.initOptions(res.data.data.enteringType,this.enteringTypeShow);//初始化  档案类别 复选框
       }
     ).catch( err => {"合同类型接口调用失败" + console.log(err)});
   }

@@ -4,7 +4,7 @@
 <template>
     <div class="basicInfo">
       <file-header text="附件上传"></file-header>
-      <annex-upload-content></annex-upload-content>
+      <annex-upload-content ref="child_auc"></annex-upload-content>
     </div>        
 
 

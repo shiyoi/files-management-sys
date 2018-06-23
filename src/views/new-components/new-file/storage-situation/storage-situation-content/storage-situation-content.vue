@@ -10,14 +10,14 @@
         <div class="text">入库状态</div>
         <div>
           <Select v-model="storageInfo.stockStatus" style="width:100%">
-            <Option v-for="item in storageInfo.storageStatusShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in storageStatusShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>           
         </div>
       </div>
       <div class="basics-rows-r">
         <div class="r-f">
           <Select v-model="storageInfo.stockType" style="width:100%">
-            <Option v-for="item in storageInfo.storageTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in storageTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>  
         </div>        
         <div class="text">入库类型</div>
@@ -28,7 +28,7 @@
         <div class="text">档案位置</div>
         <div>
           <Select v-model="storageInfo.archiveRoom" style="width:100%">
-            <Option v-for="item in storageInfo.archiveRoomShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in archiveRoomShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>           
         </div>
       </div>
@@ -63,27 +63,30 @@
 export default {
   data: function () {
     return {
+      //入库状态 数据
+      storageStatusShow: [
+        {value: "20",label: "已入库"},
+        {value: "10",label: "未入库"}
+      ],      
+      //入库类型 数据
+      storageTypeShow: [
+        {value: "10",label: "实物库"},
+        {value: "20",label: "电子库"},
+        {value: "30",label: "实物库+电子库"}
+      ],    
+      //档案位置 数据
+      archiveRoomShow: [
+        {value: "10",label: "腾邦总部/腾邦大厦/5楼档案室"},
+        {value: "20",label: "腾邦总部/腾邦大厦/4楼档案室"},
+        {value: "30",label: "腾邦总部/腾邦大厦/3楼档案室"}          
+      ],        
       storageInfo: {
         stockStatus: "10",//入库状态
-        //入库状态 数据
-        storageStatusShow: [
-          {value: "20",label: "已入库"},
-          {value: "10",label: "未入库"}
-        ],
+
         stockType: "30",//入库类型
-        //入库类型 数据
-        storageTypeShow: [
-          {value: "10",label: "实物库"},
-          {value: "20",label: "电子库"},
-          {value: "30",label: "实物库+电子库"}
-        ],
-        archiveRoom: "0",//档案位置
-        //档案位置 数据
-        archiveRoomShow: [
-          {value: "0",label: "腾邦总部/腾邦大厦/5楼档案室"},
-          {value: "1",label: "腾邦总部/腾邦大厦/4楼档案室"},
-          {value: "2",label: "腾邦总部/腾邦大厦/3楼档案室"}          
-        ],
+
+        archiveRoom: "10",//档案位置
+
         cabinet: "",//     柜号         
         columnNo: "",//    列号          
         rowNo: "",//       行号       
@@ -108,8 +111,8 @@ export default {
   created () {
     //请求表单下拉框的  配置信息
     this.$axios.post('/common/init-stock-statu').then( res => {
-        this.initOptions(res.data.data.stockStatus,this.storageInfo.storageStatusShow);//入库状态
-        this.initOptions(res.data.data.stockType,this.storageInfo.storageTypeShow);//入库类型
+        this.initOptions(res.data.data.stockStatus,this.storageStatusShow);//入库状态
+        this.initOptions(res.data.data.stockType,this.storageTypeShow);//入库类型
       }
     ).catch( err => {"init-stock-statu接口调用失败" + console.log(err)});
   }    
