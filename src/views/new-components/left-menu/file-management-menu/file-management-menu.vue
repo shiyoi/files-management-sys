@@ -1,5 +1,5 @@
 <style scoped lang="less">
-   @import './groupFile-menu.less';
+   @import './file-management-menu.less';
 </style>
 
 <template>
@@ -7,18 +7,12 @@
     <div class="sidebar-menu-con" :style="{width: shrink ? '60px' : '200px', overflow: shrink ? 'visible' : 'auto'}">
         <Row>
         <Col span="24">
-            <Menu :theme="theme2" accordion >
+            <Menu :theme="theme2" :active-name="configNav[3].childs[0].name">
                 <div v-show="!shrink">
-                    <!-- 循环生成集团档案的   left_menu -->
-                    <Submenu v-for="(v,i) in configNav[1].childs" :key="i" :name="v.name">
-                        <template slot="title">
-                            <Icon type="ios-paper"></Icon>
-                            {{ v.name }}
-                        </template>
-                        <MenuItem :name="v.childs[0].name" @click.native="changeWhich(v.childs[0].to)">{{ v.childs[0].name }}</MenuItem>
-                        <MenuItem :name="v.childs[1].name" @click.native="changeWhich(v.childs[1].to)">{{ v.childs[1].name }}</MenuItem>
-                        <MenuItem :name="v.childs[2].name" @click.native="changeWhich(v.childs[2].to)">{{ v.childs[2].name }}</MenuItem>
-                    </Submenu> 
+                    <MenuItem v-for="(value,index) in configNav[3].childs" :key="index" :name="value.name" @click.native="changeWhich(value.path)">
+                      <Icon type="document-text"></Icon>
+                      {{ value.name }}
+                    </MenuItem>
                 </div>
                 <div v-show="shrink">
                     <div>
@@ -33,18 +27,6 @@
                     <div>
                         <left-small-icon type="ios-paper" title="资料档案"></left-small-icon>
                     </div>   
-                    <div>
-                        <left-small-icon type="ios-paper" title="会计档案"></left-small-icon>
-                    </div>    
-                    <div>
-                        <left-small-icon type="ios-paper" title="声像档案"></left-small-icon>
-                    </div>    
-                    <div>
-                        <left-small-icon type="ios-paper" title="设备档案"></left-small-icon>
-                    </div>     
-                    <div>
-                        <left-small-icon type="ios-paper" title="基建档案"></left-small-icon>
-                    </div> 
                 </div>
             </Menu>
         </Col>

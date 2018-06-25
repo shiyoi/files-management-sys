@@ -65,36 +65,30 @@
     },
     methods: {
       submitForm(msg) {
-        //拿到组成表单的组件的  表单数据
+        //构建表单数据（非文件）
         let resultJson = Object.assign({},
           this.$refs.child_fbi.$refs.child_fbic.basicInfo,       //合同档案基本信息
           this.$refs.child_ti.$refs.child_tic.transferInfo,      //移交信息组件的数据
-          this.$refs.child_ss.$refs.child_ssc.storageInfo,       //入库情况组件的数据
-          this.$refs.child_au.$refs.child_auc.files,             //上传文件
+          this.$refs.child_ss.$refs.child_ssc.storageInfo,       //入库情况组件的数据           
           this.$refs.child_r.$refs.child_rc.remarkInfo           //备注信息的数据
         );
-        console.log(resultJson.uploadFile);
+        let files = this.$refs.child_au.$refs.child_auc.files.uploadFile;// 上传文件(文件数组)
         let formData = new FormData();
-        for (let key in resultJson) {
-          if (key === 'uploadFile') {
-            for (let i=0;i<resultJson[key].length;i++) {
-              formData.append('uploadFile',resultJson[key][i]);
-            }
-          }
-          formData.append(key,resultJson[key]);
+        formData.append('data',JSON.stringify(resultJson));//字符串化
+        console.log(JSON.stringify(resultJson));
+        //将文件添加进去
+        for (let i=0;i<files.length;i++) {
+          formData.append('uploadFile',files[i]);
         }
-
-        // formData.append('name', "dffd");
-        console.log( formData);
         console.log( formData.get('uploadFile'));
-
+        //配置http请求头
         let config = {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        }
+        };
         this.$axios.post('/company/contract/submit',formData,config).then( res => {
-          console.log(res.data);
+          console.log("新增档案提交表单成功：",res.data);
         }).catch( err => {
           console.log("新增档案提交表单失败：",err);
         });

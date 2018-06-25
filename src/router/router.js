@@ -70,8 +70,23 @@ export const groupFile = {
     children: [
         {path: '/groupFile/contractFile/fileList', name: 'contractFileList', component: () => import('@/views/new-components/contract-file-list/contract-file-list.vue')}, 
         {path: '/groupFile/contractFile/newFile', name: 'contractFileNew', component: () => import('@/views/new-components/new-file/new-file.vue')}, 
-        {path: '/groupFile/contractFile/batchOperation', name: 'contractFileNew', component: () => import('@/views/new-components/batch-operating/batch-operating.vue')} 
+        {path: '/groupFile/contractFile/batchOperation', name: 'contractFileBatch', component: () => import('@/views/new-components/batch-operating/batch-operating.vue')} 
     ]
+};
+//档案管理路由
+export const fileManagement = {
+    path: '/filesManagement',
+    name: 'filesManagement',
+    redirect: '/filesManagement/groupFile',
+    component: () => import('@/views/new-components/files-management/files-management.vue'),
+    children: [
+        {path: "/filesManagement/groupFile", name: 'groupFileManagement', component: () => import('@/views/new-components/files-management/group-file-management/group-file-management.vue')}, 
+        {path: "/filesManagement/personnelFile", name: 'personnelFileManagement', component: () => import('@/views/new-components/files-management/personnel-file-management/personnel-file-management.vue')}, 
+        {path: "/filesManagement/borrowed", name: 'borrowedManagement', component: () => import('@/views/new-components/files-management/borrowed-management/borrowed-management.vue')}, 
+        {path: "/filesManagement/store", name: 'storeManagement', component: () => import('@/views/new-components/files-management/store-management/store-management.vue')} 
+        
+    ]
+
 };
 //人事档案路由
 // export const personnelFile = {
@@ -280,6 +295,7 @@ export const routers = [
     preview,
     locking,
     groupFile,
+    fileManagement,
     // groupFile1,
     ...appRouter,
     page500,

@@ -1,11 +1,14 @@
 <style scoped lang="less">
-    @import './group-file.less';
+    @import './files-management.less';
 </style>
 
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
-        <group-file-menu :dataNav="parentDataToUserImage" @whichClick="handleClick"></group-file-menu>
+
+        <file-management-menu :dataNav="parentDataToUserImage"></file-management-menu>
+
         <top-header></top-header>
+
         <div class="single-page-con" :style="{left: shrink ? '60px':'200px',width: shrink ? 'calc(100% - 60px)' : 'calc(100% - 200px)'}">
            <router-view></router-view> 
         </div>
@@ -14,19 +17,19 @@
 
 <script>
     import common from '@/libs/common.js';
-    // my components 
-    //引入配置文件
+    // my components
     import config from '@/libs/config.js';
     //头
     import topHeader from '@/views/new-components/topHeader/topHeader.vue';
     //menu
-    import groupFileMenu from '@/views/new-components/left-menu/groupFile-menu/groupFile-menu.vue';
+    import fileManagementMenu from '@/views/new-components/left-menu/file-management-menu/file-management-menu.vue';
+
 
 export default {
   name : "group-file",
   components: {
     topHeader,
-    groupFileMenu
+    fileManagementMenu
 
   },
   data () {
@@ -73,7 +76,6 @@ export default {
 mounted () {
     common.bus.$on('toggleMenu', shrink => {
         this.shrink = shrink;
-        // console.log(this.shrink);
     });
 },
   created () {

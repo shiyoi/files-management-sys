@@ -293,12 +293,12 @@
 
         //生命周期钩子函数
         created: function () {
-            
-        },
-        beforeCreate: function () {
-            //alert('beforeCreate');
-        },
-        activated: function () {
+        //配置http请求头
+            // let config = {
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data'
+            //     }
+            // };            
             // 异步请求  合同档案-档案列表接口
             this.$axios.post('company/contract/find', {})
             .then( res => {
@@ -322,6 +322,11 @@
             .catch(err => {
                 console.log('异步请求合同档案/档案列表失败',err);
             });
+        },
+        beforeCreate: function () {
+            //alert('beforeCreate');
+        },
+        activated: function () {
         },
         deactivated: function () {
             //alert('停用');

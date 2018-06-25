@@ -4,6 +4,7 @@
 
 <template>
 <!-- 附件上传的body 组件 -->
+<!-- :before-upload="handleUpload" -->
   <div class="basic-info-con">
     <Upload
         multiple

@@ -35,10 +35,10 @@ const nav = [
     to : '/filesManagement',
     status: 3,
     childs: [
-      {name: "集团档案管理"},
-      {name: "人事档案管理"},
-      {name: "借阅管理"},
-      {name: "档案储存管理"},
+      {name: "集团档案管理", path: "/filesManagement/groupFile"},
+      {name: "人事档案管理", path: "/filesManagement/personnelFile"},
+      {name: "借阅管理", path: "/filesManagement/borrowed"},
+      {name: "档案储存管理", path: "/filesManagement/store"},
     ]
   },
   {
