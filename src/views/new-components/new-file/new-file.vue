@@ -74,6 +74,7 @@
         );
         let files = this.$refs.child_au.$refs.child_auc.files.uploadFile;// 上传文件(文件数组)
         let formData = new FormData();
+
         formData.append('data',JSON.stringify(resultJson));//字符串化
         console.log(JSON.stringify(resultJson));
         //将文件添加进去
@@ -84,9 +85,12 @@
         //配置http请求头
         let config = {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            // 'Content-Type': 'multipart/form-data'
+            // 'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json; charset=UTF-8'
           }
         };
+
         this.$axios.post('/company/contract/submit',formData,config).then( res => {
           console.log("新增档案提交表单成功：",res.data);
         }).catch( err => {

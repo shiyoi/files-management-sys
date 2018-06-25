@@ -35,10 +35,10 @@ const nav = [
     to : '/filesManagement',
     status: 3,
     childs: [
-      {name: "集团档案管理", path: "/filesManagement/groupFile"},
-      {name: "人事档案管理", path: "/filesManagement/personnelFile"},
-      {name: "借阅管理", path: "/filesManagement/borrowed"},
-      {name: "档案储存管理", path: "/filesManagement/store"},
+      {name: "集团档案管理", to: "/filesManagement/groupFile"},
+      {name: "人事档案管理", to: "/filesManagement/personnelFile"},
+      {name: "借阅管理", to: "/filesManagement/borrowed"},
+      {name: "档案储存管理", to: "/filesManagement/store"}
     ]
   },
   {
@@ -46,10 +46,10 @@ const nav = [
     to : '/systemSettings',
     status: 4,
     childs: [
-      {name: "系统设置",childs: [{name: "菜单管理"},{name: "角色管理"},{name: "用户角色配置"}]},
-      {name: "水印"},
-      {name: "条形码",childs: [{name: "打印任务"}]},
-      {name: "公司信息维护",childs: [{name: "公司列表"},{name: "新增公司"}]}
+      {name: "系统设置",childs: [{name: "菜单管理", to: "/systemSettings/menuManagement"},{name: "角色管理", to: "/systemSettings/role"},{name: "用户角色配置", to: "/systemSettings/userRole"}]},
+      {name: "水印", to: "/systemSettings/watermark"},
+      {name: "条形码",childs: [{name: "条形码列表", to: "/systemSettings/watermarkList"}, {name: "打印任务", to: "/systemSettings/printTask"}]},
+      {name: "公司信息维护",childs: [{name: "公司列表", to: "/systemSettings/companyList"},{name: "新增公司", to: "/systemSettings/addCompany"}]}
     ]
   }
 ];

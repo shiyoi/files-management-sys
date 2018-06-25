@@ -1,5 +1,5 @@
 <style scoped lang="less">
-   @import './file-management-menu.less';
+   @import './system-settings-menu.less';
 </style>
 
 <template>
@@ -39,7 +39,7 @@
   import leftSmallIcon from '@/views/new-components/left-small-icon/left-small-icon';
   import config from '@/libs/config.js';
   export default {
-    name: "groupFileMenu",
+    name: "systemSettingsMenu",
     props: ['dataNav'],
     components: {
         leftSmallIcon

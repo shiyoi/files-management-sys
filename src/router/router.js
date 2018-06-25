@@ -7,8 +7,8 @@ export const loginRouter = {
     meta: {
         title: 'Login - 登录'
     },
-    component: () => import('@/views/login.vue')
-    // component: () => import('@/views/new-components/group-file/group-file.vue')
+    // component: () => import('@/views/login.vue')
+    component: () => import('@/views/admin/admin.vue')
 };
 
 export const page404 = {
@@ -84,10 +84,18 @@ export const fileManagement = {
         {path: "/filesManagement/personnelFile", name: 'personnelFileManagement', component: () => import('@/views/new-components/files-management/personnel-file-management/personnel-file-management.vue')}, 
         {path: "/filesManagement/borrowed", name: 'borrowedManagement', component: () => import('@/views/new-components/files-management/borrowed-management/borrowed-management.vue')}, 
         {path: "/filesManagement/store", name: 'storeManagement', component: () => import('@/views/new-components/files-management/store-management/store-management.vue')} 
-        
     ]
-
 };
+//系统设置路由
+export const systemSettings = {
+    path: '/systemSettings',
+    name: 'systemSettings',
+    redirect: '/systemSettings/menuManagement',
+    component: () => import('@/views/new-components/system-settings/system-settings.vue'),
+    children: [
+        {path: "/systemSettings/menuManagement", name: "menuManagement", component: () => import('@/views/new-components/system-settings/menu-management/menu-management.vue')}
+    ]
+}
 //人事档案路由
 // export const personnelFile = {
 //     path: '/personnelFile',
@@ -296,6 +304,7 @@ export const routers = [
     locking,
     groupFile,
     fileManagement,
+    systemSettings,
     // groupFile1,
     ...appRouter,
     page500,
