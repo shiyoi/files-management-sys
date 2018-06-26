@@ -7,18 +7,18 @@
     <div class="basics-rows">
       <div class="basics-rows-l">
         <div class="text"><span class="color-red">* </span>合同名称</div>
-        <div><Input v-model="basicInfo.contractName" placeholder="" name="email" style="width:100%;" :maxlength="30"></Input></div>
+        <div><Input ref="contractName" v-model="basicInfo.contractName" placeholder="请输入合同名称" name="email" style="width:100%;" :maxlength="30"></Input></div>
         <span>{{ errors.first('email') }}</span>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><Input v-model="basicInfo.signedSubject" placeholder="" style="width:100%;" :maxlength="30"></Input></div>        
+        <div class="r-f"><Input ref="signedSubject" v-model="basicInfo.signedSubject" placeholder="请输入腾邦签署主体" style="width:100%;" :maxlength="30"></Input></div>        
         <div class="text"><span class="color-red">* </span>腾邦签署主体</div>
       </div>
     </div>
     <div class="basics-rows" style="height:90px;">
         <div style="width:11%;float:left;text-align:right;padding-right:8px;"><span class="color-red">* </span>业务内容摘要</div>
         <div style="width:89%;float:left;">
-          <Input v-model="basicInfo.businessBrief" type="textarea" :rows="4" placeholder="请输入业务内容摘要，限制200字符" :maxlength="200"></Input>                      
+          <Input ref="businessBrief" v-model="basicInfo.businessBrief" type="textarea" :rows="4" placeholder="请输入业务内容摘要，限制200字符" :maxlength="200"></Input>                      
         </div>  
     </div>
     <div class="basics-rows">
@@ -37,7 +37,7 @@
     <div class="basics-rows">
       <div class="basics-rows-l">
         <div class="text"><span class="color-red">* </span>对方公司名称</div>
-        <div><Input v-model="basicInfo.oppositeCompany" placeholder="" style="width:100%;" :maxlength="30"></Input></div>
+        <div><Input ref="oppositeCompany" v-model="basicInfo.oppositeCompany" placeholder="请输入对方公司名称" style="width:100%;" :maxlength="30"></Input></div>
       </div>
       <div class="basics-rows-r">
         <div class="r-f"><DatePicker v-model="effectiveDate" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
@@ -156,6 +156,7 @@ export default {
         enteringDate: "",//收文时间
         enteringUser: "某某某",//收文人
       }
+
     };
   },
   computed: {
@@ -205,6 +206,15 @@ export default {
       }    
     }
   },
+  directives: {
+      focus: {
+          inserted: function (el, {value}) {
+              if (value) {
+                  el.focus();
+              }
+          }
+      }
+  },  
   created () {
     //请求表单下拉框的  配置信息
     this.$axios.post('/common/init-base-data').then( res => {

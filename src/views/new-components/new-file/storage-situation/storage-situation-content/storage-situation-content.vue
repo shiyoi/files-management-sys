@@ -16,9 +16,9 @@
       </div>
       <div class="basics-rows-r">
         <div class="r-f">
-          <Select v-model="storageInfo.stockType" style="width:100%">
+          <Select :disabled="isDisabled" v-model="storageInfo.stockType" style="width:100%">
             <Option v-for="item in storageTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>  
+          </Select>          
         </div>        
         <div class="text">入库类型</div>
       </div>
@@ -27,9 +27,9 @@
       <div class="basics-rows-l">
         <div class="text">档案位置</div>
         <div>
-          <Select v-model="storageInfo.archiveRoom" style="width:100%">
+          <Select :disabled="isDisabled" v-model="storageInfo.archiveRoom" style="width:100%">
             <Option v-for="item in archiveRoomShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>           
+          </Select>                     
         </div>
       </div>
       <div class="basics-rows-r">
@@ -43,16 +43,24 @@
       <div class="basics-rows-l">
         <div class="text">柜号</div>
         <div>
-          <div style="width:40%;float:left;"><Input v-model="storageInfo.cabinet" placeholder="" style="width:100%;" :maxlength="10"></Input></div>
+          <div style="width:40%;float:left;">
+            <InputNumber :disabled="isDisabled" :min="min" v-model="storageInfo.cabinet" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
+          </div>
           <div style="width:20%;float:left;text-align:right;padding-right:8px;">列号</div>
-          <div style="width:40%;float:left;"><Input v-model="storageInfo.columnNo" placeholder="" style="width:100%;" :maxlength="10"></Input></div>
+          <div style="width:40%;float:left;">
+            <InputNumber :disabled="isDisabled || cabinet === min" :min="min" v-model="storageInfo.columnNo" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
+          </div>
         </div>
       </div>
       <div class="basics-rows-r">
         <div class="r-f">
-          <div style="width:40%;float:left;"><Input v-model="storageInfo.rowNo" placeholder="" style="width:100%;" :maxlength="10"></Input></div>
+          <div style="width:40%;float:left;">
+            <InputNumber :min="min" :disabled="isDisabled || cabinet === min || columnNo === min" v-model="storageInfo.rowNo" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
+          </div>
           <div style="width:20%;float:left;text-align:right;padding-right:8px;">件号</div>
-          <div style="width:40%;float:left;"><Input v-model="storageInfo.piece" placeholder="" style="width:100%;" :maxlength="10"></Input></div>      
+          <div style="width:40%;float:left;">
+            <InputNumber :min="min" :disabled="isDisabled || cabinet === min || columnNo === min || rowNo === min" v-model="storageInfo.piece" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
+          </div>      
         </div>        
         <div class="text">行号</div>
       </div>
@@ -63,6 +71,9 @@
 export default {
   data: function () {
     return {
+      //柜列行件   数字  >=1
+      min: -1,
+      isDisabled: true,//是否显示入库状态后面的表单，默认false 显示，true为disabled
       //入库状态 数据
       storageStatusShow: [
         {value: "20",label: "已入库"},
@@ -82,17 +93,95 @@ export default {
       ],        
       storageInfo: {
         stockStatus: "10",//入库状态
-
         stockType: "30",//入库类型
-
         archiveRoom: "10",//档案位置
-
-        cabinet: "",//     柜号         
-        columnNo: "",//    列号          
-        rowNo: "",//       行号       
-        piece: ""//        件号      
+        cabinet: -1,//     柜号         
+        columnNo: -1,//    列号          
+        rowNo: -1,//       行号       
+        piece: -1//        件号 
       }
     };
+  },
+  computed: {
+    stockStatus: {
+      get () {
+        return this.storageInfo.stockStatus;
+      },
+      set (newValus) {
+      }
+    },
+    //柜号
+    cabinet: {
+      get () {
+        return this.storageInfo.cabinet;
+      },
+      set () {
+
+      }
+    },
+    //列号
+    columnNo: {
+     get () {
+        return this.storageInfo.columnNo;
+      },
+      set () {
+
+      }      
+    },
+    //行号
+    rowNo: {
+     get () {
+        return this.storageInfo.rowNo;
+      },
+      set () {
+
+      }         
+    },
+    piece: {
+      get () {
+
+      },
+      set () {
+
+      }
+    }
+
+    
+  },
+  watch: {
+    stockStatus (newValue,oldValue) {
+      //如果改为未入库状态，则清空柜、列、行、件
+      if ('10' === newValue) {
+        this.storageInfo.cabinet = this.min;
+        this.storageInfo.columnNo = this.min;
+        this.storageInfo.rowNo = this.min;
+        this.storageInfo.piece = this.min;
+        this.isDisabled = true;
+      } else if ('20' === newValue) {
+        this.isDisabled = false;
+      }
+    },
+    //监控柜号
+    cabinet (newValue,oldValue) {
+      if (newValue === -1){
+        this.storageInfo.columnNo = this.min;
+        this.storageInfo.rowNo = this.min;
+        this.storageInfo.piece = this.min;        
+      }
+    },
+    //监控列号
+    columnNo (newValue,oldValue) {
+      if (newValue === -1){
+        this.storageInfo.rowNo = this.min;
+        this.storageInfo.piece = this.min;        
+      }
+    },   
+    //监控行号
+    rowNo (newValue,oldValue) {
+      if (newValue === -1){
+        this.storageInfo.piece = this.min;        
+      }
+    },      
   },
   components: {
 

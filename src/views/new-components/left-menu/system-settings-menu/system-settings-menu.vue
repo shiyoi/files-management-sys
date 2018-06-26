@@ -9,10 +9,18 @@
         <Col span="24">
             <Menu :theme="theme2" :active-name="configNav[3].childs[0].name">
                 <div v-show="!shrink">
-                    <MenuItem v-for="(value,index) in configNav[3].childs" :key="index" :name="value.name" @click.native="changeWhich(value.to)">
+                    <!-- <MenuItem v-for="(value,index) in configNav[3].childs" :key="index" :name="value.name" @click.native="changeWhich(value.to)">
                       <Icon type="document-text"></Icon>
                       {{ value.name }}
-                    </MenuItem>
+                    </MenuItem> -->
+            <MenuItem name="1">
+                <Icon type="document-text"></Icon>
+                文章管理
+            </MenuItem>  
+            <MenuItem name="2">
+                <Icon type="document-text"></Icon>
+                文章管理
+            </MenuItem>                               
                 </div>
                 <div v-show="shrink">
                     <div>
@@ -64,6 +72,7 @@
       //监控 header 发来的   shrink（true表示 左边应该收缩，false表示左边menu应该展开）
       common.bus.$on('toggleMenu', shrink => {
           this.shrink = shrink;
+        //   alert(this.shrink);
       });
     }
   }

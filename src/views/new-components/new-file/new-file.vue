@@ -20,6 +20,7 @@
   import annexUpload from './annex-upload/annex-upload.vue';// 引入附件长传组件
   import remark from './remark/remark.vue';// 引入备注组件
   import bottomBotton from './bottom-botton/bottom-botton.vue';// 引入底部按钮组件
+  import commonValidate from '@/libs/common_validate';// 引入底部按钮组件
   export default {
     data: function () {
       return {
@@ -52,7 +53,8 @@
           rowNo: "",//行号
           piece: "",//件号
           remark: "",//备注
-        }
+        },
+        commonValidate
       };
     },
     components: {
@@ -64,7 +66,7 @@
       bottomBotton
     },
     methods: {
-      submitForm(msg) {
+      submitForm (msg) {
         //构建表单数据（非文件）
         let resultJson = Object.assign({},
           this.$refs.child_fbi.$refs.child_fbic.basicInfo,       //合同档案基本信息
@@ -72,30 +74,67 @@
           this.$refs.child_ss.$refs.child_ssc.storageInfo,       //入库情况组件的数据           
           this.$refs.child_r.$refs.child_rc.remarkInfo           //备注信息的数据
         );
+        resultJson.enteringType = resultJson.enteringType.join(',');//档案基本信息-类别复选框数组转字符串
         let files = this.$refs.child_au.$refs.child_auc.files.uploadFile;// 上传文件(文件数组)
-        let formData = new FormData();
+        if (!this.formValidate(resultJson)) {return ;}
 
-        formData.append('data',JSON.stringify(resultJson));//字符串化
-        console.log(JSON.stringify(resultJson));
+        alert('togng');
+
+        let formData = new FormData();
+        //将表单数据添加到 formdata
+        for (let index in resultJson) {
+            formData.append(index,resultJson[index]);
+        }
         //将文件添加进去
         for (let i=0;i<files.length;i++) {
           formData.append('uploadFile',files[i]);
         }
-        console.log( formData.get('uploadFile'));
-        //配置http请求头
-        let config = {
-          headers: {
-            // 'Content-Type': 'multipart/form-data'
-            // 'Content-Type': 'application/x-www-form-urlencoded'
-            'Content-Type': 'application/json; charset=UTF-8'
-          }
-        };
 
-        this.$axios.post('/company/contract/submit',formData,config).then( res => {
+        
+
+        this.$axios.post('/company/contract/submit',formData).then( res => {
           console.log("新增档案提交表单成功：",res.data);
         }).catch( err => {
           console.log("新增档案提交表单失败：",err);
         });
+      },
+      formValidate (resultJson) {
+        console.log(resultJson);
+        //验证合同名称
+         if (this.commonValidate.isEmpty(resultJson.contractName)) {
+          this.$Message.info({content: '合同名称不能为空',duration:3,closable: true}); 
+          this.$refs.child_fbi.$refs.child_fbic.$refs.contractName.focus();//自动聚焦
+          return false;          
+         }
+        //验证腾邦签署主体
+         if (this.commonValidate.isEmpty(resultJson.signedSubject)) {
+          this.$Message.info({content: '腾邦签署主体不能为空',duration:3,closable: true}); 
+          this.$refs.child_fbi.$refs.child_fbic.$refs.signedSubject.focus();//自动聚焦
+          return false;          
+         }    
+        //验证业务内容摘要
+         if (this.commonValidate.isEmpty(resultJson.businessBrief)) {
+          this.$Message.info({content: '业务内容摘要不能为空',duration:3,closable: true}); 
+          this.$refs.child_fbi.$refs.child_fbic.$refs.businessBrief.focus();//自动聚焦
+          return false;          
+         }   
+        //对方公司名称
+         if (this.commonValidate.isEmpty(resultJson.oppositeCompany)) {
+          this.$Message.info({content: '对方公司名称不能为空',duration:3,closable: true}); 
+          this.$refs.child_fbi.$refs.child_fbic.$refs.oppositeCompany.focus();//自动聚焦
+          return false;          
+         }     
+        //有效期开始时间
+         if (this.commonValidate.isEmpty(resultJson.effectiveStartDate)) {
+          this.$Message.info({content: '有效期不能为空',duration:3,closable: true}); 
+          return false;          
+         } 
+        //有效期结束时间
+         if (this.commonValidate.isEmpty(resultJson.effectiveEndDate)) {
+          this.$Message.info({content: '有效期不能为空',duration:3,closable: true}); 
+          return false;          
+         }          
+         return true;
       }
     }   
   }
