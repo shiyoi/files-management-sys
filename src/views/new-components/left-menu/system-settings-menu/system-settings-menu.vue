@@ -13,14 +13,13 @@
                       <Icon type="document-text"></Icon>
                       {{ value.name }}
                     </MenuItem> -->
-            <MenuItem name="1">
-                <Icon type="document-text"></Icon>
-                文章管理
-            </MenuItem>  
-            <MenuItem name="2">
-                <Icon type="document-text"></Icon>
-                文章管理
-            </MenuItem>                               
+                   <Submenu v-for="(v,i) in configNav[4].childs" :key="i" :name="v.name">
+                        <template slot="title">
+                            <Icon type="ios-paper"></Icon>
+                            {{ v.name }}
+                        </template>
+                        <MenuItem v-for="(value,index) in v.childs" :name="value.name" @click.native="changeWhich(value.to)">{{ value.name }}</MenuItem>
+                    </Submenu>                     
                 </div>
                 <div v-show="shrink">
                     <div>

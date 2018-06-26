@@ -40,7 +40,7 @@
         <div><Input ref="oppositeCompany" v-model="basicInfo.oppositeCompany" placeholder="请输入对方公司名称" style="width:100%;" :maxlength="30"></Input></div>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><DatePicker v-model="effectiveDate" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
+        <div class="r-f"><DatePicker ref="effectiveDate" v-model="effectiveDate" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
         <div class="text"><span class="color-red">* </span>有效期</div>
       </div>
     </div>
