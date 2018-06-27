@@ -9,7 +9,7 @@
       <fileListsTop></fileListsTop>
       <Table highlight-row @on-current-change="handleRowChange" border ref="selection" :columns="columns4" :data="fileListData"></Table>
       <div class="page-container-div">
-        <Page :total="100" size="small" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
+        <Page :total="totalCount" size="small" :page-size="page_size" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
       </div>
     </div>
     <!-- 下面tab部门 -->
@@ -266,7 +266,9 @@
                         piece: '',
                     }
                 },
-                shrink: false
+                shrink: false,
+                totalCount: 0,
+                page_size: 30
             };
         },
         components: {
@@ -281,7 +283,6 @@
             handleRowChange (currentRow, oldCurrentRow) {
                 this.toBriefInfo = currentRow;
                 console.log('当前选中行的数据：',this.toBriefInfo);
-                // console.log(oldCurrentRow);
             },
             handlePage (a) {
                 console.log(a);
@@ -292,13 +293,7 @@
         },
 
         //生命周期钩子函数
-        created: function () {
-        //配置http请求头
-            // let config = {
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data'
-            //     }
-            // };            
+        created: function () {          
             // 异步请求  合同档案-档案列表接口
             this.$axios.post('company/contract/find', {})
             .then( res => {
@@ -310,17 +305,19 @@
                 }
                 this.fileListData = res.data.data;
                 console.log('从服务器接收的数据：',this.fileListData);
+                console.log('总条数：',typeof res.data.count);
+                this.totalCount = res.data.count;
 
                 //赋初始值   (考虑到后台不一定可靠，拿不到数据时 this.fileListData 为空数组时------显示暂无数据)
                 this.toBriefInfo.contractName = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].contractName;//档案名称
                 this.toBriefInfo.creatorId = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].creatorId;//创建者
                 this.toBriefInfo.createTm = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].createTm;//创建时间
-                if (this.fileListData[0] != undefined) {
+                if (this.fileListData[0] != undefined && this.fileListData[0].hasOwnProperty('archiveMaterialStock')) {
                     this.toBriefInfo.archiveMaterialStock = this.fileListData[0].archiveMaterialStock;//储存位置
                 }
             })
             .catch(err => {
-                console.log('异步请求合同档案/档案列表失败',err);
+                console.log('异步请求合同档案/档案列表失败',err);             
             });
         },
         beforeCreate: function () {

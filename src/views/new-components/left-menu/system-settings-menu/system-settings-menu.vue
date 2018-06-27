@@ -9,10 +9,6 @@
         <Col span="24">
             <Menu :theme="theme2" :active-name="configNav[3].childs[0].name">
                 <div v-show="!shrink">
-                    <!-- <MenuItem v-for="(value,index) in configNav[3].childs" :key="index" :name="value.name" @click.native="changeWhich(value.to)">
-                      <Icon type="document-text"></Icon>
-                      {{ value.name }}
-                    </MenuItem> -->
                    <Submenu v-for="(v,i) in configNav[4].childs" :key="i" :name="v.name">
                         <template slot="title">
                             <Icon type="ios-paper"></Icon>

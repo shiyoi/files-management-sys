@@ -35,15 +35,17 @@
     computed: {
       //储存
       savePosition: function () {
-        if (this.info.archiveMaterialStock.archiveRoom === '' || this.info.archiveMaterialStock.cabinet === '' || this.info.archiveMaterialStock.columnNo === '' || this.info.archiveMaterialStock.rowNo === '' || this.info.archiveMaterialStock.piece === '') {
-          return '暂无数据';
+        if (!this.info.hasOwnProperty('archiveMaterialStock')) return '';
+        
+        if (this.info.archiveMaterialStock.archiveRoom != '' && this.info.archiveMaterialStock.cabinet != '' && this.info.archiveMaterialStock.columnNo != '' && this.info.archiveMaterialStock.rowNo != '' && this.info.archiveMaterialStock.piece != '') {
+            return `${this.info.archiveMaterialStock.archiveRoom} /
+                    ${this.info.archiveMaterialStock.cabinet}柜 /
+                    ${this.info.archiveMaterialStock.columnNo}列 /
+                    ${this.info.archiveMaterialStock.rowNo}行 /
+                    ${this.info.archiveMaterialStock.piece}件
+            `;
         } else {
-          return `${this.info.archiveMaterialStock.archiveRoom} /
-                  ${this.info.archiveMaterialStock.cabinet} /
-                  ${this.info.archiveMaterialStock.columnNo} /
-                  ${this.info.archiveMaterialStock.rowNo} /
-                  ${this.info.archiveMaterialStock.piece}
-          `;
+          return '';
         }
 
       }

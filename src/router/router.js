@@ -8,7 +8,6 @@ export const loginRouter = {
         title: 'Login - 登录'
     },
     component: () => import('@/views/login.vue')
-    // component: () => import('@/views/admin/admin.vue')
 };
 
 export const page404 = {
@@ -121,6 +120,7 @@ export const otherRouter = {
     children: [
         // { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/home.vue') },
         //{ path: 'admin', title: {i18n: 'home'}, name: 'admin', component: () => import('@/views/home/home.vue') },
+        // { path: '/home', title: '首页', name: 'home_index', component: () => import('@/views/admin/admin.vue') },
         { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/own-space.vue') },
         { path: 'order/:order_id', title: '订单详情', name: 'order-info', component: () => import('@/views/advanced-router/component/order-info.vue') }, // 用于展示动态路由
         { path: 'shopping', title: '购物详情', name: 'shopping', component: () => import('@/views/advanced-router/component/shopping-info.vue') }, // 用于展示带参路由
@@ -297,9 +297,9 @@ export const appRouter = [
 
 // 所有上面定义的路由都要写在下面的routers里
 export const routers = [
-    loginRouter,
     otherRouter,
     home,
+    loginRouter,
     preview,
     locking,
     groupFile,

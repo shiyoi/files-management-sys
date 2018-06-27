@@ -44,22 +44,22 @@
         <div class="text">柜号</div>
         <div>
           <div style="width:40%;float:left;">
-            <InputNumber :disabled="isDisabled" :min="min" v-model="storageInfo.cabinet" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
+            <InputNumber ref="cabinet" :disabled="isDisabled" :min="min" v-model="storageInfo.cabinet" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
           </div>
           <div style="width:20%;float:left;text-align:right;padding-right:8px;">列号</div>
           <div style="width:40%;float:left;">
-            <InputNumber :disabled="isDisabled || cabinet === min" :min="min" v-model="storageInfo.columnNo" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
+            <InputNumber ref="columnNo" :disabled="isDisabled || cabinet === min" :min="min" v-model="storageInfo.columnNo" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
           </div>
         </div>
       </div>
       <div class="basics-rows-r">
         <div class="r-f">
           <div style="width:40%;float:left;">
-            <InputNumber :min="min" :disabled="isDisabled || cabinet === min || columnNo === min" v-model="storageInfo.rowNo" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
+            <InputNumber ref="rowNo" :min="min" :disabled="isDisabled || cabinet === min || columnNo === min" v-model="storageInfo.rowNo" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
           </div>
           <div style="width:20%;float:left;text-align:right;padding-right:8px;">件号</div>
           <div style="width:40%;float:left;">
-            <InputNumber :min="min" :disabled="isDisabled || cabinet === min || columnNo === min || rowNo === min" v-model="storageInfo.piece" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
+            <InputNumber ref="piece" :min="min" :disabled="isDisabled || cabinet === min || columnNo === min || rowNo === min" v-model="storageInfo.piece" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
           </div>      
         </div>        
         <div class="text">行号</div>
@@ -87,19 +87,18 @@ export default {
       ],    
       //档案位置 数据
       archiveRoomShow: [
-        {value: "10",label: "腾邦总部/腾邦大厦/5楼档案室"},
-        {value: "20",label: "腾邦总部/腾邦大厦/4楼档案室"},
-        {value: "30",label: "腾邦总部/腾邦大厦/3楼档案室"}          
+        {value: "4楼档案室",label: "腾邦总部/腾邦大厦/4楼档案室"},
+        {value: "5楼档案室",label: "腾邦总部/腾邦大厦/5楼档案室"}          
       ],        
       storageInfo: {
-        stockStatus: "10",//入库状态
-        stockType: "30",//入库类型
-        archiveRoom: "10",//档案位置
-        cabinet: -1,//     柜号         
-        columnNo: -1,//    列号          
-        rowNo: -1,//       行号       
-        piece: -1//        件号 
-      }
+        stockStatus: "10",        // 入库状态
+        stockType: "30",          // 入库类型
+        archiveRoom: "5楼档案室",         // 档案位置
+        cabinet: -1,              // 柜号         
+        columnNo: -1,             // 列号          
+        rowNo: -1,                // 行号       
+        piece: -1                 // 件号 
+      } 
     };
   },
   computed: {
@@ -202,6 +201,7 @@ export default {
     this.$axios.post('/common/init-stock-statu').then( res => {
         this.initOptions(res.data.data.stockStatus,this.storageStatusShow);//入库状态
         this.initOptions(res.data.data.stockType,this.storageTypeShow);//入库类型
+        this.initOptions(res.data.data.archiveRoom,this.archiveRoomShow);//档案位置
       }
     ).catch( err => {"init-stock-statu接口调用失败" + console.log(err)});
   }    
