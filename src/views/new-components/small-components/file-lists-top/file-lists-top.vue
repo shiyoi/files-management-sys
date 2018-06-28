@@ -104,7 +104,7 @@
       </div>
 
       <div slot="footer">
-        <Button @click="exportsExcel.exportExcel = false;exportsExcel.exportExcelSuccess = true" type="primary">确定</Button>
+        <Button @click="exportExcelData" type="primary">确定</Button>
         <Button @click="exportsExcel.exportExcel = false">取消</Button>
       </div>
     </Modal>   
@@ -308,6 +308,13 @@ export default {
        console.log(file);
        this.batchFiles.push(file);
        return false;
+    },
+    //批量导出
+    exportExcelData () {
+      this.exportsExcel.exportExcel = false;
+      this.exportsExcel.exportExcelSuccess = true;
+      
+      common.bus.$emit('exportExcelData','1234567890');
     }
   }
 }

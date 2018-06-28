@@ -7,7 +7,7 @@
     <!-- 头部操作和表格部分 -->
     <div class="right-main-page">
       <fileListsTop></fileListsTop>
-      <Table highlight-row @on-current-change="handleRowChange" border ref="selection" :columns="columns4" :data="fileListData"></Table>
+      <Table highlight-row @on-current-change="handleRowChange" @on-select="selectOneRow" border ref="selection" :columns="columns4" :data="fileListData"></Table>
       <div class="page-container-div">
         <Page :total="totalCount" size="small" :page-size="currentPageSize" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
       </div>
@@ -40,6 +40,7 @@
 <script>
     import fileListsTop from '../small-components/file-lists-top/file-lists-top.vue';
     import briefInformation from './brief-information/brief-information.vue';
+    import common from '@/libs/common.js';//bus 总线
     export default {
         name: 'contract-file',
         props: ['path'],
@@ -104,48 +105,66 @@
                     },
                     {
                         title: '操作人',
-                        key: 'operating_people'
+                        key: 'operattionUser'
                     },
                     {
                         title: '类型',
-                        key: 'type'
+                        key: 'operationType'
                     },
                     {
                         title: '时间',
-                        key: 'time'
+                        key: 'operattionDate'
                     },
                     {
                         title: '操作',
-                        key: 'operating'
+                        key: 'operating',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'primary',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        marginRight: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            alert('df');
+                                        }
+                                    }
+                                }, '查看操作日志')
+                            ]);
+                        }                        
                     }                        
                 ],
                 data2: [
                     {
                         operating_frequency: '5',
-                        operating_people: '张三',
-                        type: '修改',
-                        time: '2018-05-06',
+                        operattionUser: '张三',
+                        operationType: '修改',
+                        operattionDate: '2018-05-06',
                         operating: ''
                     },
                     {
                         operating_frequency: '5',
-                        operating_people: '张三',
-                        type: '修改',
-                        time: '2018-05-06',
+                        operattionUser: '张三',
+                        operationType: '修改',
+                        operattionDate: '2018-05-06',
                         operating: '查看操作日志'
                     },
                     {
                         operating_frequency: '5',
-                        operating_people: '张三',
-                        type: '修改',
-                        time: '2018-05-06',
+                        operattionUser: '张三',
+                        operationType: '修改',
+                        operattionDate: '2018-05-06',
                         operating: '查看操作日志'
                     },
                     {
                         operating_frequency: '5',
-                        operating_people: '张三',
-                        type: '修改',
-                        time: '2018-05-06',
+                        operattionUser: '张三',
+                        operationType: '修改',
+                        operattionDate: '2018-05-06',
                         operating: '查看操作日志'
                     }
                 ],
@@ -241,7 +260,8 @@
                 shrink: false,
                 totalCount: 0,
                 currentPage: 1,
-                currentPageSize: 30
+                currentPageSize: 30,
+                checkBoxSelectedData: []//已选  复选框 的合同数组
             };
         },
         components: {
@@ -252,13 +272,16 @@
             handleSelectAll (statusDesc) {
             this.$refs.selection.selectAll(statusDesc);
             },
-            //my methods
+            //my methods  单击一行
             handleRowChange (currentRow, oldCurrentRow) {
                 this.toBriefInfo = currentRow;//更新简要信息
                 
                 //调操作日志接口
                 let formData = new FormData();
                 formData.append('archiveNo',this.toBriefInfo.archiveNo);
+                formData.append('page','0');
+                formData.append('pageSize','5');
+
                 this.$axios.post('/common/log/find',formData).then( res => {
                     console.log(res);
                 }).catch( err => {
@@ -335,7 +358,16 @@
                 if (this.fileListData[0] != undefined && this.fileListData[0].hasOwnProperty('archiveMaterialStock')) {
                     this.toBriefInfo.archiveMaterialStock = this.fileListData[0].archiveMaterialStock;//储存位置
                 }
-            } 
+            },
+            //复选框选中任意一行时触发，参数一表示：所有选中的行数据，参数二表示：当前选中行的数据
+            selectOneRow (selection,row) {
+                console.log(selection);
+                console.log('---------------------------');
+                console.log(row);
+                this.checkBoxSelectedData = selection;
+
+            }
+
         },
 
         //生命周期钩子函数
@@ -359,6 +391,21 @@
             .catch(err => {
                 console.log('异步请求合同档案/档案列表失败',err);  
                 setTimeout(msg, 0);//取消loading           
+            });
+        },
+        mounted () {
+            //接收导出弹窗的确定事件
+            common.bus.$on('exportExcelData', (msg) => {
+                // let formdata = new FormData();
+                // console.log(this.checkBoxSelectedData[0].archiveBarcode.archiveType);//取第一个的档案类型
+                // formdata.append();
+                // for (let v of this.checkBoxSelectedData) {
+                //     console.log(v.archiveNo);
+                // }
+                
+                //archiveType   string
+                //archiveNos
+
             });
         },
         beforeCreate: function () {
