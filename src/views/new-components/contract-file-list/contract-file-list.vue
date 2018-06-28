@@ -9,7 +9,7 @@
       <fileListsTop></fileListsTop>
       <Table highlight-row @on-current-change="handleRowChange" border ref="selection" :columns="columns4" :data="fileListData"></Table>
       <div class="page-container-div">
-        <Page :total="totalCount" size="small" :page-size="page_size" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
+        <Page :total="totalCount" size="small" :page-size="currentPageSize" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
       </div>
     </div>
     <!-- 下面tab部门 -->
@@ -96,35 +96,7 @@
                         key: 'borrowingSituation'
                     }              
                 ],
-                fileListData: [
-                    {
-                        contractNo: 'AHU889001231',
-                        contractName: 'xxxxx公司xxxx业务合同',
-                        signedSubject: 'xxxxx单位名称',
-                        groupCompany: '腾邦国际',
-                        oppositeCompany: 'xxxxxx公司',
-                        businessBrief:'这是内容摘要这是内...',
-                        validityPeriod:'20180401-20190401',
-                        enteringType:'电子扫描件',
-                        statusDesc:'已收文',
-                        enteringDate:'20180401',
-                        borrowingSituation:'超时未还'
-                    },
-                                {
-                        contractNo: 'AHU889001231',
-                        contractName: 'xxxxx公司xxxx业务合同',
-                        signedSubject: 'xxxxx单位名称',
-                        groupCompany: '腾邦国际',
-                        oppositeCompany: 'xxxxxx公司',
-                        businessBrief:'这是内容摘要这是内...',
-                        validityPeriod:'20180401-20190401',
-                        enteringType:'电子扫描件',
-                        statusDesc:'已收文',
-                        enteringDate:'20180401',
-                        borrowingSituation:'超时未还'
-                    }                           
-                
-                ],
+                fileListData: [],
                 columns2: [
                     {
                         title: '操作次数',
@@ -268,7 +240,8 @@
                 },
                 shrink: false,
                 totalCount: 0,
-                page_size: 30
+                currentPage: 1,
+                currentPageSize: 30
             };
         },
         components: {
@@ -281,22 +254,69 @@
             },
             //my methods
             handleRowChange (currentRow, oldCurrentRow) {
-                this.toBriefInfo = currentRow;
+                this.toBriefInfo = currentRow;//更新简要信息
+                
+                //调操作日志接口
+                let formData = new FormData();
+                formData.append('archiveNo',this.toBriefInfo.archiveNo);
+                this.$axios.post('/common/log/find',formData).then( res => {
+                    console.log(res);
+                }).catch( err => {
+                    console.log('获取操作日志失败' + err);
+                });
                 console.log('当前选中行的数据：',this.toBriefInfo);
+                console.log(this.toBriefInfo.archiveNo,typeof this.toBriefInfo.archiveNo);
             },
-            handlePage (a) {
-                console.log(a);
-            },
-            handlePageSize (a) {
-                console.log(a);
-            }
-        },
+            //改变页码
+            handlePage (newPage) {
+                //loading 中
+                let msg = this.$Message.loading({
+                    content: 'Loading...',
+                    duration: 0
+                });     
+                // console.log('变化至页码：'+a,typeof a,'每页条数'+this.currentPageSize,typeof this.currentPageSize);    //page
+                let formdate = new FormData();
+                //构建查询字段
+                this.currentPage = newPage;//当前页码
+                formdate.append('page',this.currentPage.toString());
+                formdate.append('pageSize',this.currentPageSize.toString());
 
-        //生命周期钩子函数
-        created: function () {          
-            // 异步请求  合同档案-档案列表接口
-            this.$axios.post('company/contract/find', {})
-            .then( res => {
+                this.$axios.post('company/contract/find',formdate).then( res => {
+                    // console.log('总条数：',res.data.count,'d当前查询条数'+res.data.data.length);
+                    this.preProcessingData(res);//数据预处理
+                    setTimeout(msg, 0);//取消loading
+                }).catch( err => {
+                    console.log('异步请求合同档案/档案列表失败',err);  
+                    setTimeout(msg, 0);//取消loading   
+                });
+            },
+            //改变每页条数
+            handlePageSize (newPageSize) {
+                //loading 中
+                let msg = this.$Message.loading({
+                    content: 'Loading...',
+                    duration: 0
+                });                
+                this.currentPage = 1;//改变每页条数时默认去第一页
+                // console.log('页码：' + this.currentPage, typeof this.currentPage,'每页条数变化至'+a,typeof a);    //page
+                let formdate = new FormData();
+                {
+                    //构建查询字段
+                    this.currentPageSize = newPageSize;
+                    formdate.append('page',this.currentPage.toString());
+                    formdate.append('pageSize',this.currentPageSize.toString());
+                }
+                this.$axios.post('company/contract/find',formdate).then( res => {
+                    // console.log('总条数：',res.data.count,'d当前查询条数'+res.data.data.length);
+                    this.preProcessingData(res);//数据预处理
+                    setTimeout(msg, 0);//取消loading
+                }).catch( err => {
+                    console.log('异步请求合同档案/档案列表失败',err);  
+                    setTimeout(msg, 0);//取消loading   
+                });
+            },
+            //显示列表数据前的预处理 传入一个 服务器响应数据 res
+            preProcessingData (res) {
                 if(0 != res.data.data.length) {
                     //显示前，处理数据（有效期时间的拼接）
                     res.data.data.forEach((item,index,arr)=>{
@@ -304,8 +324,8 @@
                     });
                 }
                 this.fileListData = res.data.data;
-                console.log('从服务器接收的数据：',this.fileListData);
-                console.log('总条数：',typeof res.data.count);
+                console.log('本次从服务器接收的数据：',this.fileListData);
+                // console.log('总条数：',res.data.count);
                 this.totalCount = res.data.count;
 
                 //赋初始值   (考虑到后台不一定可靠，拿不到数据时 this.fileListData 为空数组时------显示暂无数据)
@@ -315,9 +335,30 @@
                 if (this.fileListData[0] != undefined && this.fileListData[0].hasOwnProperty('archiveMaterialStock')) {
                     this.toBriefInfo.archiveMaterialStock = this.fileListData[0].archiveMaterialStock;//储存位置
                 }
+            } 
+        },
+
+        //生命周期钩子函数
+        created: function () {   
+            //loading 中
+            let msg = this.$Message.loading({
+                content: 'Loading...',
+                duration: 0
+            });     
+            let formdate = new FormData();
+            //构建查询字段
+            formdate.append('page',this.currentPage.toString());
+            formdate.append('pageSize',this.currentPageSize.toString());
+                             
+            // 异步请求  合同档案-档案列表接口
+            this.$axios.post('company/contract/find', formdate)
+            .then( res => {
+                this.preProcessingData(res);
+                setTimeout(msg, 0);//取消loading
             })
             .catch(err => {
-                console.log('异步请求合同档案/档案列表失败',err);             
+                console.log('异步请求合同档案/档案列表失败',err);  
+                setTimeout(msg, 0);//取消loading           
             });
         },
         beforeCreate: function () {

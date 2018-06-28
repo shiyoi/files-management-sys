@@ -133,8 +133,6 @@
           formData.append('uploadFile',files[i]);
         }
 
-        
-
         this.$axios.post('/company/contract/submit',formData).then( res => {
           console.log("新增档案提交表单成功：",res.data);
           JsBarcode("#barcode", res.data.data.barcodeNo);
