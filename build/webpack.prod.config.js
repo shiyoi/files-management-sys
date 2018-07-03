@@ -26,6 +26,7 @@ module.exports = merge(webpackBaseConfig, {
 
 
         publicPath: 'http://10.2.104.201:8989/dist/',  // 测试环境 ip
+        // publicPath: 'http://10.2.104.179:8080/archive-systems/dist/',  // 网关 ip
         // publicPath: 'http://127.0.0.1:8989/dist/',  //  本地 127.0.0.1
         filename: '[name].[hash].js',
         chunkFilename: '[name].[hash].chunk.js'

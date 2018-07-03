@@ -6,8 +6,8 @@
   <div>
     <!-- 头部操作和表格部分 -->
     <div class="right-main-page">
-      <fileListsTop></fileListsTop>
-      <Table highlight-row @on-current-change="handleRowChange" @on-select="selectOneRow" border ref="selection" :columns="columns4" :data="fileListData"></Table>
+      <fileListsTop ref="fileListTop" :checkedNum="checkedNum"></fileListsTop>
+      <Table highlight-row @on-current-change="handleRowChange" @on-select="selectOneRow" @on-select-all="selectAllRow" @on-selection-change="selectionChange" border ref="selection" :columns="columns4" :data="fileListData"></Table>
       <div class="page-container-div">
         <Page :total="totalCount" size="small" :page-size="currentPageSize" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
       </div>
@@ -264,6 +264,11 @@
                 checkBoxSelectedData: []//已选  复选框 的合同数组
             };
         },
+        computed: {
+            checkedNum () {
+                return this.checkBoxSelectedData.length;
+            }
+        },
         components: {
             fileListsTop,
             briefInformation
@@ -352,22 +357,29 @@
                 this.totalCount = res.data.count;
 
                 //赋初始值   (考虑到后台不一定可靠，拿不到数据时 this.fileListData 为空数组时------显示暂无数据)
-                this.toBriefInfo.contractName = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].contractName;//档案名称
-                this.toBriefInfo.creatorId = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].creatorId;//创建者
-                this.toBriefInfo.createTm = this.fileListData[0] === undefined ? "暂无数据" : this.fileListData[0].createTm;//创建时间
+                this.toBriefInfo.contractName = this.fileListData[0] === undefined ? "" : this.fileListData[0].contractName;//档案名称
+                this.toBriefInfo.creatorId = this.fileListData[0] === undefined ? "" : this.fileListData[0].creatorId;//创建者
+                this.toBriefInfo.createTm = this.fileListData[0] === undefined ? "" : this.fileListData[0].createTm;//创建时间
                 if (this.fileListData[0] != undefined && this.fileListData[0].hasOwnProperty('archiveMaterialStock')) {
                     this.toBriefInfo.archiveMaterialStock = this.fileListData[0].archiveMaterialStock;//储存位置
+                } else {
+                    for (let i of Object.keys(this.toBriefInfo.archiveMaterialStock)) {
+                        this.toBriefInfo.archiveMaterialStock[i] = '';
+                    }
                 }
             },
             //复选框选中任意一行时触发，参数一表示：所有选中的行数据，参数二表示：当前选中行的数据
             selectOneRow (selection,row) {
-                console.log(selection);
-                console.log('---------------------------');
-                console.log(row);
                 this.checkBoxSelectedData = selection;
-
-            }
-
+            },
+            //全选
+            selectAllRow (selection) {
+                this.checkBoxSelectedData = selection;
+            },
+            //选中项发生变化
+            selectionChange (selection) {
+                this.checkBoxSelectedData = selection;
+            }          
         },
 
         //生命周期钩子函数
@@ -396,16 +408,83 @@
         mounted () {
             //接收导出弹窗的确定事件
             common.bus.$on('exportExcelData', (msg) => {
-                // let formdata = new FormData();
-                // console.log(this.checkBoxSelectedData[0].archiveBarcode.archiveType);//取第一个的档案类型
-                // formdata.append();
-                // for (let v of this.checkBoxSelectedData) {
-                //     console.log(v.archiveNo);
-                // }
+                    let formdata = new FormData();
+                    // formdata.append('archiveType',(this.checkBoxSelectedData[0].hasOwnProperty('archiveBarcode') && this.checkBoxSelectedData[0].archiveBarcode.hasOwnProperty('archiveType')) ? this.checkBoxSelectedData[0].archiveBarcode.archiveType : 'Y');
+                    formdata.append('archiveType','Y');
+                    let arr = [];
+                    for (let v of this.checkBoxSelectedData) {
+                        arr.push(v.archiveNo);
+                    }
+                    formdata.append('archiveNos',arr);
+                    formdata.append('operateDesc','LIST');
+                    this.$axios({
+                        method: 'post',
+                        url: '/common/export',
+                        data: formdata,
+                        responseType: 'blob'
+                    }).then( res => {
+                        console.log(res);
+                        let blob = res.data
+                        let reader = new FileReader()
+                        reader.readAsDataURL(blob)
+                        reader.onload = (e) => {
+                            let a = document.createElement('a')
+                            a.download = 'excel.xlsx';//fileName
+                            a.href = e.target.result
+                            document.body.appendChild(a)
+                            a.click()
+                            document.body.removeChild(a)
+                        }
+                                        
+                    }).catch( err => {
+                        console.log('下载文件失败'+err);
+                    });
+        
+            });
+            //接收搜索的事件
+            common.bus.$on('searchFile', (msg) => {
+                let obj = Object.assign({},msg);
                 
-                //archiveType   string
-                //archiveNos
-
+                delete(obj['searchBoxTitle']);
+                delete(obj['search']);
+                console.log(obj);
+                //loading 中
+                let msgTxt = this.$Message.loading({
+                    content: 'Loading...',
+                    duration: 0
+                }); 
+                let formdate = new FormData();
+                for (let index of Object.keys(obj)) {
+                    formdate.append(index,obj[index]);
+                }
+                formdate.append('page',this.currentPage.toString());
+                formdate.append('pageSize',this.currentPageSize.toString());                
+                this.$axios.post('company/contract/find',formdate).then( res => {
+                    // console.log('总条数：',res.data.count,'d当前查询条数'+res.data.data.length);
+                    this.preProcessingData(res);//数据预处理
+                    setTimeout(msgTxt, 0);//取消loading
+                }).catch( err => {
+                    console.log('异步请求合同档案/档案列表失败',err);  
+                    setTimeout(msgTxt, 0);//取消loading   
+                });          
+            });
+            //接收批量导入的事件
+            common.bus.$on('handleBatchImport',(file) => {
+                //loading 中
+                let msgTxt = this.$Message.loading({
+                    content: 'Loading...',
+                    duration: 0
+                });   
+                let formdate = new FormData();                             
+                formdate.append('importFile',file[0]);
+                this.$axios.post('/company/contract/import',formdate).then( res => {
+                    this.$refs.fileListTop.batchImportFields.batchFiles.pop();//导入成功后清空已选文件
+                    this.$refs.fileListTop.batchImportFields.importBatchSuccess = true;//打开导出成功弹窗
+                    setTimeout(msgTxt, 0);//取消loading
+                }).catch( err => {
+                    console.log('批量导入失败' , err);  
+                    setTimeout(msgTxt, 0);//取消loading   
+                });                   
             });
         },
         beforeCreate: function () {

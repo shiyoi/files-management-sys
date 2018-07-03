@@ -17,9 +17,10 @@ Vue.use(iView);
 Vue.use(VeeValidate);
 
 Vue.prototype.$axios = axios;
-Vue.prototype.$axios.defaults.baseURL = "http://10.2.104.201:8989/";//测试环境
-// Vue.prototype.$axios.defaults.baseURL = "http://10.200.66.113:8989/";//蒋欣
+// Vue.prototype.$axios.defaults.baseURL = "http://10.2.104.201:8989/";//测试环境
+Vue.prototype.$axios.defaults.baseURL = "http://10.200.66.113:8989/";//蒋欣 
 // Vue.prototype.$axios.defaults.baseURL = "http://172.16.7.125:8989/";//开哥
+// Vue.prototype.$axios.defaults.baseURL = "http://10.2.104.179:8080/archive-systems/";//网关
 // Vue.prototype.$axios.defaults.baseURL = "http://localhost:3000/";
 // Vue.prototype.$axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded";
 // Vue.prototype.$axios.defaults.headers.post['Content-Type'] = "application/json";
