@@ -69,10 +69,11 @@ export default {
                         Cookies.set('access', 1);
                     }
                     this.$router.push({
-                        name: 'home_index'
+                        name: 'home'
                     });
                 }
             });
+            //this.$router.push('/home');
         }
     }
 };

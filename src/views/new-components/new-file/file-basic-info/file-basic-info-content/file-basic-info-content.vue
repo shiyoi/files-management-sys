@@ -6,27 +6,27 @@
   <div class="basic-info-con">
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text"><span class="color-red">* </span>合同名称</div>
+        <div class="text"><span class="color-red">* </span>合同名称：</div>
         <div><Input ref="contractName" v-model="basicInfo.contractName" placeholder="请输入合同名称" name="email" style="width:100%;" :maxlength="30"></Input></div>
         <span>{{ errors.first('email') }}</span>
       </div>
       <div class="basics-rows-r">
         <div class="r-f"><Input ref="signedSubject" v-model="basicInfo.signedSubject" placeholder="请输入腾邦签署主体" style="width:100%;" :maxlength="30"></Input></div>        
-        <div class="text"><span class="color-red">* </span>腾邦签署主体</div>
+        <div class="text"><span class="color-red">* </span>腾邦签署主体：</div>
       </div>
     </div>
     <div class="basics-rows" style="height:90px;">
-        <div style="width:11%;float:left;text-align:right;padding-right:8px;"><span class="color-red">* </span>业务内容摘要</div>
-        <div style="width:89%;float:left;">
-          <Input ref="businessBrief" v-model="basicInfo.businessBrief" type="textarea" :rows="4" placeholder="请输入业务内容摘要，限制200字符" :maxlength="200"></Input>                      
+        <div style="width:12.5%;float:left;text-align:right;padding-right:8px;">业务内容摘要：</div>
+        <div style="width:87.5%;float:left;">
+          <Input ref="businessBrief" v-model="basicInfo.businessBrief" type="textarea" :rows="4" placeholder="请输入业务内容摘要，限制200字符。（非必填）" :maxlength="200"></Input>                      
         </div>  
     </div>
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text"><span class="color-red">* </span>档案归属</div>
+        <div class="text"><span class="color-red">* </span>档案归属：</div>
         <div>
           <Select v-model="basicInfo.groupCompany" style="width:100%">
-            <Option v-for="item in fileAttribution" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="(item,index) in fileAttribution" :value="item.value" :key="index">{{ item.label }}</Option>
           </Select>          
         </div>
       </div>
@@ -36,31 +36,31 @@
     </div>
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text"><span class="color-red">* </span>对方公司名称</div>
+        <div class="text"><span class="color-red">* </span>对方公司名称：</div>
         <div><Input ref="oppositeCompany" v-model="basicInfo.oppositeCompany" placeholder="请输入对方公司名称" style="width:100%;" :maxlength="30"></Input></div>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><DatePicker ref="effectiveDate" v-model="effectiveDate" type="daterange" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
-        <div class="text"><span class="color-red">* </span>有效期</div>
+        <div class="r-f"><DatePicker ref="effectiveDate" v-model="effectiveDate" type="daterange" :editable="constFalse" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
+        <div class="text"><span class="color-red">* </span>有效期：</div>
       </div>
     </div>
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text">合同类型</div>
+        <div class="text">合同类型：</div>
         <div>
           <Select v-model="basicInfo.contractType" style="width:100%">
-            <Option v-for="item in fileTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="(item,index) in fileTypeShow" :value="item.value" :key="index">{{ item.label }}</Option>
           </Select>           
         </div>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><Input v-model="basicInfo.contractNo" placeholder="请输入合同编号" style="width:100%;" :maxlength="30"></Input></div>        
-        <div class="text">合同编号</div>
+        <div class="r-f"><Input v-model="basicInfo.contractNo" placeholder="请输入合同编号" style="width:100%;"></Input></div>        
+        <div class="text">合同编号：</div>
       </div>
     </div>
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text">签署人</div>
+        <div class="text">签署人：</div>
         <div>
           <Input v-model="basicInfo.signedUser" placeholder="请输入签署人" style="width:100%;" :maxlength="30"></Input>
           <!-- <Select v-model="basicInfo.signedUser" style="width:100%">
@@ -71,31 +71,31 @@
       <div class="basics-rows-r">
         <div class="r-f">
           <CheckboxGroup v-model="basicInfo.enteringType">
-            <Checkbox v-for="item in enteringTypeShow" :label="item.value">
+            <Checkbox v-for="(item,index) in enteringTypeShow" :key="index" :label="item.value">
                 <span>{{ item.label }}</span>
             </Checkbox>
           </CheckboxGroup>        
         </div>        
-        <div class="text">类别</div>
+        <div class="text">类别：</div>
       </div>
     </div>
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text">状态</div>
+        <div class="text">状态：</div>
         <div>
           <Select v-model="basicInfo.status" style="width:100%">
-            <Option v-for="item in statusShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="(item,index) in statusShow" :value="item.value" :key="index">{{ item.label }}</Option>
           </Select>           
         </div>
       </div>
       <div class="basics-rows-r">
-        <div class="r-f"><DatePicker v-model="enteringDate" type="date" placeholder="Select date" style="width: 100%"></DatePicker></div>        
-        <div class="text">收文时间</div>
+        <div class="r-f"><DatePicker v-model="enteringDate" type="date" :disabled="basicInfo.status === '20' ? false : true" :editable="constFalse" placement="bottom-end" placeholder="Select date" style="width: 100%"></DatePicker></div>        
+        <div class="text">收文时间：</div>
       </div>
     </div>
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text">收文人</div>
+        <div class="text">收文人：</div>
         <div style="text-indent:8px;">
           {{ basicInfo.enteringUser }}
         </div>
@@ -110,6 +110,7 @@
 export default {
   data: function () {
     return {
+      constFalse: false,
       //档案归属数据
       fileAttribution: [
         {value: "TG",label: "腾邦集团"},

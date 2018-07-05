@@ -6,10 +6,10 @@
   <div>
     <!-- 头部操作和表格部分 -->
     <div class="right-main-page">
-      <fileListsTop ref="fileListTop" :checkedNum="checkedNum"></fileListsTop>
-      <Table highlight-row @on-current-change="handleRowChange" @on-select="selectOneRow" @on-select-all="selectAllRow" @on-selection-change="selectionChange" border ref="selection" :columns="columns4" :data="fileListData"></Table>
+      <fileListsTop ref="fileListTop" :checkedNum="checkedNum" @refreshList="refreshList" @handleBatchImport="handleBatchImport" @exportExcelData="exportExcelData" @searchFile="searchFile" @printPage="printPage" @migrate="migrate" @migrateSubmit="migrateSubmit" @moveInBatchOperating="moveInBatchOperating"></fileListsTop>
+      <Table class="aaa" highlight-row @on-current-change="handleRowChange" @on-row-dblclick="showFileDetails" @on-select="selectOneRow" @on-select-all="selectAllRow" @on-selection-change="selectionChange" border ref="selection" :columns="columns4" :data="fileListData" :size="tableSize"></Table>
       <div class="page-container-div">
-        <Page :total="totalCount" size="small" :page-size="currentPageSize" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize'></Page>
+        <Page :total="totalCount" size="small" :page-size="currentPageSize" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize' :page-size-opts="pageSizeOpts"></Page>
       </div>
     </div>
     <!-- 下面tab部门 -->
@@ -22,12 +22,12 @@
                       </TabPane>
                       <TabPane label="操作日志">
                           <div class="tab-info-con">
-                            <Table height="200" border :columns="columns2" :data="data2"></Table>
+                            <Table height="200" border :columns="columns2" :data="data2" :size="tableSize"></Table>
                           </div>
                       </TabPane>
                       <TabPane label="借阅信息">
                           <div class="tab-info-con">
-                            <Table height="200" border :columns="columns3" :data="data3"></Table>
+                            <Table height="200" border :columns="columns3" :data="data3" :size="tableSize"></Table>
                           </div>                          
                       </TabPane>
                   </Tabs>
@@ -40,12 +40,15 @@
 <script>
     import fileListsTop from '../small-components/file-lists-top/file-lists-top.vue';
     import briefInformation from './brief-information/brief-information.vue';
-    import common from '@/libs/common.js';//bus 总线
+    import common from '@/libs/common';//bus 总线
+    import {groupCompany,enteringType,status,borrowFlag} from '@/libs/select_config';//配置信息
     export default {
         name: 'contract-file',
         props: ['path'],
         data: function () {
             return {
+                tableSize: 'small',//表格size
+                pageSizeOpts: [30],//每页条数
                 columns4: [
                     {
                         type: 'selection',
@@ -74,7 +77,14 @@
                     },
                     {
                         title: '业务内容摘要',
-                        key: 'businessBrief'
+                        key: 'businessBrief',
+                        render: (h,params) => {
+                            return h(
+                                'Poptip',
+                                {props:{trigger: 'hover'}},
+                                'ddd');
+                       
+                        }
                     },
                     {
                         title: '有效期',
@@ -94,14 +104,14 @@
                     },
                     {
                         title: '借阅情况',
-                        key: 'borrowingSituation'
+                        key: 'borrowFlag'
                     }              
                 ],
                 fileListData: [],
                 columns2: [
                     {
                         title: '操作次数',
-                        key: 'operating_frequency'
+                        key: 'operatingFrequency'
                     },
                     {
                         title: '操作人',
@@ -138,36 +148,7 @@
                         }                        
                     }                        
                 ],
-                data2: [
-                    {
-                        operating_frequency: '5',
-                        operattionUser: '张三',
-                        operationType: '修改',
-                        operattionDate: '2018-05-06',
-                        operating: ''
-                    },
-                    {
-                        operating_frequency: '5',
-                        operattionUser: '张三',
-                        operationType: '修改',
-                        operattionDate: '2018-05-06',
-                        operating: '查看操作日志'
-                    },
-                    {
-                        operating_frequency: '5',
-                        operattionUser: '张三',
-                        operationType: '修改',
-                        operattionDate: '2018-05-06',
-                        operating: '查看操作日志'
-                    },
-                    {
-                        operating_frequency: '5',
-                        operattionUser: '张三',
-                        operationType: '修改',
-                        operattionDate: '2018-05-06',
-                        operating: '查看操作日志'
-                    }
-                ],
+                data2: [],
                 columns3: [
                     {
                         title: '借出人',
@@ -198,53 +179,7 @@
                         key: 'operating'
                     }                                 
                 ],
-                data3: [
-                    {
-                        lend_people: '王子扬',
-                        borrowed_people: '张三',
-                        lend_time: '2018-05-06',
-                        expected_return_time: '2018-05-06',
-                        actual_return_time: '2018-05-06',
-                        renew:'2018-05-06',
-                        operating: ''
-                    },
-                    {
-                        lend_people: '王子扬',
-                        borrowed_people: '张三',
-                        lend_time: '2018-05-06',
-                        expected_return_time: '2018-05-06',
-                        actual_return_time: '2018-05-06',
-                        renew:'2018-05-06',
-                        operating: ''
-                    },
-                    {
-                        lend_people: '王子扬',
-                        borrowed_people: '张三',
-                        lend_time: '2018-05-06',
-                        expected_return_time: '2018-05-06',
-                        actual_return_time: '2018-05-06',
-                        renew:'2018-05-06',
-                        operating: ''
-                    },
-                    {
-                        lend_people: '王子扬',
-                        borrowed_people: '张三',
-                        lend_time: '2018-05-06',
-                        expected_return_time: '2018-05-06',
-                        actual_return_time: '2018-05-06',
-                        renew:'2018-05-06',
-                        operating: ''
-                    },
-                    {
-                        lend_people: '王子扬',
-                        borrowed_people: '张三',
-                        lend_time: '2018-05-06',
-                        expected_return_time: '2018-05-06',
-                        actual_return_time: '2018-05-06',
-                        renew:'2018-05-06',
-                        operating: ''
-                    }                        
-                ],
+                data3: [],
                 toBriefInfo:{
                     contractName: '',//档案名称
                     creatorId: '',//创建者工号
@@ -261,7 +196,8 @@
                 totalCount: 0,
                 currentPage: 1,
                 currentPageSize: 30,
-                checkBoxSelectedData: []//已选  复选框 的合同数组
+                checkBoxSelectedData: [],//已选  复选框 的合同数组
+                // batchOperatingArr: []//批量操作的数组
             };
         },
         computed: {
@@ -275,25 +211,37 @@
         },
         methods: {
             handleSelectAll (statusDesc) {
-            this.$refs.selection.selectAll(statusDesc);
+                this.$refs.selection.selectAll(statusDesc);
             },
             //my methods  单击一行
             handleRowChange (currentRow, oldCurrentRow) {
                 this.toBriefInfo = currentRow;//更新简要信息
-                
                 //调操作日志接口
                 let formData = new FormData();
                 formData.append('archiveNo',this.toBriefInfo.archiveNo);
-                formData.append('page','0');
+                formData.append('page','1');
                 formData.append('pageSize','5');
 
-                this.$axios.post('/common/log/find',formData).then( res => {
-                    console.log(res);
-                }).catch( err => {
-                    console.log('获取操作日志失败' + err);
+                this.$axios.all([
+                    this.$axios.post('/common/log/find',formData),
+                    this.$axios.post('/common/borrow/find',formData),
+                    ]).then(this.$axios.spread( (log,borrowInfo) => {
+                    console.log('日志信息',log.data.data);
+                    console.log('借阅信息',borrowInfo.data.data);
+                    this.data2 = log.data.data;
+                    this.data3 = borrowInfo.data.data;
+                })).catch( (err) => {
+                    console.log('读取日志或借阅信息出错'+err);
                 });
-                console.log('当前选中行的数据：',this.toBriefInfo);
-                console.log(this.toBriefInfo.archiveNo,typeof this.toBriefInfo.archiveNo);
+              
+
+
+
+                //console.log('当前选中行的数据：',this.toBriefInfo);
+            },
+            //双击一行，显示详情页面
+            showFileDetails () {
+                this.$router.push({name:'contractFileDetails'});
             },
             //改变页码
             handlePage (newPage) {
@@ -346,9 +294,28 @@
             //显示列表数据前的预处理 传入一个 服务器响应数据 res
             preProcessingData (res) {
                 if(0 != res.data.data.length) {
-                    //显示前，处理数据（有效期时间的拼接）
+                    //显示前，处理数据
                     res.data.data.forEach((item,index,arr)=>{
+                        //有效期时间的拼接
                         item.validityPeriod = `${item.effectiveStartDate}-${item.effectiveEndDate}`;
+                        //档案归属编码转为汉字
+                        for (let obj of groupCompany) {
+                            if(obj.value === item.groupCompany) {
+                                item.groupCompany = obj.label;
+                            } 
+                        }
+                        //类别编码转汉字
+                        item.enteringType = item.enteringType.split(',').map( item => {
+                            for (let v of enteringType) {if (item === v.value) {return v.label;}}
+                        }).join('，');
+                        //收文时间格式化显示
+                        if (item.enteringDate) item.enteringDate = new Date(item.enteringDate).Format("yyyy-MM-dd");
+                        //借阅情况转换
+                        for (let obj of borrowFlag) {
+                            if(obj.value == item.borrowFlag) {
+                                item.borrowFlag = obj.label;
+                            } 
+                        }                        
                     });
                 }
                 this.fileListData = res.data.data;
@@ -368,6 +335,9 @@
                     }
                 }
             },
+            getCheckedDataLength () {
+                return this.checkBoxSelectedData.length;
+            },
             //复选框选中任意一行时触发，参数一表示：所有选中的行数据，参数二表示：当前选中行的数据
             selectOneRow (selection,row) {
                 this.checkBoxSelectedData = selection;
@@ -379,71 +349,76 @@
             //选中项发生变化
             selectionChange (selection) {
                 this.checkBoxSelectedData = selection;
-            }          
-        },
-
-        //生命周期钩子函数
-        created: function () {   
-            //loading 中
-            let msg = this.$Message.loading({
-                content: 'Loading...',
-                duration: 0
-            });     
-            let formdate = new FormData();
-            //构建查询字段
-            formdate.append('page',this.currentPage.toString());
-            formdate.append('pageSize',this.currentPageSize.toString());
-                             
-            // 异步请求  合同档案-档案列表接口
-            this.$axios.post('company/contract/find', formdate)
-            .then( res => {
-                this.preProcessingData(res);
-                setTimeout(msg, 0);//取消loading
-            })
-            .catch(err => {
-                console.log('异步请求合同档案/档案列表失败',err);  
-                setTimeout(msg, 0);//取消loading           
-            });
-        },
-        mounted () {
-            //接收导出弹窗的确定事件
-            common.bus.$on('exportExcelData', (msg) => {
-                    let formdata = new FormData();
-                    // formdata.append('archiveType',(this.checkBoxSelectedData[0].hasOwnProperty('archiveBarcode') && this.checkBoxSelectedData[0].archiveBarcode.hasOwnProperty('archiveType')) ? this.checkBoxSelectedData[0].archiveBarcode.archiveType : 'Y');
-                    formdata.append('archiveType','Y');
-                    let arr = [];
-                    for (let v of this.checkBoxSelectedData) {
-                        arr.push(v.archiveNo);
+            },
+            //获取列表最新数据（刷新列表）
+            refreshList () {
+                //loading 中
+                let msg = this.$Message.loading({
+                    content: 'Loading...',
+                    duration: 0
+                });     
+                let formdate = new FormData();
+                //构建查询字段
+                formdate.append('page',this.currentPage.toString());
+                formdate.append('pageSize',this.currentPageSize.toString());
+                                
+                // 异步请求  合同档案-档案列表接口
+                this.$axios.post('company/contract/find', formdate)
+                .then( res => {
+                    this.preProcessingData(res);
+                    setTimeout(msg, 0);//取消loading
+                })
+                .catch(err => {
+                    console.log('异步请求合同档案/档案列表失败',err);  
+                    setTimeout(msg, 0);//取消loading           
+                });
+            },
+            //处理批量导入
+            handleBatchImport (file) {
+                let formdate = new FormData();                             
+                formdate.append('importFile',file[0]);
+                this.$axios.post('/company/contract/import',formdate).then( res => {
+                    this.$refs.fileListTop.batchImportFields.batchFiles.pop();//导入成功后清空已选文件
+                    this.$refs.fileListTop.batchImportFields.importBatchSuccess = true;//打开导出成功弹窗
+                }).catch( err => {
+                    console.log('批量导入失败' , err);  
+                });                 
+            },
+            //批量导出
+            exportExcelData () {
+                let formdata = new FormData();
+                formdata.append('archiveType',this.checkBoxSelectedData[0].archiveBarcode.archiveType);
+                let arr = [];
+                for (let v of this.checkBoxSelectedData) {
+                    arr.push(v.archiveNo);
+                }
+                formdata.append('archiveNos',arr);
+                formdata.append('operateDesc','LIST');
+                this.$axios({
+                    method: 'post',
+                    url: '/common/export',
+                    data: formdata,
+                    responseType: 'blob'
+                }).then( res => {
+                    console.log(res);
+                    let blob = res.data
+                    let reader = new FileReader()
+                    reader.readAsDataURL(blob)
+                    reader.onload = (e) => {
+                        let a = document.createElement('a')
+                        a.download = 'excel.xlsx';//fileName
+                        a.href = e.target.result
+                        document.body.appendChild(a)
+                        a.click()
+                        document.body.removeChild(a)
                     }
-                    formdata.append('archiveNos',arr);
-                    formdata.append('operateDesc','LIST');
-                    this.$axios({
-                        method: 'post',
-                        url: '/common/export',
-                        data: formdata,
-                        responseType: 'blob'
-                    }).then( res => {
-                        console.log(res);
-                        let blob = res.data
-                        let reader = new FileReader()
-                        reader.readAsDataURL(blob)
-                        reader.onload = (e) => {
-                            let a = document.createElement('a')
-                            a.download = 'excel.xlsx';//fileName
-                            a.href = e.target.result
-                            document.body.appendChild(a)
-                            a.click()
-                            document.body.removeChild(a)
-                        }
-                                        
-                    }).catch( err => {
-                        console.log('下载文件失败'+err);
-                    });
-        
-            });
-            //接收搜索的事件
-            common.bus.$on('searchFile', (msg) => {
-                let obj = Object.assign({},msg);
+                }).catch( err => {
+                    console.log('下载文件失败'+err);
+                });                
+            },
+            //搜索
+            searchFile (msg) {
+               let obj = Object.assign({},msg);
                 
                 delete(obj['searchBoxTitle']);
                 delete(obj['search']);
@@ -466,34 +441,116 @@
                 }).catch( err => {
                     console.log('异步请求合同档案/档案列表失败',err);  
                     setTimeout(msgTxt, 0);//取消loading   
-                });          
-            });
-            //接收批量导入的事件
-            common.bus.$on('handleBatchImport',(file) => {
-                //loading 中
-                let msgTxt = this.$Message.loading({
-                    content: 'Loading...',
-                    duration: 0
-                });   
-                let formdate = new FormData();                             
-                formdate.append('importFile',file[0]);
-                this.$axios.post('/company/contract/import',formdate).then( res => {
-                    this.$refs.fileListTop.batchImportFields.batchFiles.pop();//导入成功后清空已选文件
-                    this.$refs.fileListTop.batchImportFields.importBatchSuccess = true;//打开导出成功弹窗
-                    setTimeout(msgTxt, 0);//取消loading
-                }).catch( err => {
-                    console.log('批量导入失败' , err);  
-                    setTimeout(msgTxt, 0);//取消loading   
-                });                   
-            });
+                });                  
+            },
+            //移入批量操作
+            moveInBatchOperating () {
+                let checkedLength = this.checkBoxSelectedData.length;
+                if (checkedLength <= 0) {
+                    let msg = this.$Message.loading({
+                        content: '没有选中任何数据！',
+                        duration: 1
+                    });
+                    return ;
+                } else {
+                    // this.batchOperatingArr.push(this.checkBoxSelectedData)
+                    console.log(this.checkBoxSelectedData);
+                }               
+            },
+            //打印
+            printPage () {
+                let checkedLength = this.checkBoxSelectedData.length;
+                if (checkedLength <= 0) {
+                    let msg = this.$Message.loading({
+                        content: '没有选中任何数据！',
+                        duration: 1
+                    });
+                    return ;
+                }
+                let str = `
+                    <table border="0" style="width:100%;border-collapse:collapse">
+                        <tr style="width:100%;height:40px;">
+                            <th style="border:1px solid #000;">合同编号</th>
+                            <th style="border:1px solid #000;">合同名称</th>
+                            <th style="border:1px solid #000;">腾邦签署主体</th>
+                            <th style="border:1px solid #000;">档案归属</th>
+                            <th style="border:1px solid #000;">对方公司名称</th>
+                            <th style="border:1px solid #000;">业务内容摘要</th>
+                            <th style="border:1px solid #000;">有效期</th>
+                            <th style="border:1px solid #000;">类别</th>
+                            <th style="border:1px solid #000;">状态</th>
+                            <th style="border:1px solid #000;">收文时间</th>
+                            <th style="border:1px solid #000;">借阅情况</th>
+                        </tr>
+                `;
+                
+                console.log(this.checkBoxSelectedData[0]);
+                for (let i = 0; i < checkedLength; i++) {
+                    str += `<tr style="width:100%;text-indent:5px;">
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].contractNo}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].contractName}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].signedSubject}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].groupCompany}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].oppositeCompany}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].businessBrief}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].validityPeriod}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].stockType}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].statusDesc}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].enteringDate}</td>
+                                <td style="border:1px solid #000;">${this.checkBoxSelectedData[i].borrowFlag}</td>
+                    </tr>`;
+                }
+                str += `</table>`;
+
+
+                let newstr = str;
+                console.log(newstr);
+                // 3. 还原：将旧的页面储存起来，当打印完成后返给给页面。
+                let oldstr = document.body.innerHTML;
+                // 2. 复制给body，并执行window.print打印功能
+                document.body.innerHTML = newstr;
+                window.print();
+                window.location.reload();
+                document.body.innerHTML = oldstr;
+                return false;
+            },
+            migrate () {
+                let checkedLength = this.getCheckedDataLength();
+                
+            },
+            migrateSubmit (obj) {
+                let formdata = new FormData();
+                let tempObj = Object.assign({},obj);
+                tempObj.archiveType = this.checkBoxSelectedData[0].archiveBarcode.archiveType;
+                let arr = [];
+                for (let v of this.checkBoxSelectedData) {
+                    arr.push(v.archiveNo);
+                }
+                tempObj.archiveNos = arr;
+                for (let i of Object.keys(tempObj)) {
+                    formdata.append(i,tempObj[i]);
+                }
+                console.log(tempObj);
+                this.$axios.post('common/migrate/migrate', formdata)
+                .then( res => {
+                    console.log(res);
+                    if (res.data.code != '0') {
+                        let msg = this.$Message.loading({
+                            content: '迁移失败',
+                            duration: 2
+                        }); 
+                    } else {
+                        this.$refs.fileListTop.migrateFields.migrateSuccess = true;//迁移成功弹窗
+                    }
+                })
+                .catch(err => {
+                    console.log('档案迁移失败',err);  
+                });
+            }
         },
-        beforeCreate: function () {
-            //alert('beforeCreate');
-        },
-        activated: function () {
-        },
-        deactivated: function () {
-            //alert('停用');
+        //生命周期钩子函数
+        created: function () {   
+            this.refreshList();
         }       
     }
 </script>

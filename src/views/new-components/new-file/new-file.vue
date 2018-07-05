@@ -160,11 +160,11 @@
           return false;          
          }    
         //验证业务内容摘要
-         if (this.commonValidate.isEmpty(resultJson.businessBrief)) {
-          this.$Message.info({content: '业务内容摘要不能为空',duration:3,closable: true}); 
-          this.$refs.child_fbi.$refs.child_fbic.$refs.businessBrief.focus();//自动聚焦
-          return false;          
-         }   
+        //  if (this.commonValidate.isEmpty(resultJson.businessBrief)) {
+        //   this.$Message.info({content: '业务内容摘要不能为空',duration:3,closable: true}); 
+        //   this.$refs.child_fbi.$refs.child_fbic.$refs.businessBrief.focus();//自动聚焦
+        //   return false;          
+        //  }   
         //对方公司名称
          if (this.commonValidate.isEmpty(resultJson.oppositeCompany)) {
           this.$Message.info({content: '对方公司名称不能为空',duration:3,closable: true}); 

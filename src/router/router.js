@@ -85,7 +85,8 @@ export const groupFile = {
     children: [
         {path: '/groupFile/contractFile/fileList', name: 'contractFileList', component: () => import('@/views/new-components/contract-file-list/contract-file-list.vue')}, 
         {path: '/groupFile/contractFile/newFile', name: 'contractFileNew', component: () => import('@/views/new-components/new-file/new-file.vue')}, 
-        {path: '/groupFile/contractFile/batchOperation', name: 'contractFileBatch', component: () => import('@/views/new-components/batch-operating/batch-operating.vue')} 
+        {path: '/groupFile/contractFile/batchOperation', name: 'contractFileBatch', component: () => import('@/views/new-components/batch-operating/batch-operating.vue')}, 
+        {path: '/groupFile/contractFile/fileDetails', name: 'contractFileDetails', component: () => import('@/views/new-components/contract-file-details/contract-file-details.vue')} 
     ]
 };
 //档案管理路由

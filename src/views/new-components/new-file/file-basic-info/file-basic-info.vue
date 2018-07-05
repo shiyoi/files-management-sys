@@ -3,6 +3,7 @@
 </style>
 <template>
     <div class="basicInfo">
+      <div style="width:100%;height:44px;line-height:44px;text-align:center;">新建档案</div>
       <file-header text="合同档案基本信息"></file-header>
       <file-basic-info-content ref="child_fbic"></file-basic-info-content>
     </div>        

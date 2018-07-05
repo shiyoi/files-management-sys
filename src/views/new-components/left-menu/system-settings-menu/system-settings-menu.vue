@@ -14,7 +14,7 @@
                             <Icon type="ios-paper"></Icon>
                             {{ v.name }}
                         </template>
-                        <MenuItem v-for="(value,index) in v.childs" :name="value.name" @click.native="changeWhich(value.to)">{{ value.name }}</MenuItem>
+                        <MenuItem v-for="(value,index) in v.childs" :key="index" :name="value.name" @click.native="changeWhich(value.to)">{{ value.name }}</MenuItem>
                     </Submenu>                     
                 </div>
                 <div v-show="shrink">

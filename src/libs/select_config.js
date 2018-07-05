@@ -1,3 +1,4 @@
+//档案归属
 const groupCompany = [
   {value: "TT",label: "商业集团"},
   {value: "TBCL",label: "差旅集团"},
@@ -8,16 +9,19 @@ const groupCompany = [
   {value: "TBJK",label: "金控集团"},
   {value: "TBLY",label: "旅游集团"}
 ];
+//类别
 const enteringType = [
   {value: "10",label: "原件"},
   {value: "20",label: "复印件"},
   {value: "30",label: "电子档"}
 ];
+//状态
 const status = [
   {value: "10",label: "未收文"},
   {value: "20",label: "已收文"},
   {value: "30",label: "已注销"}
 ];
+//借阅情况
 const borrowFlag = [
   {value: "10",label: "未借阅"},
   {value: "20",label: "已借阅"},

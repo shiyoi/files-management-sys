@@ -7,7 +7,7 @@
   <div class="basic-info-con">
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text">入库状态</div>
+        <div class="text">入库状态：</div>
         <div>
           <Select v-model="storageInfo.stockStatus" style="width:100%">
             <Option v-for="item in storageStatusShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -20,12 +20,12 @@
             <Option v-for="item in storageTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>          
         </div>        
-        <div class="text">入库类型</div>
+        <div class="text">入库类型：</div>
       </div>
     </div>  
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text">档案位置</div>
+        <div class="text">档案位置：</div>
         <div>
           <Select :disabled="isDisabled" v-model="storageInfo.archiveRoom" style="width:100%">
             <Option v-for="item in archiveRoomShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -41,28 +41,28 @@
     </div>   
     <div class="basics-rows">
       <div class="basics-rows-l">
-        <div class="text">柜号</div>
+        <div class="text">柜号：</div>
         <div>
-          <div style="width:40%;float:left;">
+          <div style="width:36%;float:left;margin-right:8px;">
             <InputNumber ref="cabinet" :disabled="isDisabled" :min="min" v-model="storageInfo.cabinet" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
           </div>
-          <div style="width:20%;float:left;text-align:right;padding-right:8px;">列号</div>
-          <div style="width:40%;float:left;">
+          <div style="width:20%;float:left;text-align:right;padding-right:8px;">列号：</div>
+          <div style="width:36%;float:left;">
             <InputNumber ref="columnNo" :disabled="isDisabled || cabinet === min" :min="min" v-model="storageInfo.columnNo" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
           </div>
         </div>
       </div>
       <div class="basics-rows-r">
         <div class="r-f">
-          <div style="width:40%;float:left;">
+          <div style="width:36%;float:left;margin-right:8px;">
             <InputNumber ref="rowNo" :min="min" :disabled="isDisabled || cabinet === min || columnNo === min" v-model="storageInfo.rowNo" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
           </div>
-          <div style="width:20%;float:left;text-align:right;padding-right:8px;">件号</div>
-          <div style="width:40%;float:left;">
+          <div style="width:20%;float:left;text-align:right;padding-right:8px;">件号：</div>
+          <div style="width:36%;float:left;">
             <InputNumber ref="piece" :min="min" :disabled="isDisabled || cabinet === min || columnNo === min || rowNo === min" v-model="storageInfo.piece" placeholder="" style="width:100%;" :maxlength="10"></InputNumber>
           </div>      
         </div>        
-        <div class="text">行号</div>
+        <div class="text">行号：</div>
       </div>
     </div>                         
   </div>
