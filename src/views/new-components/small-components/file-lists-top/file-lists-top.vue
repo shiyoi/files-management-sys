@@ -63,13 +63,13 @@
           <div class="l">
             <div class="txt">收文时间</div>
             <div class="in">
-              <DatePicker type="date" v-model="enteringDate" placeholder="Select date" style="width: 190px"></DatePicker>
+              <DatePicker type="date" v-model="enteringDate" :disabled="searchFields.status === '20' ? false : true" placeholder="Select date" style="width: 190px"></DatePicker>
             </div>
           </div>
           <div class="r">
             <div class="txt">状态</div>
             <div class="in">
-              <Select v-model="searchFields.status" style="width:190px">
+              <Select v-model="searchFields.status" style="width:190px" @on-change="changeSearchFieldsStatus">
                 <Option v-for="item in fileStatus" :value="item.value" :key="item.value">{{ item.label }}</Option>
               </Select>                 
             </div>
@@ -206,7 +206,17 @@
       <div slot="footer">
         <Button type="primary" @click="migrateFields.migrateSuccess = false">确定</Button>
       </div>
-    </Modal>         
+    </Modal>
+    <!-- 移入批量操作  -->
+   <Modal v-model="batchOperationFields.batchOperationSuccess" :title="batchOperationFields.batchOperationTitle" :mask-closable="false" @on-ok="ok" @on-cancel="cancel" width="620">
+      <div class="searchBox">
+        <div>移入批量操作成功！</div>     
+      </div>
+
+      <div slot="footer">
+        <Button type="primary" @click="batchOperationFields.batchOperationSuccess = false">确定</Button>
+      </div>
+    </Modal>    
   </div>
 </template>
 <script>
@@ -214,7 +224,7 @@ import common from '@/libs/common.js';//bus 总线
 //引入配置文件
 import config from '@/libs/config.js';
 //引入下拉选项的配置
-import {groupCompany,enteringType,status,borrowFlag} from '@/libs/select_config.js';
+import {groupCompanySearch,enteringTypeSearch,statusSearch,borrowFlagSearch} from '@/libs/select_config.js';
 export default {
   name: 'file-lists-top',
   props: ['checkedNum'],
@@ -231,22 +241,22 @@ export default {
       fileSituation: [],
       effectiveDate: "",//有效期时间  
       enteringDate: "", //收文时间
-      //搜索需要的字段 ---(最后一个借阅情况没有)
+      //搜索需要的字段
       searchFields: {
         search: false,//搜索弹窗
         searchBoxTitle: "搜索",
         signedSubject: "",//腾邦签署主体
-        groupCompany: "TT",//档案归属  
+        groupCompany: groupCompanySearch[0].value,//档案归属  
         businessBrief: "",//业务内容摘要
         // contractType: "10",//合同类型
-        enteringType: "10",//收文类别
+        enteringType: enteringTypeSearch[0].value,//收文类别
         contractNo: "",//合同编号
         effectiveStartDate: "",//有效期开始时间
         effectiveEndDate: "",//有效期结束时间    
         enteringDate: "",//收文时间    
-        status: "10",//状态
+        status: statusSearch[0].value,//状态
         oppositeCompany: "",//对方公司名称
-        borrowFlag: "10"
+        borrowFlag: borrowFlagSearch[0].value
       },
       //批量导入需要的字段
       batchImportFields: {
@@ -283,8 +293,12 @@ export default {
         isColumnNo: true,           
         isRowNo: true,           
         isPiece: true,           
+      },
+      //批量操作字段
+      batchOperationFields: {
+        batchOperationSuccess: false,//批量操作成功弹窗
+        batchOperationTitle: "移入批量操作",
       }
-      // groupCompany
     };
   },
   computed : {
@@ -411,15 +425,15 @@ export default {
     //重置搜索弹窗字段
     reset () {
       this.searchFields.signedSubject = '';
-      this.searchFields.groupCompany = groupCompany[0].value;
+      this.searchFields.groupCompany = groupCompanySearch[0].value;
       this.searchFields.businessBrief = '';
       this.searchFields.contractNo = '';
       this.searchFields.oppositeCompany = '';
       this.effectiveDate = '';
       this.enteringDate = '';
-      this.searchFields.borrowFlag = '10';
-      this.searchFields.status = '10';
-      this.searchFields.enteringType = '10';
+      this.searchFields.borrowFlag = borrowFlagSearch[0].value;
+      this.searchFields.status = statusSearch[0].value;
+      this.searchFields.enteringType = enteringTypeSearch[0].value;
     },
     //手动上传
     handleUpload (file) {
@@ -502,16 +516,20 @@ export default {
       obj.piece = this.migrateFields.piece;
       this.$emit('migrateSubmit',obj);
       this.migrateFields.migrate = false;
+    },
+    //当搜索-状态的下拉选项变化时触发
+    changeSearchFieldsStatus (value) {
+      if (value != '20') {
+        this.enteringDate = '';
+      }
     }
     
   },
   created () {
-    // console.log(groupCompany);
-    this.fileAttribution = groupCompany;//初始化搜索弹窗的档案归属下拉列表
-    this.fileType = enteringType;//初始化搜索弹窗的类别
-    this.fileStatus = status;//初始化搜索弹窗的状态
-    this.fileSituation = borrowFlag;//初始化搜索弹窗的  借阅情况
-    // console.log(this.fileAttribution);
+    this.fileAttribution = groupCompanySearch;//初始化搜索弹窗的档案归属下拉列表
+    this.fileType = enteringTypeSearch;//初始化搜索弹窗的类别
+    this.fileStatus = statusSearch;//初始化搜索弹窗的状态
+    this.fileSituation = borrowFlagSearch;//初始化搜索弹窗的  借阅情况
   }
 }
 </script>

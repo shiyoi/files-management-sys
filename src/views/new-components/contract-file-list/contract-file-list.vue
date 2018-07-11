@@ -7,7 +7,7 @@
     <!-- 头部操作和表格部分 -->
     <div class="right-main-page">
       <fileListsTop ref="fileListTop" :checkedNum="checkedNum" @refreshList="refreshList" @handleBatchImport="handleBatchImport" @exportExcelData="exportExcelData" @searchFile="searchFile" @printPage="printPage" @migrate="migrate" @migrateSubmit="migrateSubmit" @moveInBatchOperating="moveInBatchOperating"></fileListsTop>
-      <Table class="aaa" highlight-row @on-current-change="handleRowChange" @on-row-dblclick="showFileDetails" @on-select="selectOneRow" @on-select-all="selectAllRow" @on-selection-change="selectionChange" border ref="selection" :columns="columns4" :data="fileListData" :size="tableSize"></Table>
+      <Table height="306" class="aaa" highlight-row @on-current-change="handleRowChange" @on-row-dblclick="showFileDetails" @on-select="selectOneRow" @on-select-all="selectAllRow" @on-selection-change="selectionChange" border ref="selection" :columns="columns4" :data="fileListData" :size="tableSize"></Table>
       <div class="page-container-div">
         <Page :total="totalCount" size="small" :page-size="currentPageSize" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize' :page-size-opts="pageSizeOpts"></Page>
       </div>
@@ -41,7 +41,8 @@
     import fileListsTop from '../small-components/file-lists-top/file-lists-top.vue';
     import briefInformation from './brief-information/brief-information.vue';
     import common from '@/libs/common';//bus 总线
-    import {groupCompany,enteringType,status,borrowFlag} from '@/libs/select_config';//配置信息
+    import {archiveType} from '@/libs/archive_type';//引入档案类型
+    import {groupCompany,groupCompanySearch,enteringType,enteringTypeSearch,status,statusSearch,borrowFlag,borrowFlagSearch} from '@/libs/select_config';//配置信息
     export default {
         name: 'contract-file',
         props: ['path'],
@@ -53,31 +54,38 @@
                     {
                         type: 'selection',
                         width: 60,
-                        align: 'center'
+                        align: 'center',
+                        fixed: 'left'
                     },
                     {
                         title: '合同编号',
-                        key: 'contractNo'
+                        key: 'contractNo',
+                        width: 100
                     },
                     {
                         title: '合同名称',
-                        key: 'contractName'
+                        key: 'contractName',
+                        width: 100
                     },
                     {
                         title: '腾邦签署主体',
-                        key: 'signedSubject'
+                        key: 'signedSubject',
+                        width: 110
                     },
                     {
                         title: '档案归属',
-                        key: 'groupCompany'
+                        key: 'groupCompany',
+                        width: 100
                     },
                     {
                         title: '对方公司名称',
-                        key: 'oppositeCompany'
+                        key: 'oppositeCompany',
+                        width: 110
                     },
                     {
                         title: '业务内容摘要',
                         key: 'businessBrief',
+                        width: 110,
                         render: (h,params) => {
                             return h(
                                 'Poptip',
@@ -88,23 +96,28 @@
                     },
                     {
                         title: '有效期',
-                        key: 'validityPeriod'
+                        key: 'validityPeriod',
+                        width: 100
                     },
                     {
                         title: '类别',
-                        key: 'enteringType'
+                        key: 'enteringType',
+                        width: 110
                     },
                     {
                         title: '状态',
-                        key: 'statusDesc'
+                        key: 'statusDesc',
+                        width: 100
                     },
                     {
                         title: '收文时间',
-                        key: 'enteringDate'
+                        key: 'enteringDate',
+                        width: 100
                     },
                     {
                         title: '借阅情况',
-                        key: 'borrowFlag'
+                        key: 'borrowFlag',
+                        width: 110
                     }              
                 ],
                 fileListData: [],
@@ -215,7 +228,9 @@
             },
             //my methods  单击一行
             handleRowChange (currentRow, oldCurrentRow) {
-                this.toBriefInfo = currentRow;//更新简要信息
+                this.toBriefInfo = Object.assign({},currentRow);//更新简要信息
+                this.toBriefInfo.createTm = new Date(this.toBriefInfo.createTm).Format('yyyy-MM-dd');//简要信息的创建时间格式化输出
+                console.log(this.toBriefInfo);
                 //调操作日志接口
                 let formData = new FormData();
                 formData.append('archiveNo',this.toBriefInfo.archiveNo);
@@ -233,14 +248,12 @@
                 })).catch( (err) => {
                     console.log('读取日志或借阅信息出错'+err);
                 });
-              
-
-
-
                 //console.log('当前选中行的数据：',this.toBriefInfo);
             },
             //双击一行，显示详情页面
-            showFileDetails () {
+            showFileDetails (currentRow) {
+                //console.log(currentRow);
+                this.$store.commit('changeFileDetailsPage',currentRow.archiveNo);
                 this.$router.push({name:'contractFileDetails'});
             },
             //改变页码
@@ -305,9 +318,12 @@
                             } 
                         }
                         //类别编码转汉字
-                        item.enteringType = item.enteringType.split(',').map( item => {
-                            for (let v of enteringType) {if (item === v.value) {return v.label;}}
-                        }).join('，');
+                        if (item.enteringType != '') {
+                            item.enteringType = item.enteringType.split(',').map( item => {
+                                for (let v of enteringType) {if (item === v.value) {return v.label;}}
+                            }).join('，');
+                        }
+
                         //收文时间格式化显示
                         if (item.enteringDate) item.enteringDate = new Date(item.enteringDate).Format("yyyy-MM-dd");
                         //借阅情况转换
@@ -419,7 +435,10 @@
             //搜索
             searchFile (msg) {
                let obj = Object.assign({},msg);
-                
+                if (obj.groupCompany === groupCompanySearch[0].value) {obj.groupCompany = '';}//档案归属-全部 传空串
+                if (obj.enteringType === enteringTypeSearch[0].value) {obj.enteringType = '';}//档案类别-全部 传空串
+                if (obj.status === statusSearch[0].value) {obj.status = '';}//状态-全部 传空串
+                if (obj.borrowFlag === borrowFlagSearch[0].value) {obj.borrowFlag = '';}//借阅情况-全部 传空串
                 delete(obj['searchBoxTitle']);
                 delete(obj['search']);
                 console.log(obj);
@@ -453,8 +472,19 @@
                     });
                     return ;
                 } else {
-                    // this.batchOperatingArr.push(this.checkBoxSelectedData)
-                    console.log(this.checkBoxSelectedData);
+                    let formdata = new FormData();
+                    formdata.append('archiveType',archiveType[0].value);//档案类型
+                    for (let v of this.checkBoxSelectedData) {
+                        formdata.append('archiveNos',v.archiveNo);//档案编号集合
+                    }
+                    this.$axios.post('/common/batch/add',formdata).then( (res) => {
+                        this.$refs.fileListTop.batchOperationFields.batchOperationSuccess = true;
+                    }).catch( (err) => {
+                    //   接口错误已做统一的    拦截。这里不用弹窗提示
+                    });
+                    
+                    
+                  
                 }               
             },
             //打印
@@ -541,6 +571,7 @@
                         }); 
                     } else {
                         this.$refs.fileListTop.migrateFields.migrateSuccess = true;//迁移成功弹窗
+                        this.refreshList();
                     }
                 })
                 .catch(err => {

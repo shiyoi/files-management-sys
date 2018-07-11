@@ -17,13 +17,24 @@ Vue.use(iView);
 Vue.use(VeeValidate);
 
 Vue.prototype.$axios = axios;
+// 添加响应拦截器
+Vue.prototype.$axios.interceptors.response.use(function (response) {
+    // 对响应数据做点什么--(判断响应码code 是否为 0 不为零则统一提示)
+    if ('code' in response.data && String(response.data.code) != '0') {
+        iView.Message.info({content: '后台接口返回错误码',duration:3,closable: true});
+    }
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    iView.Message.info({content: '后台接口错误',duration:3,closable: true});
+    return Promise.reject(error);
+  });
+//配置axios
 Vue.prototype.$axios.defaults.baseURL = "http://10.2.104.201:8989/";//测试环境
 // Vue.prototype.$axios.defaults.baseURL = "http://10.200.66.113:8989/";//蒋欣 
 // Vue.prototype.$axios.defaults.baseURL = "http://172.16.7.125:8989/";//开哥
 // Vue.prototype.$axios.defaults.baseURL = "http://10.2.104.179:8080/archive-systems/";//网关
 // Vue.prototype.$axios.defaults.baseURL = "http://localhost:3000/";
-// Vue.prototype.$axios.defaults.headers.post['Content-Type'] = "application/x-www-form-urlencoded";
-// Vue.prototype.$axios.defaults.headers.post['Content-Type'] = "application/json";
 
 
 new Vue({

@@ -83,10 +83,16 @@ export const groupFile = {
     redirect: '/groupFile/contractFile/fileList',
     component: () => import('@/views/new-components/group-file/group-file.vue'),
     children: [
+        // 档案列表
         {path: '/groupFile/contractFile/fileList', name: 'contractFileList', component: () => import('@/views/new-components/contract-file-list/contract-file-list.vue')}, 
+        // 新建档案
         {path: '/groupFile/contractFile/newFile', name: 'contractFileNew', component: () => import('@/views/new-components/new-file/new-file.vue')}, 
+        // 批量操作
         {path: '/groupFile/contractFile/batchOperation', name: 'contractFileBatch', component: () => import('@/views/new-components/batch-operating/batch-operating.vue')}, 
-        {path: '/groupFile/contractFile/fileDetails', name: 'contractFileDetails', component: () => import('@/views/new-components/contract-file-details/contract-file-details.vue')} 
+        // 档案详情
+        {path: '/groupFile/contractFile/fileDetails', name: 'contractFileDetails', component: () => import('@/views/new-components/contract-file-details/contract-file-details.vue')}, 
+        // 档案借阅
+        {path: '/groupFile/contractFile/fileBorrow', name: 'contractFileBorrow', component: () => import('@/views/new-components/contract-file-borrow/contract-file-borrow.vue')} 
     ]
 };
 //档案管理路由

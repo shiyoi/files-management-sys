@@ -68,6 +68,7 @@
   </div>
 </template>
 <script>
+import {archiveRoomConfig} from '@/libs/select_config';
 export default {
   data: function () {
     return {
@@ -86,14 +87,11 @@ export default {
         {value: "30",label: "实物库+电子库"}
       ],    
       //档案位置 数据
-      archiveRoomShow: [
-        {value: "4楼档案室",label: "腾邦总部/腾邦大厦/4楼档案室"},
-        {value: "5楼档案室",label: "腾邦总部/腾邦大厦/5楼档案室"}          
-      ],        
+      archiveRoomShow: archiveRoomConfig,        
       storageInfo: {
         stockStatus: "10",        // 入库状态
         stockType: "30",          // 入库类型
-        archiveRoom: "5楼档案室",         // 档案位置
+        archiveRoom: "腾邦总部/腾邦大厦/5楼档案室",         // 档案位置
         cabinet: -1,              // 柜号         
         columnNo: -1,             // 列号          
         rowNo: -1,                // 行号       

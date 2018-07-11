@@ -9,9 +9,13 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         //
+        fileDetails: ''//当前打开的详情页面对应的  档案编号
     },
     mutations: {
         //
+        changeFileDetailsPage (state,newPage) {
+            state.fileDetails = newPage;
+        }
     },
     actions: {
 

@@ -11,7 +11,7 @@
     <div class="new-file-con"><remark ref="child_r"></remark></div><!-- 备注组件 -->   
     <div class="new-file-con" style="margin-bottom:150px;"><bottomBotton @submit="submitForm"></bottomBotton></div><!-- 底部按钮组件 -->            
     <!-- 创建档案成功弹窗 -->
-    <Modal v-model="createdSuccess" :title="createdSuccessTitle" :mask-closable="false" width="620">
+    <Modal v-model="createdSuccess" :title="createdSuccessTitle" :mask-closable="false" width="620" @on-cancel="successCreated">
       <div class="searchBox" style="text-align:center;margin-top:20px;">
         <div style="font-size:14px;">创建档案成功！系统已自动生成条形码，请选择您需要的操作！</div>     
       </div>
