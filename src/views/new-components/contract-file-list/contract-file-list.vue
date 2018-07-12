@@ -7,7 +7,7 @@
     <!-- 头部操作和表格部分 -->
     <div class="right-main-page">
       <fileListsTop ref="fileListTop" :checkedNum="checkedNum" @refreshList="refreshList" @handleBatchImport="handleBatchImport" @exportExcelData="exportExcelData" @searchFile="searchFile" @printPage="printPage" @migrate="migrate" @migrateSubmit="migrateSubmit" @moveInBatchOperating="moveInBatchOperating"></fileListsTop>
-      <Table height="306" class="aaa" highlight-row @on-current-change="handleRowChange" @on-row-dblclick="showFileDetails" @on-select="selectOneRow" @on-select-all="selectAllRow" @on-selection-change="selectionChange" border ref="selection" :columns="columns4" :data="fileListData" :size="tableSize"></Table>
+      <Table :loading="loading" height="306" class="aaa" highlight-row @on-current-change="handleRowChange" @on-row-dblclick="showFileDetails" @on-select="selectOneRow" @on-select-all="selectAllRow" @on-selection-change="selectionChange" border ref="selection" :columns="columns4" :data="fileListData" :size="tableSize"></Table>
       <div class="page-container-div">
         <Page :total="totalCount" size="small" :page-size="currentPageSize" show-elevator show-sizer show-total  @on-change="handlePage" @on-page-size-change='handlePageSize' :page-size-opts="pageSizeOpts"></Page>
       </div>
@@ -48,6 +48,7 @@
         props: ['path'],
         data: function () {
             return {
+                loading: true,
                 tableSize: 'small',//表格size
                 pageSizeOpts: [30],//每页条数
                 columns4: [
@@ -367,12 +368,8 @@
                 this.checkBoxSelectedData = selection;
             },
             //获取列表最新数据（刷新列表）
-            refreshList () {
-                //loading 中
-                let msg = this.$Message.loading({
-                    content: 'Loading...',
-                    duration: 0
-                });     
+            refreshList () { 
+                this.loading = true;   
                 let formdate = new FormData();
                 //构建查询字段
                 formdate.append('page',this.currentPage.toString());
@@ -382,11 +379,11 @@
                 this.$axios.post('company/contract/find', formdate)
                 .then( res => {
                     this.preProcessingData(res);
-                    setTimeout(msg, 0);//取消loading
+                    this.loading = false;
                 })
                 .catch(err => {
-                    console.log('异步请求合同档案/档案列表失败',err);  
-                    setTimeout(msg, 0);//取消loading           
+                    this.loading = false;
+                    console.log('异步请求合同档案/档案列表失败',err);        
                 });
             },
             //处理批量导入

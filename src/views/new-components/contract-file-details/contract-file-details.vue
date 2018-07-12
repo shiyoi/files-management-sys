@@ -2,15 +2,14 @@
 @import './contract-file-details.less';
 </style>
 <template>
-<div style="">
+<div>
   <!-- 操作按钮 -->
-  <!-- #eaeff0 -->
   <div class="file-details-con" style="margin-top:0px;position:fixed;top:60px;padding-bottom:20px;padding-top:20px;z-index:9999;border:none;background-color:#eaeff0;">
     <div>
       <Row type="flex" justify="center">
         <Col span="2"><Button type="primary">修改</Button></Col>
         <Col span="2"><Button type="primary">刷新</Button></Col>
-        <Col span="2"><Button type="primary">借阅</Button></Col>
+        <Col span="2"><Button @click="fileBorrow" type="primary">借阅</Button></Col>
         <Col span="2"><Button type="primary">打印</Button></Col>
         <Col span="2"><Button type="primary">导出表格</Button></Col>
       </Row>    
@@ -580,7 +579,9 @@ export default {
     };
   },
   methods: {
-
+    fileBorrow () {
+      this.$router.push('/groupFile/contractFile/fileBorrow');
+    }
   },
   created: function () {
     let formData = new FormData();

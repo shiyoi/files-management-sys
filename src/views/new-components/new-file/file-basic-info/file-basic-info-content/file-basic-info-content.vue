@@ -63,9 +63,6 @@
         <div class="text">签署人：</div>
         <div>
           <Input v-model="basicInfo.signedUser" placeholder="请输入签署人" style="width:100%;" :maxlength="30"></Input>
-          <!-- <Select v-model="basicInfo.signedUser" style="width:100%">
-            <Option v-for="item in fileTypeShow" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>            -->
         </div>
       </div>
       <div class="basics-rows-r">
