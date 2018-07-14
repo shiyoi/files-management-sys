@@ -92,7 +92,10 @@ export const groupFile = {
         // 档案详情
         {path: '/groupFile/contractFile/fileDetails', name: 'contractFileDetails', component: () => import('@/views/new-components/contract-file-details/contract-file-details.vue')}, 
         // 档案借阅
-        {path: '/groupFile/contractFile/fileBorrow', name: 'contractFileBorrow', component: () => import('@/views/new-components/contract-file-borrow/contract-file-borrow.vue')} 
+        {path: '/groupFile/contractFile/fileBorrow', name: 'contractFileBorrow', component: () => import('@/views/new-components/contract-file-borrow/contract-file-borrow.vue')}, 
+        // 档案借阅附件操作
+        {path: '/groupFile/contractFile/fileBorrowAnnexOperating', name: 'contractFileBorrowAnnexOperating', component: () => import('@/views/new-components/contract-file-borrow-annex-ope/contract-file-borrow-annex-ope.vue')} 
+
     ]
 };
 //档案管理路由

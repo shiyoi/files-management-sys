@@ -9,13 +9,18 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         //
-        fileDetails: ''//当前打开的详情页面对应的  档案编号
+        fileDetails: '',//当前打开的详情页面对应的  档案编号
+        stockNos: []//电子库存编号
     },
     mutations: {
         //
         changeFileDetailsPage (state,newPage) {
             state.fileDetails = newPage;
+        },
+        changeStockNo (state,newV) {
+            state.stockNos = newV;
         }
+
     },
     actions: {
 

@@ -587,7 +587,8 @@ export default {
     let formData = new FormData();
     formData.append('archiveNo',this.$store.state.fileDetails);
     this.$axios.post('/company/contract/detail',formData).then( res => {
-      console.log(res.data.data);
+      this.$store.commit('changeStockNo',[res.data.data.stockNo]);
+      
       this.data = res.data.data;
       JsBarcode("#barcode", this.data.archiveBarcode.barcodeNo);
     }).catch( err => {

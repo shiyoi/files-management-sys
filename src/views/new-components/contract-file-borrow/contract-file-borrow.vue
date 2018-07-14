@@ -96,7 +96,16 @@ export default {
         filesName: ""    
       }   
       ],
-      rowOriginData: {},
+      rowOriginData: {
+        annexFormat: "",
+        isDownload: false,
+        isPrint: false,
+        printNum: 0,
+        filesNames: [],
+        filesName: "",
+        operation: "",
+        fileId: 0
+      },    
       orginFileList: [
         {
           value: 1,
@@ -148,9 +157,10 @@ export default {
                 props: {value: params.row.filesName},
                 on: {
                   'on-change': (value) => {
-                    params.row.annexFormat = value.slice(value.indexOf('.')+1);
+                    params.row.annexFormat = value.slice(value.lastIndexOf('.') + 1);
                     this.annexData[params.index].filesName = params.row.filesName = value;
                     this.annexData[params.index].annexFormat = params.row.annexFormat;
+                    this.annexData[params.index].fileId = this.files.filter( item => item.fileName === value ? true : false)[0].id;
                   }
                 }
               },
@@ -247,58 +257,58 @@ export default {
       ];
     },
     registerSubmit () {
-      console.log(this.annexData);
-      let formdata = new FormData();
+      //
       for (let v of this.annexData) {
         if (v.isDownload && !v.isPrint) {v.operation = "10"}
         if (!v.isDownload && v.isPrint) {v.operation = "20"}
         if (v.isDownload && v.isPrint) {v.operation = "30"}
       }
-      // let arrTemp = [];
+      let arrTemp = [];
       for (let v of this.annexData) {
         let tempObj = {};
-        // tempObj.id = 123
         tempObj.attachmentName = v.filesName;
-        tempObj.attchmentFormat = v.annexFormat;
+        tempObj.attachmentFormat = v.annexFormat;
         tempObj.printCount = v.printNum;
         tempObj.operation = v.operation;
-        console.log(tempObj);
-        // arrTemp.push(tempObj);
-        formdata.append("details", JSON.stringify(tempObj));
+        tempObj.fileId = v.fileId;
+        arrTemp.push(tempObj);
       }
-      // formdata.append("details",arrTemp);
-      formdata.append("archiveNo",this.registerData.archiveNo);
-      formdata.append("archiveName",this.registerData.archiveName);
-      formdata.append("borrowNo",this.registerData.borrowNo);
-      formdata.append("needOrginFile",this.registerData.needOrginFile);
-      formdata.append("needReturn",this.registerData.needReturn);
-      formdata.append("borrowDate",this.registerData.borrowDate);
-      formdata.append("planReturnDate",this.registerData.planReturnDate);
-      formdata.append("remark",this.registerData.remark);
-      this.$axios.post("/common/borrow/borrow-register",formdata).then( res => {
-        console.log(res);
+      let t = [{
+        archiveBorrowDetails:arrTemp,
+        archiveNo: this.registerData.archiveNo,
+        archiveName: this.registerData.archiveName,
+        borrowNo: this.registerData.borrowNo,
+        needOrginFile: this.registerData.needOrginFile,
+        needReturn: this.registerData.needReturn,
+        borrowDate: this.registerData.borrowDate,
+        planReturnDate: this.registerData.planReturnDate,
+        remark: this.registerData.remark
+      }];
+      this.$axios({
+          url: "/common/borrow/borrow-register",
+          method: "post",
+          data: t
+      }).then( res => {
+        // console.log(res);
+        let storage = window.localStorage;
+        storage.setItem("annexArr",JSON.stringify(res.data.data));
+        this.$router.push({
+          path: '/groupFile/contractFile/fileBorrowAnnexOperating',
+          name: 'contractFileBorrowAnnexOperating',
+          params: {fileArr: res.data.data}
+        });
       }).catch( err => {
 
       });
-      
     }
   },
   created: function () {
     //获取附件列表数据
     let formdata = new FormData();
-    formdata.append('archiveType',archiveType[0].value);
-    formdata.append('archiveNo',this.$store.state.fileDetails);
+    formdata.append('stockNos',this.$store.state.stockNos);
     this.$axios.post('/common/archive-attachments',formdata).then( (res) => {
       this.files = res.data.data;//获取后台返回的数据
-
-      this.rowOriginData.annexFormat = '';
-      this.rowOriginData.isDownload = false;
-      this.rowOriginData.isPrint = false;
-      this.rowOriginData.printNum = 0; 
-      this.rowOriginData.filesNames = [];
-      this.rowOriginData.filesName = "";
-      this.rowOriginData.operation = "";
-      
+      // console.log(this.files);
       for (let v of this.files) {
         this.rowOriginData.filesNames.push(v.fileName);
       }
